@@ -1,0 +1,64 @@
+body {
+    padding-left: 10px;
+}
+
+.selectTissues table {
+    /*
+      border-collapse: separate;
+      border-spacing: 50px 0;
+      */
+}
+
+.selectTissues td {
+/*
+  padding-right: 10px 0;
+  */
+}
+
+#lociSearchBox {
+    width: 300px;
+}
+
+.checkboxTable {
+    width: auto;
+    /*min-width: 50%;*/
+}
+
+.checkboxTable th {
+    padding-right: 10px; /* !important;*/
+}
+
+/* for sorttable */
+.table-tight>tbody>tr>td,
+.table-tight>tbody>tr>th,
+.table-tight>tfoot>tr>td,
+.table-tight>tfoot>tr>th,
+.table-tigth>thead>tr>td,
+.table-tight>thead>tr>th {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}th.sort-header::-moz-selection { background:transparent; }
+th.sort-header::selection      { background:transparent; }
+th.sort-header { cursor:pointer; }
+table th.sort-header:after {
+  content:'';
+  float:right;
+  margin-top:7px;
+  border-width:0 4px 4px;
+  border-style:solid;
+  border-color:#404040 transparent;
+  visibility:hidden;
+  }
+table th.sort-header:hover:after {
+  visibility:visible;
+  }
+table th.sort-up:after,
+table th.sort-down:after,
+table th.sort-down:hover:after {
+  visibility:visible;
+  opacity:0.4;
+  }
+table th.sort-up:after {
+  border-bottom:none;
+  border-width:4px 4px 0;
+  }

@@ -1,0 +1,339 @@
+#!/usr/bin/env python
+
+import os, sys, json, argparse
+from collections import defaultdict
+from itertools import groupby
+import cPickle as pickle
+
+import numpy as np
+
+from natsort import natsorted
+
+from roadmap import RoadmapMetadata
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
+from metadataws import MetadataWS
+from files_and_paths import Datasets
+from epigenome import Epigenomes
+from ontology import Ontology
+
+class ColWrap:
+    def __init__(self, pretty_age, selectorName):
+        self.pretty_age = pretty_age
+        self.selectorName = selectorName
+
+    def __eq__(self, other):
+        return (isinstance(other, self.__class__)
+                and self.__dict__ == other.__dict__)
+
+    def __ne__(self):
+         return not self.__eq__(other)
+
+    # allow correct set() operations
+    # http://stackoverflow.com/a/10547584
+    def __hash__(self):
+        return hash((self.pretty_age, self.selectorName))
+
+    def matchWepi(self, wepi):
+        return wepi.pretty_age() == self.pretty_age and wepi.SelectorName() == self.selectorName
+
+class WalkRow:
+    def __init__(self, row):
+        self.row = row
+
+    def hasSingleEntry(self):
+        return 1 == np.count_nonzero(self.row)
+
+    def Walk(self):
+        justOne = self.hasSingleEntry()
+
+        for exps in self.row:
+            if exps == 0:
+                yield None, None, None
+            else:
+                for c in exps:
+                    if justOne:
+                        yield c.web_id(), c.web_title_single(), c
+                    else:
+                        yield c.web_id(), c.web_title(), c
+
+class WebEpigenomesLoader:
+    def __init__(self, args):
+        self.args = args
+        self.ontology = Ontology()
+
+        byAssembly = {}
+
+        m = MetadataWS(Datasets.all_mouse)
+        byAssembly["mm9"] = m.chipseq_tf_annotations_mm9()
+        byAssembly["mm10"] = m.chipseq_tf_annotations_mm10()
+
+        roadmap = RoadmapMetadata().epigenomes
+
+        combined = Epigenomes("ROADMAP + ENCODE", "hg19")
+        if 1:
+            m = MetadataWS(Datasets.all_human)
+            encodeHg19 = m.chipseq_tf_annotations_hg19()
+            combined.epis = encodeHg19.epis + roadmap.epis
+        else:
+            combined.epis = roadmap.epis
+        byAssembly["hg19"] = combined
+
+        self.byAssemblyAssays = defaultdict(lambda : defaultdict(None))
+        for assembly in ["mm9", "mm10", "hg19"]:
+            for assays in ["Both", "H3K27ac", "DNase"]:
+                epis = byAssembly[assembly].GetByAssays(assays)
+                if epis:
+                    epis = [WebEpigenome(self.args, epi, assays, self.ontology) for epi in epis]
+                    self.byAssemblyAssays[assembly][assays] = WebEpigenomes(self.args, assembly, assays, epis)
+
+    def GetByAssemblyAndAssays(self, assembly, assays):
+        return self.byAssemblyAssays[assembly][assays]
+
+    def Walk(self, assembly, assays):
+        return self.GetByAssemblyAndAssays(assembly, assays).Walk()
+
+    def Header(self, assembly, assays):
+        return self.GetByAssemblyAndAssays(assembly, assays).Header()
+
+    def SelectorNames(self):
+        ret = []
+        for assembly in ["mm9", "mm10", "hg19"]:
+            for assays in ["Both", "H3K27ac", "DNase"]:
+                epis = self.GetByAssemblyAndAssays(assembly, assays)
+                for epi in epis.epis:
+                    ret.append(epi.SelectorName())
+        return json.dumps(sorted(list(set(ret))))
+
+class WebEpigenome:
+    def __init__(self, args, epi, assays, ontology):
+        self.args = args
+        self.epi = epi
+        self.assays = assays
+        self.ontology = ontology
+
+        self.DNase = None
+        self.H3K27ac = None
+
+        if len(self.epi.DNase()) > 1:
+            print self.epi
+            for e in self.epi.DNase():
+                print "\t", e
+            raise Exception("multiple DNase experiments found")
+        if len(self.epi.H3K27ac()) > 1:
+            print self.epi
+            for e in self.epi.H3K27ac():
+                print "\t", e
+            raise Exception("multiple H3K27ac experiments found")
+
+        if "Both" == self.assays:
+            self.DNase = epi.DNase()[0]
+            self.H3K27ac = epi.H3K27ac()[0]
+        elif "H3K27ac" == self.assays:
+            self.H3K27ac = epi.H3K27ac()[0]
+        elif "DNase" == self.assays:
+            self.DNase = epi.DNase()[0]
+        else:
+            raise Exception("unknown assay type " + self.assays)
+
+    def web_id(self):
+        if self.epi.age_display:
+            s = "_".join([self.epi.biosample_term_name, self.epi.life_stage, self.epi.age_display])
+        else:
+            if "hg19" == self.epi.assembly:
+                s = "_".join([self.epi.biosample_term_name, "select"])
+            else:
+                s = "_".join([self.epi.biosample_term_name, "other"])
+        return s.lower().replace(' ', '_').replace('.', '_')
+
+    def pretty_age(self):
+        s = ""
+        if self.epi.age_display:
+            s = self.epi.life_stage + " " + self.epi.age_display
+        if "13.5 week" == self.epi.age_display:
+            s = "e13.5" # exception for d embryonic fibroblast 13.5 week mm9
+        if "embryonic" in s:
+            s = s.replace("embryonic ", "e").replace(" day", "")
+        elif "postnatal" in s:
+            s = s.replace(" day", "").replace("postnatal ", "p")
+        if "adult 8 week" == s:
+            s = "p56"
+        if "adult 8-10 week" == s:
+            s = "p56-p70"
+        if "adult 24 week" == s:
+            s = "p168"
+        if not s:
+            if "hg19" == self.epi.assembly:
+                return ""
+            else:
+                s = "other"
+        return s
+
+    def SelectorName(self):
+        if self.epi.age_display:
+            s = self.epi.life_stage + "_" + self.epi.age_display
+            return s.replace('.', '_').replace(" ", "_")
+        if "hg19" == self.epi.assembly:
+            return "select"
+        return "other"
+
+    def web_title(self):
+        if self.epi.age_display:
+            return self.pretty_age()
+        return self.epi.biosample_term_name
+
+    def web_title_single(self):
+        return self.pretty_age()
+
+    def isActive(self):
+        return self.web_id() in ["midbrain_embryonic_11_5_day",
+                                 "hindbrain_embryonic_11_5_day",
+                                 "limb_embryonic_11_5_day",
+                                 "neural_tube_embryonic_11_5_day",
+                                 "cerebellum_adult_8_week",
+                                 "primary_t_cells_from_peripheral_blood_select",
+                                 "primary_natural_killer_cells_from_peripheral_blood_select",
+                                 "fetal_thymus_select"]
+
+    def exps(self):
+        if "H3K27ac" == self.assays:
+            return [self.H3K27ac]
+        if "DNase" == self.assays:
+            return [self.DNase]
+        if "Both" == self.assays:
+            return [self.DNase, self.H3K27ac]
+        raise Exception("unknown assay type " + self.assays)
+
+    def predictionFnp(self):
+        return self.epi.predictionFnp(self.DNase, self.H3K27ac)
+
+    def predictionFnpExists(self):
+        if self.DNase and self.H3K27ac:
+            return os.path.exists(self.predictionFnp())
+        return False
+
+    def webName(self):
+        if self.args.debug:
+            if self.predictionFnpExists():
+                return "*"
+        return ""
+
+    def webExps(self):
+        if self.args.debug:
+            return self.exps()
+        return []
+
+    def tissue_type(self):
+        return self.ontology.getTissue(self.epi)
+
+    def cell_type(self):
+        return self.ontology.getCellType(self.epi)
+
+class WebEpigenomes:
+    def __init__(self, args, assembly, assays, epis):
+        self.args = args
+        self.assembly = assembly
+        self.assays = assays
+        self.epis = epis
+
+        self.setupMatrix()
+
+    def Header(self):
+        for idx, c in enumerate(self.header):
+            yield idx, c.pretty_age, c.selectorName
+
+    def Walk(self):
+        m = sorted(self.m, key = lambda x: (x[0], x[1]))
+        for row in m:
+            yield row[0], row[1], row[2], WalkRow(row[3:]).Walk()
+
+    def adjust_biosample_term_name(self, b):
+        if "embryonic facial prominence" == b:
+            b = "embryonic facial<br>prominence"
+        b  = b.replace("negative", "-").replace("positive", "+").replace("--", "-").replace("-+", "+")
+        return b
+
+    def setupMatrix(self):
+        if "hg19" == self.assembly:
+            return self.setupMatrixHuman()
+        return self.setupMatrixMouse()
+
+    def setupMatrixHuman(self):
+        wepis = self.epis
+        keyfunc = lambda x: (x.epi.biosample_term_name.lower(), x.pretty_age())
+	wepis.sort(key=keyfunc)
+
+        cols = [ColWrap("Tissue", ""),
+                ColWrap("Cell Type", ""),
+                ColWrap("Biosample", ""),
+                ColWrap("", "select")]
+        self.m = []
+
+        # header row
+        self.header = cols
+
+        for rowIdx, wepi in enumerate(wepis):
+            rowTitle = wepi.epi.biosample_term_name
+            if wepi.pretty_age() and not wepi.epi.isImmortalizedCellLine():
+                rowTitle += " (" + wepi.pretty_age() + ')'
+            row = [wepi.tissue_type(),
+                   wepi.cell_type(),
+                   rowTitle,
+                   [wepi]]
+            self.m.append(row)
+
+    def setupMatrixMouse(self):
+        rows = set()
+        cols = set()
+
+        epis = self.epis
+        keyfunc = lambda x: x.epi.biosample_term_name
+	epis.sort(key=keyfunc)
+
+        for biosample_term_name, wepis in groupby(epis, keyfunc):
+            rows.add(biosample_term_name)
+            for wepi in wepis:
+                cols.add(ColWrap(wepi.pretty_age(), wepi.SelectorName()))
+
+        cols = natsorted(list(cols), key = lambda x: x.pretty_age)
+        cols = [ColWrap("Tissue", ""),
+                ColWrap("Cell Type", ""),
+                ColWrap("Biosample", "")
+                ] + cols
+        for colIdx, cw in enumerate(cols):
+            if cw.pretty_age == "other":
+                break
+        cols += [cols.pop(colIdx)] # push "other" column to end
+        self.m = []
+
+        # header row
+        self.header = cols
+
+        for biosample_term_name, wepis in groupby(epis, keyfunc):
+            row = [0] * len(cols)
+            for wepi in wepis:
+                # could do http://stackoverflow.com/a/947184
+                for colIdx, cw in enumerate(cols):
+                    if cw.matchWepi(wepi):
+                        break
+                if 0 == row[colIdx]:
+                    row[colIdx] = []
+                row[colIdx].append(wepi)
+            row[0] = wepi.tissue_type()
+            row[1] = wepi.cell_type()
+            row[2] = self.adjust_biosample_term_name(biosample_term_name)
+            self.m.append(row)
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--debug', action="store_true", default=False)
+    args = parser.parse_args()
+    return args
+
+def main():
+    args = parse_args()
+
+    we = WebEpigenomesLoader(args)
+
+if __name__ == '__main__':
+    main()

@@ -1,0 +1,71 @@
+{% macro makeTissueActive(e) -%}
+{% if e.isActive() -%}
+checked="checked"
+{% endif -%}
+{% endmacro -%}
+
+{% macro hide(isActive) -%}
+{% if not isActive -%}
+style="display: none;"
+{% endif -%}
+{% endmacro -%}
+
+{% macro downloadLink(assembly, assays) -%}
+<div>
+  <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp;
+  {% if "Both" == assays -%}
+  <a href="">Download</a> candidate enhancers computed using DNase and H3K27ac signals for cell types below (genome wide)
+  {% endif -%}
+  {% if "DNase" == assays -%}
+  <a href="">Download</a> candidate enhancers computed using DNase signals for cell types below (genome wide)
+  {% endif -%}
+  {% if "H3K27ac" == assays -%}
+  <a href="">Download</a> candidate enhancers computed using H3K27ac signals for for cell types below (genome wide)
+  {% endif -%}
+</div>
+{% endmacro -%}
+
+{% macro tissueCheckboxes(epigenomes, assembly, assays, isActive) -%}
+<div id="content{{assembly}}{{assays}}" class="selectTissues" {{ hide(isActive) }} >
+  <br>
+  {{ downloadLink(assembly, assays) }}
+  <table id="table{{assembly}}{{assays}}" class="table table-bordered table-condensed table-tight checkboxTable tablesorter">
+    <thead>
+      <tr>
+        {% for idx, h, selectorName in epigenomes.Header(assembly, assays) -%}
+        <th>
+            {% if idx < 3 -%}
+            {{h}}
+            {% else -%}
+            {% if h -%}
+            <input type="checkbox" class="select{{selectorName}}">&nbsp;{{h}}
+            {% endif -%}
+            {% endif -%}
+        </th>
+        {% endfor -%}
+      </tr>
+    </thead>
+    <tbody>
+      {% for type, biosample_term_name, cell_type, cols in epigenomes.Walk(assembly, assays) -%}
+      <tr>
+        <td>{{type}}</td>
+        <td>{{biosample_term_name}}</td>
+        <td>{{cell_type}}</td>
+        {% for webID, webTitle, w in cols -%}
+        <td>
+          {% if w -%}
+          <center>
+            <input type="checkbox" name="{{assembly}}{{assays}}" value="{{webID}}" data-selector-name="{{w.SelectorName()}}" {{makeTissueActive(w)}}>{{w.webName()}}
+            {% for exp in w.webExps() -%}
+            <a href="{{exp.url}}" target="_blank">{{exp.assay_term_name[0]}}</a>
+            {% endfor -%}
+          </center>
+          {% endif -%}
+        </td>
+        {% endfor -%}
+      </tr>
+      {% endfor -%}
+    </tbody>
+  </table>
+</div>
+{% endmacro -%}
