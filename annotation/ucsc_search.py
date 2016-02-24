@@ -57,7 +57,6 @@ class UcscSearch:
                           "Submit=submit"]
         if 0:
             customUrl = os.path.join(self.host,
-                                     "annotations",
                                      "trackhubCustom",
                                      self.uid,
                                      str(self.hubNum))
@@ -72,7 +71,6 @@ class UcscSearch:
         urlBase = "https://genome.ucsc.edu/cgi-bin/hgTracks?"
 
         self.trackhubUrl = os.path.join(self.host,
-                                        "annotations",
                                         "trackhub",
                                         self.uid,
                                         "hub_{hubNum}.txt".format(hubNum =
@@ -80,7 +78,6 @@ class UcscSearch:
         ucscParams.append("hubClear=" + self.trackhubUrl)
 
         self.trackdbUrl = os.path.join(self.host,
-                                       "annotations",
                                        "trackhub",
                                        self.uid,
                                        self.psb.assembly,
