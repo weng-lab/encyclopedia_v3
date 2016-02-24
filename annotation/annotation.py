@@ -43,7 +43,7 @@ class AnnotationSearchUcsc(object):
 
         self.defaults = Defaults()
 
-        self.host = "http://bib7.umassmed.edu/ws/"
+        self.host = "http://zlab-annotations.umassmed.edu/"
         if self.args.local:
             fnp = os.path.expanduser("~/.ws_host.txt")
             if os.path.exists(fnp):
