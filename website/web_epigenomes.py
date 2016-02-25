@@ -231,7 +231,7 @@ class WebEpigenome:
         return []
 
     def tissue_type(self):
-        return self.ontology.getTissue(self.epi)
+        return self.ontology.getTissue(self.epi).replace('_', ' ')
 
     def cell_type(self):
         return self.ontology.getCellType(self.epi)
@@ -278,7 +278,7 @@ class WebEpigenomes:
         keyfunc = lambda x: (x.epi.biosample_term_name.lower(), x.pretty_age())
 	wepis.sort(key=keyfunc)
 
-        cols = [ColWrap("Tissue", ""),
+        cols = [ColWrap("Tissue of origin", ""),
                 ColWrap("Cell Type", ""),
                 ColWrap("Biosample", ""),
                 ColWrap("", "select")]
@@ -311,7 +311,7 @@ class WebEpigenomes:
                 cols.add(ColWrap(wepi.pretty_age(), wepi.SelectorName()))
 
         cols = natsorted(list(cols), key = lambda x: x.pretty_age)
-        cols = [ColWrap("Tissue", ""),
+        cols = [ColWrap("Tissue of origin", ""),
                 ColWrap("Cell Type", ""),
                 ColWrap("Biosample", "")
                 ] + cols
