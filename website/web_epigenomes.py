@@ -105,6 +105,13 @@ class WebEpigenomesLoader:
                     ret.append(epi.SelectorName())
         return json.dumps(sorted(list(set(ret))))
 
+    def getWebIDsFromExpIDs(self, assembly, expIDs):
+        ret = []
+        for assays in ["Both", "H3K27ac", "DNase"]:
+            epis = self.GetByAssemblyAndAssays(assembly, assays)
+            ret += epis.getWebIDsFromExpIDs(expIDs)
+        return ret
+
 class WebEpigenome:
     def __init__(self, args, epi, assays, ontology):
         self.args = args
@@ -236,7 +243,15 @@ class WebEpigenomes:
         self.assays = assays
         self.epis = epis
 
+        self.expIDtoWebId = {}
+        for wepi in self.epis:
+            for exp in wepi.exps():
+                self.expIDtoWebId[exp.encodeID] = wepi.web_id()
+
         self.setupMatrix()
+
+    def getWebIDsFromExpIDs(self, expIDs):
+        return [self.expIDtoWebId[k] for k in expIDs if k in self.expIDtoWebId]
 
     def Header(self):
         for idx, c in enumerate(self.header):

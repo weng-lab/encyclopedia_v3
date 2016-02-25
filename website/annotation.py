@@ -113,12 +113,17 @@ class AnnotationSearchUcsc(object):
     def bedsInRange(self, *args, **params):
         input_json = cherrypy.request.json
         ret = []
+
         try:
             self.psb = ParseSearchBox(self.epigenomes, self.dbSnps, input_json)
             self.coord = self.psb.search()
             if self.coord:
-                ret = self.db.findBedOverlap(self.psb.assembly, self.coord.chrom,
-                                             self.coord.start, self.coord.end)
+                expIDs = self.db.findBedOverlap(self.psb.assembly,
+                                                self.coord.chrom,
+                                                self.coord.start,
+                                                self.coord.end)
+                ret = self.epigenomes.getWebIDsFromExpIDs(self.psb.assembly,
+                                                          expIDs)
         except:
             if self.args.debug:
                 raise
