@@ -117,7 +117,19 @@ $(document).ready(function(){
             dataType: "json",
             contentType : "application/json",
             success: function(got){
-                console.log(got);
+                var assembly = activeAssembly()
+                $.each(["Both", "H3K27ac", "DNase"], function(idx, assays) {
+                    var section = $("#content" + assembly + assays);
+                    section.find(":checkbox").prop('checked', false);
+
+                    $.each(got["ret"][assays], function(idx, web_id){
+                        section.find(":checkbox")
+                            .filter(function(){
+                                return this.value == web_id})
+                            .prop('checked', true);
+                    });
+                });
+
             }
         });
     });

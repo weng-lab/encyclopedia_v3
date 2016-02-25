@@ -106,10 +106,10 @@ class WebEpigenomesLoader:
         return json.dumps(sorted(list(set(ret))))
 
     def getWebIDsFromExpIDs(self, assembly, expIDs):
-        ret = []
+        ret = {}
         for assays in ["Both", "H3K27ac", "DNase"]:
             epis = self.GetByAssemblyAndAssays(assembly, assays)
-            ret += epis.getWebIDsFromExpIDs(expIDs)
+            ret[assays] = epis.getWebIDsFromExpIDs(expIDs)
         return ret
 
 class WebEpigenome:

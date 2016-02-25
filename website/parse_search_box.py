@@ -21,7 +21,10 @@ class ParseSearchBox:
         self.assembly = self.params["assembly"]
         self.assays = self.params["assays"]
 
-        self.tissue_ids = sorted(self.params[self.assembly + self.assays])
+        key = self.assembly + self.assays
+        self.tissue_ids = []
+        if key in self.params:
+            self.tissue_ids = sorted(self.params[key])
 
         self.loci = self.params["loci"].strip()
 
