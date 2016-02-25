@@ -37,7 +37,7 @@ AND startend && int4range(%(start)s, %(end)s)
 {"chrom" : chrom,
  "start" : start,
  "end" : end})
-            return curs.fetchall()
+            return [x[0] for x in curs.fetchall()]
 
     def insertOrUpdate(self, assembly, assays, tissues, loci, uid):
         with getcursor(self.DBCONN, "insertOrUpdate") as curs:
