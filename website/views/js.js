@@ -107,5 +107,20 @@ $(document).ready(function(){
         });
     });
 
+    $("#selectIntersect").click(function() {
+        var formData = $("#searchForm").serializeJSON();
+
+        $.ajax({
+            type: "POST",
+            url: "bedsInRange",
+            data: formData,
+            dataType: "json",
+            contentType : "application/json",
+            success: function(got){
+                console.log(got);
+            }
+        });
+    });
+
 })
 

@@ -69,7 +69,6 @@ class AnnotationSearchUcsc(object):
             self.sessions.insertOrUpdate(cherrypy.session.id, uid)
 
         input_json = cherrypy.request.json
-        print input_json
 
         us = UcscSearch(self.epigenomes, self.db, self.dbSnps,
                         self.host, self.args, input_json, uid)
@@ -109,11 +108,12 @@ class AnnotationSearchUcsc(object):
         return th.ParsePath(path)
 
     @cherrypy.expose
+    @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def bedsInRange(self, *args, **params):
-
+        input_json = cherrypy.request.json
         try:
-            self.psb = ParseSearchBox(self.dbsnps, self.params)
+            self.psb = ParseSearchBox(self.epigenomes, self.dbSnps, input_json)
             self.coord = self.psb.search()
         except:
             if self.args.debug:
@@ -121,4 +121,5 @@ class AnnotationSearchUcsc(object):
             pass
 
         return {"args" : args,
-                "params" : params}
+                "params" : params,
+                "input_json" : input_json}
