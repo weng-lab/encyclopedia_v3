@@ -59,6 +59,8 @@ class AnnotationSearchUcsc(object):
         return str(uuid.uuid4())
 
     @cherrypy.expose
+    @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
     def ucsc(self, *args, **params):
         uid = self.sessions.get(cherrypy.session.id)
         if not uid:
@@ -66,15 +68,19 @@ class AnnotationSearchUcsc(object):
             cherrypy.session["uid"] = uid
             self.sessions.insertOrUpdate(cherrypy.session.id, uid)
 
-        us = UcscSearch(self.epigenomes, self.db, self.dbSnps, self.host, self.args, params, uid)
+        input_json = cherrypy.request.json
+        print input_json
+
+        us = UcscSearch(self.epigenomes, self.db, self.dbSnps,
+                        self.host, self.args, input_json, uid)
         us.parse()
         url = us.configureUcscHubLink()
 
         if self.args.debug:
-            return self.templates("ucsc",
-                                  us = us,
-                                  url = url)
-        raise cherrypy.HTTPRedirect(url, 303)
+            return {"html" : self.templates("ucsc",
+                                            us = us,
+                                            url = url)}
+        return {"url" : url}
 
     @cherrypy.expose
     def trackhubCustom(self, *args, **params):

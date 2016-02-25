@@ -55,7 +55,7 @@ style="display: none;"
         <td>
           {% if w -%}
           <center>
-            <input type="checkbox" name="{{assembly}}{{assays}}" value="{{webID}}" data-selector-name="{{w.SelectorName()}}" {{makeTissueActive(w)}}>{{w.webName()}}
+            <input type="checkbox" name="{{assembly}}{{assays}}[]" value="{{webID}}" data-selector-name="{{w.SelectorName()}}" {{makeTissueActive(w)}}>{{w.webName()}}
             {% for exp in w.webExps() -%}
             <a href="{{exp.url}}" target="_blank">{{exp.assay_term_name[0]}}</a>
             {% endfor -%}

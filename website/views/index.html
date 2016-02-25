@@ -19,7 +19,7 @@
       <div>
         <a href="#search"></a>
         <b>Search Candidate Enhancers</b>
-        <form method="get" action="ucsc" target="_blank">
+        <form id="searchForm">
 
           <div id="selectAssembly" class="btn-group" data-toggle="buttons">
             <label class="btn btn-primary">
@@ -83,5 +83,6 @@
   var annotationDefaults = {{defaults.json()}};
   {% include 'js.js' -%}
 </script>
+<script src="static/jquery.serialize-object.min.js"></script>
 
 {% include '_footer.html' -%}

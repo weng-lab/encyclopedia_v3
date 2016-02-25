@@ -85,5 +85,27 @@ $(document).ready(function(){
     $('.tablesorter').each(function(i, obj) {
         new Tablesort(obj);
     });
+
+    $( "#searchForm" ).submit(function( event ) {
+        event.preventDefault();
+
+        var formData = $("#searchForm").serializeJSON();
+
+        $.ajax({
+            type: "POST",
+            url: "ucsc",
+            data: formData,
+            dataType: "json",
+            contentType : "application/json",
+            success: function(got){
+                if("url" in got){
+                    return window.open(got["url"], '_blank');
+                }
+                var w = window.open();
+                $(w.document.body).html(got["html"]);
+            }
+        });
+    });
+
 })
 
