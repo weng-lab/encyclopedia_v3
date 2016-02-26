@@ -18,8 +18,9 @@ from epigenome import Epigenomes
 from ontology import Ontology
 
 class ColWrap:
-    def __init__(self, pretty_age, selectorName):
+    def __init__(self, pretty_age, ageDays, selectorName):
         self.pretty_age = pretty_age
+        self.ageDays = ageDays
         self.selectorName = selectorName
 
     def __eq__(self, other):
@@ -167,17 +168,41 @@ class WebEpigenome:
         elif "postnatal" in s:
             s = s.replace(" day", "").replace("postnatal ", "p")
         if "adult 8 week" == s:
-            s = "p56"
+            s = "a8w"
         if "adult 8-10 week" == s:
-            s = "p56-p70"
+            s = "a8-10w"
         if "adult 24 week" == s:
-            s = "p168"
+            s = "a24w"
         if not s:
             if "hg19" == self.epi.assembly:
                 return ""
             else:
                 s = "other"
         return s
+
+    def ageDays(self):
+        pa = self.pretty_age()
+        lookup = { "e10" : 10,
+                   "e10.5" : 10.5,
+                   "e11" : 11,
+                   "e11.5" : 11.5,
+                   "e12" : 12,
+                   "e13.5" : 13.5,
+                   "e14.5" : 14.5,
+                   "e15.5" : 15.5,
+                   "e16.5" : 16.5,
+                   "e18.5" : 18.5,
+                   "p0" : 22,
+                   "p1" : 23,
+                   "p7" : 29,
+                   "a8w" : 22 + 8*7,
+                   "a8-10w" : 22 + 9*7,
+                   "a24w" : 22 + 24*7,
+                   "other" : 1000 }
+        if pa not in lookup:
+            print "ERROR: missing ageDays", pa
+            return 999
+        return lookup[pa]
 
     def SelectorName(self):
         if self.epi.age_display:
@@ -259,7 +284,7 @@ class WebEpigenomes:
             yield idx, c.pretty_age, c.selectorName
 
     def Walk(self):
-        m = sorted(self.m, key = lambda x: (x[0], x[1]))
+        m = natsorted(self.m, key = lambda x: (x[0], x[1], x[2]))
         for row in m:
             yield row[0], row[1], row[2], WalkRow(row[3:]).Walk()
 
@@ -279,10 +304,10 @@ class WebEpigenomes:
         keyfunc = lambda x: (x.epi.biosample_term_name.lower(), x.pretty_age())
 	wepis.sort(key=keyfunc)
 
-        cols = [ColWrap("Tissue of origin", ""),
-                ColWrap("Cell Type", ""),
-                ColWrap("Biosample", ""),
-                ColWrap("", "select")]
+        cols = [ColWrap("Tissue of origin", "", ""),
+                ColWrap("Cell Type", "", ""),
+                ColWrap("Biosample", "", ""),
+                ColWrap("", "", "select")]
         self.m = []
 
         # header row
@@ -309,12 +334,12 @@ class WebEpigenomes:
         for biosample_term_name, wepis in groupby(epis, keyfunc):
             rows.add(biosample_term_name)
             for wepi in wepis:
-                cols.add(ColWrap(wepi.pretty_age(), wepi.SelectorName()))
+                cols.add(ColWrap(wepi.pretty_age(), wepi.ageDays(), wepi.SelectorName()))
 
-        cols = natsorted(list(cols), key = lambda x: x.pretty_age)
-        cols = [ColWrap("Tissue of origin", ""),
-                ColWrap("Cell Type", ""),
-                ColWrap("Biosample", "")
+        cols = natsorted(list(cols), key = lambda x: x.ageDays)
+        cols = [ColWrap("Tissue of origin", "", ""),
+                ColWrap("Cell Type", "", ""),
+                ColWrap("Biosample", "", "")
                 ] + cols
         for colIdx, cw in enumerate(cols):
             if cw.pretty_age == "other":
