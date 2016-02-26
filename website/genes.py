@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, sys, json, psycopg2, argparse
+import os, sys, json, psycopg2, argparse, StringIO
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
 from utils import Utils
@@ -8,8 +8,9 @@ from dbs import DBS
 from files_and_paths import Dirs
 from coord import Coord
 from db_utils import getcursor
+from get_tss import Genes
 
-class Genes:
+class LookupGenes:
     def __init__(self, DBCONN):
         self.DBCONN = DBCONN
         self.tableNames = {"mm9" : "genes_mm9",
@@ -42,14 +43,14 @@ gene text
 );
 """.format(table=table_name))
 
-    ggff = Genes(args.file, "gtf")
+    ggff = Genes(fnp, "gtf")
 
     outF = StringIO.StringIO()
     for g in ggff.getGenes():
-        outF.write("\t".join(g[:4]) + "\n")
+        outF.write("\t".join([str(x) for x in [g.chr_, g.start_, g.end_, g.genename_]]) + "\n")
 
     outF.seek(0)
-    cur.copy_from(outF, table_name, ',',
+    cur.copy_from(outF, table_name, '\t',
                   columns=("chrom", "chromStart", "chromEnd", "gene"))
 
     cur.execute("""
@@ -78,11 +79,10 @@ def main():
     dbs["application_name"] = os.path.realpath(__file__)
 
     import psycopg2.pool
-    DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, dbs)
+    DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
     with getcursor(DBCONN, "main") as cur:
-        if 0:
-            setupAll(cur)
+        setupAll(cur)
 
 if __name__ == '__main__':
     main()
