@@ -30,6 +30,7 @@ class Ontology:
     def __init__(self):
         self._load_adhoc()
         self._load_ucsc()
+        self._load_manual()
 
     def _load_adhoc(self):
         fnp = os.path.join(os.path.dirname(__file__),
@@ -46,11 +47,19 @@ class Ontology:
             lines = [line.rstrip().split('\t') for line in f]
         self.ucsc = dict((a[0], a[1]) for a in lines)
 
+    def _load_manual(self):
+        fnp = os.path.join(os.path.dirname(__file__),
+                           "manual.ontology.txt")
+        with open(fnp) as f:
+            lines = [line.rstrip().split('\t') for line in f]
+        self.manual = dict((a[0], a[2]) for a in lines)
+
     def getTissue(self, epi):
         btn = epi.biosample_term_name
         if btn in self.ucsc:
             return self.ucsc[btn]
-
+        if btn in self.manual:
+            return self.manual[btn]
         if epi.organ_slims:
             return epi.organ_slims[0]
         bti = epi.biosample_term_id

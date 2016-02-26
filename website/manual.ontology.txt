@@ -1,94 +1,95 @@
-CH12.LX         EFO:0005233     blood
-MEL cell line   EFO:0003971     blood
-CH12.LX         EFO:0005233     blood
-ES-Bruce4       EFO:0005483     esc
-ES-E14  NTR:0001510             esc
-MEL cell line   EFO:0003971     blood
-brown adipose tissue    UBERON:0001348  adipose
-embryonic fibroblast    CL:2000042      skin
-3134    NTR:0000693
-416B    EFO:0005482     blood
-A20     EFO:0005285     blood
-CD4-positive helper T cell      CL:0000492      blood
-CD4-positive, CD25-positive, alpha-beta regulatory T cell       CL:0000792      blood
-CH12.LX         EFO:0005233  blood
-ES-CJ7  EFO:0005916          esc
-ES-E14  NTR:0001510          esc
-G1E     EFO:0002034          blood
-G1E-ER4         EFO:0002055  blood
-MEL cell line   EFO:0003971  blood
-MEL-GATA-1-ER   EFO:0005480  blood
-NIH3T3  EFO:0001222          skin
-Patski  EFO:0005481     skin
-WW6     EFO:0005915     esc
-ZHBTc4-mESC     EFO:0005914     esc
-c-Kit-negative CD71-positive TER-119-positive erythroid progenitor cells        NTR:0000719     blood
-c-Kit-positive CD71-negative TER-119-negative erythroid progenitor cells        NTR:0000720     blood
-c-Kit-positive CD71-positive TER-119-negative erythroid progenitor cells        NTR:0000721     blood
-c-Kit-positive CD71-positive TER-119-positive erythroid progenitor cells        NTR:0000722     blood
-embryoid body   EFO:0004988  esc
-fat pad         UBERON:0003916  adipose
-fibroblast      CL:0000057      skin
-forelimb bud    UBERON:0005417  embryonic structure
-hindlimb bud    UBERON:0005418  embryonic structure
-induced T-regulatory cell       CL:0000902      blood
-mesoderm        UBERON:0000926  embryonic structure
-naive thymus-derived CD4-positive, alpha-beta T cell    CL:0000895      blood
-splenic B cell  NTR:0000741        blood
-embryonic facial prominence     UBERON:0012314  embryonic structure
-intestine       UBERON:0000160  gi
-3T3-L1  EFO:0001084
-MEL cell line   EFO:0003971     blood
-R1      EFO:0002076             esc
-acute myeloid leukemia  EFO:0000222     blood
-adipocyte       CL:0000136              adipose
-craniofacial tissue     EFO:0000792     embryonic structure
-embryo  UBERON:0000922  embryonic structure
-CD14-positive monocyte  CL:0001054      blood
-OCI-LY7         EFO:0006711             blood
-CD14-positive monocyte  CL:0001054      blood
-DND-41  NTR:0003406     blood
-OCI-LY7         EFO:0006711     blood
-ACHN    EFO:0002108             kidney
-adipocyte       CL:0000136      adipose
-BE2C    EFO:0005725             esc
-CD14-positive monocyte  CL:0001054      blood
-Daoy    EFO:0005698
-fibroblast of peridontal ligament       CL:2000017
-H7-hESC         EFO:0005904             esc
-H9      EFO:0003045                     esc
-HGPS cell       EFO:0005909             skin
-HS-27A  EFO:0005283                     bone marrow
-HS-5    EFO:0005282                     bone marrow
-hTERT-HM        EFO:0005912             myometrium
-HTR-8/SVneo     EFO:0005709             embryonic structure
-HuH-7   EFO:0005384                     liver
-HuH-7.5         EFO:0005704             liver
-islet precursor cell    NTR:0001484     pancreas
-Karpas-422      EFO:0005719             blood
-KBM-7   EFO:0005903                     blood
-LHCN-M2         EFO:0005714             skeletal muscle
-LNCaP clone FGC         EFO:0005726     prostate
-Mel-2183        EFO:0005706             blood
-MM.1S   EFO:0005724                     blood
-naive thymus-derived CD4-positive, alpha-beta T cell    CL:0000895      blood
-naive thymus-derived CD4-positive, alpha-beta T cell    CL:0000895      blood
-naive thymus-derived CD4-positive, alpha-beta T cell    CL:0000895      blood
-NAMALWA         EFO:0002246        blood
-NCI-H226        EFO:0002285        lung
-neural progenitor cell  NTR:0000711     brain
-non-pigmented ciliary epithelial cell   CL:0002304      skin
-OCI-LY7         EFO:0006711      blood
-olfactory neurosphere cell line         EFO:0005705     brain
-PC-9    EFO:0002847   lung
-RCC 7860        EFO:0005707     renal
-regulatory T-lymphocyte         CL:0000815      blood
-regulatory T-lymphocyte         CL:0000815      blood
-RPMI8226        EFO:0002322     blood
-SJCRH30         EFO:0005722     bone marrow
-SK-N-DZ         EFO:0005721     brain
-smooth muscle cell of the brain vasculature     CL:0002590      brain
-T-helper 2 cell         CL:0000546              blood
-T-helper 2 cell         CL:0000546              blood
-T-helper 2 cell         CL:0000546              blood
-urothelium cell line    EFO:0005913             ureter
+CH12.LX 	EFO:0005233	blood
+MEL cell line	EFO:0003971	blood
+CH12.LX	EFO:0005233	blood
+ES-Bruce4	EFO:0005483	esc
+ES-E14	NTR:0001510	esc
+MEL cell line	EFO:0003971	blood
+brown adipose tissue	UBERON:0001348	adipose
+embryonic fibroblast	CL:2000042	skin
+3134	NTR:0000693	mammary
+416B	EFO:0005482	blood
+A20	EFO:0005285	blood
+CD4-positive helper T cell	CL:0000492	blood
+CD4-positive, CD25-positive, alpha-beta regulatory T cell	CL:0000792	blood
+CH12.LX	EFO:0005233	blood
+ES-CJ7	EFO:0005916	esc
+ES-E14	NTR:0001510	esc
+G1E	EFO:0002034	blood
+G1E-ER4	EFO:0002055	blood
+MEL cell line	EFO:0003971	blood
+MEL-GATA-1-ER	EFO:0005480	blood
+NIH3T3	EFO:0001222	skin
+Patski	EFO:0005481	skin
+WW6	EFO:0005915	esc
+ZHBTc4-mESC	EFO:0005914	esc
+c-Kit-negative CD71-positive TER-119-positive erythroid progenitor cells	NTR:0000719	blood
+c-Kit-positive CD71-negative TER-119-negative erythroid progenitor cells	NTR:0000720	blood
+c-Kit-positive CD71-positive TER-119-negative erythroid progenitor cells	NTR:0000721	blood
+c-Kit-positive CD71-positive TER-119-positive erythroid progenitor cells	NTR:0000722	blood
+embryoid body	EFO:0004988	esc
+fat pad	UBERON:0003916	adipose
+fibroblast	CL:0000057	skin
+forelimb bud	UBERON:0005417	embryonic structure
+hindlimb bud	UBERON:0005418	embryonic structure
+induced T-regulatory cell	CL:0000902	blood
+mesoderm	UBERON:0000926	embryonic structure
+naive thymus-derived CD4-positive, alpha-beta T cell	CL:0000895	blood
+splenic B cell	NTR:0000741	blood
+embryonic facial prominence	UBERON:0012314	embryonic structure
+intestine	UBERON:0000160	gi
+3T3-L1	EFO:0001084	adipose
+MEL cell line	EFO:0003971	blood
+R1	EFO:0002076	esc
+acute myeloid leukemia	EFO:0000222	blood
+adipocyte	CL:0000136	adipose
+craniofacial tissue	EFO:0000792	embryonic structure
+embryo	UBERON:0000922	embryonic structure
+CD14-positive monocyte	CL:0001054	blood
+OCI-LY7	EFO:0006711	blood
+CD14-positive monocyte	CL:0001054	blood
+DND-41	NTR:0003406	blood
+OCI-LY7	EFO:0006711	blood
+ACHN	EFO:0002108	kidney
+adipocyte	CL:0000136	adipose
+BE2C	EFO:0005725	esc
+CD14-positive monocyte	CL:0001054	blood
+Daoy	EFO:0005698	brain
+fibroblast of peridontal ligament	CL:2000017	ligament
+H7-hESC	EFO:0005904	esc
+H9	EFO:0003045	esc
+HGPS cell	EFO:0005909	skin
+HS-27A	EFO:0005283	bone marrow
+HS-5	EFO:0005282	bone marrow
+hTERT-HM	EFO:0005912	myometrium
+HTR-8/SVneo	EFO:0005709	embryonic structure
+HuH-7	EFO:0005384	liver
+HuH-7.5	EFO:0005704	liver
+islet precursor cell	NTR:0001484	pancreas
+Karpas-422	EFO:0005719	blood
+KBM-7	EFO:0005903	blood
+LHCN-M2	EFO:0005714	skeletal muscle
+LNCaP clone FGC	EFO:0005726	prostate
+Mel-2183	EFO:0005706	blood
+MM.1S	EFO:0005724	blood
+naive thymus-derived CD4-positive, alpha-beta T cell	CL:0000895	blood
+naive thymus-derived CD4-positive, alpha-beta T cell	CL:0000895	blood
+naive thymus-derived CD4-positive, alpha-beta T cell	CL:0000895	blood
+NAMALWA	EFO:0002246	blood
+NCI-H226	EFO:0002285	lung
+neural progenitor cell	NTR:0000711	brain
+non-pigmented ciliary epithelial cell	CL:0002304	skin
+OCI-LY7	EFO:0006711	blood
+olfactory neurosphere cell line	EFO:0005705	brain
+PC-9	EFO:0002847	lung
+RCC 7860	EFO:0005707	renal
+regulatory T-lymphocyte	CL:0000815	blood
+regulatory T-lymphocyte	CL:0000815	blood
+RPMI8226	EFO:0002322	blood
+SJCRH30	EFO:0005722	bone marrow
+SK-N-DZ	EFO:0005721	brain
+smooth muscle cell of the brain vasculature	CL:0002590	brain
+T-helper 2 cell	CL:0000546	blood
+T-helper 2 cell	CL:0000546	blood
+T-helper 2 cell	CL:0000546	blood
+urothelium cell line	EFO:0005913	ureter
+cardiac muscle cell	CL:0000746      heart
