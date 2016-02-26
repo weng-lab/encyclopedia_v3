@@ -28,6 +28,10 @@ class AdHoc:
 
 class Ontology:
     def __init__(self):
+        self._load_adhoc()
+        self._load_ucsc()
+
+    def _load_adhoc(self):
         fnp = os.path.join(os.path.dirname(__file__),
                            "adhoc_slim.tsv.txt")
         with open(fnp) as f:
@@ -35,7 +39,18 @@ class Ontology:
         self.adhoc_lines = [AdHoc(line) for line in lines[1:]]
         self.adhoc = dict((a.term_id, a) for a in self.adhoc_lines if a.term_id)
 
+    def _load_ucsc(self):
+        fnp = os.path.join(os.path.dirname(__file__),
+                           "ucsc_ontology.txt")
+        with open(fnp) as f:
+            lines = [line.rstrip().split('\t') for line in f]
+        self.ucsc = dict((a[0], a[1]) for a in lines)
+
     def getTissue(self, epi):
+        btn = epi.biosample_term_name
+        if btn in self.ucsc:
+            return self.ucsc[btn]
+
         if epi.organ_slims:
             return epi.organ_slims[0]
         bti = epi.biosample_term_id
@@ -45,6 +60,7 @@ class Ontology:
             return "limb"
         if "neural tube" == epi.biosample_term_name:
             return "brain"
+        print btn, "\t", bti
         return ""
 
     def getCellType(self, epi):

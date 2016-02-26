@@ -1,0 +1,94 @@
+CH12.LX         EFO:0005233
+MEL cell line   EFO:0003971
+CH12.LX         EFO:0005233
+ES-Bruce4       EFO:0005483
+ES-E14  NTR:0001510
+MEL cell line   EFO:0003971
+brown adipose tissue    UBERON:0001348
+embryonic fibroblast    CL:2000042
+3134    NTR:0000693
+416B    EFO:0005482
+A20     EFO:0005285
+CD4-positive helper T cell      CL:0000492
+CD4-positive, CD25-positive, alpha-beta regulatory T cell       CL:0000792
+CH12.LX         EFO:0005233
+ES-CJ7  EFO:0005916
+ES-E14  NTR:0001510
+G1E     EFO:0002034
+G1E-ER4         EFO:0002055
+MEL cell line   EFO:0003971
+MEL-GATA-1-ER   EFO:0005480
+NIH3T3  EFO:0001222
+Patski  EFO:0005481
+WW6     EFO:0005915
+ZHBTc4-mESC     EFO:0005914
+c-Kit-negative CD71-positive TER-119-positive erythroid progenitor cells        NTR:0000719
+c-Kit-positive CD71-negative TER-119-negative erythroid progenitor cells        NTR:0000720
+c-Kit-positive CD71-positive TER-119-negative erythroid progenitor cells        NTR:0000721
+c-Kit-positive CD71-positive TER-119-positive erythroid progenitor cells        NTR:0000722
+embryoid body   EFO:0004988
+fat pad         UBERON:0003916
+fibroblast      CL:0000057
+forelimb bud    UBERON:0005417
+hindlimb bud    UBERON:0005418
+induced T-regulatory cell       CL:0000902
+mesoderm        UBERON:0000926
+naive thymus-derived CD4-positive, alpha-beta T cell    CL:0000895
+splenic B cell  NTR:0000741
+embryonic facial prominence     UBERON:0012314
+intestine       UBERON:0000160
+3T3-L1  EFO:0001084
+MEL cell line   EFO:0003971
+R1      EFO:0002076
+acute myeloid leukemia  EFO:0000222
+adipocyte       CL:0000136
+craniofacial tissue     EFO:0000792
+embryo  UBERON:0000922
+CD14-positive monocyte  CL:0001054
+OCI-LY7         EFO:0006711
+CD14-positive monocyte  CL:0001054
+DND-41  NTR:0003406
+OCI-LY7         EFO:0006711
+ACHN    EFO:0002108
+adipocyte       CL:0000136
+BE2C    EFO:0005725
+CD14-positive monocyte  CL:0001054
+Daoy    EFO:0005698
+fibroblast of peridontal ligament       CL:2000017
+H7-hESC         EFO:0005904
+H9      EFO:0003045
+HGPS cell       EFO:0005909
+HS-27A  EFO:0005283
+HS-5    EFO:0005282
+hTERT-HM        EFO:0005912
+HTR-8/SVneo     EFO:0005709
+HuH-7   EFO:0005384
+HuH-7.5         EFO:0005704
+islet precursor cell    NTR:0001484
+Karpas-422      EFO:0005719
+KBM-7   EFO:0005903
+LHCN-M2         EFO:0005714
+LNCaP clone FGC         EFO:0005726
+Mel-2183        EFO:0005706
+MM.1S   EFO:0005724
+naive thymus-derived CD4-positive, alpha-beta T cell    CL:0000895
+naive thymus-derived CD4-positive, alpha-beta T cell    CL:0000895
+naive thymus-derived CD4-positive, alpha-beta T cell    CL:0000895
+NAMALWA         EFO:0002246
+NCI-H226        EFO:0002285
+neural progenitor cell  NTR:0000711
+non-pigmented ciliary epithelial cell   CL:0002304
+OCI-LY7         EFO:0006711
+olfactory neurosphere cell line         EFO:0005705
+PC-9    EFO:0002847
+RCC 7860        EFO:0005707
+regulatory T-lymphocyte         CL:0000815
+regulatory T-lymphocyte         CL:0000815
+RPMI8226        EFO:0002322
+SJCRH30         EFO:0005722
+SK-N-DZ         EFO:0005721
+smooth muscle cell of the brain vasculature     CL:0002590
+T-helper 2 cell         CL:0000546
+T-helper 2 cell         CL:0000546
+T-helper 2 cell         CL:0000546
+urothelium cell line    EFO:0005913

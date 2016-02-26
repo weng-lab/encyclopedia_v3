@@ -24,23 +24,34 @@ class OntologyAuto:
 def main():
     on = OntologyAuto()
 
-    print on.uberon.term("UBERON:0001049")
-    rts = on.uberon.related_terms("UBERON:0001049")
-    for rt in rts:
-        if rt[0] == "is_a" or rt[0] == "part_of":
+    if 0:
+        print on.uberon.term("UBERON:0001049")
+        rts = on.uberon.related_terms("UBERON:0001049")
+        for rt in rts:
+            if rt[0] == "is_a" or rt[0] == "part_of":
+                print rt
+                print on.uberon.term(rt[1])
+        return
+
+    if 0:
+        rts = on.efo.related_terms("EFO:0005233")
+        for rt in rts:
             print rt
-            print on.uberon.term(rt[1])
-    return
+            print on.efo.term(rt[1])
 
+        print "**************"
+        print on.efo.related_terms("EFO:0005292")
+        print on.efo.term("EFO:0000322")
 
-    rts = on.efo.related_terms("EFO:0002784")
-    for rt in rts:
-        print rt
-        print on.efo.term(rt[1])
-
-    print "**************"
-    print on.efo.related_terms("EFO:0005292")
-    print on.efo.term("EFO:0000322")
+    with open("/home/mjp/Dropbox/missing.txt") as f:
+        for line in f:
+            toks = line.rstrip().split()
+            if toks[1].startswith('EFO:'):
+                print "*******************************", toks[0], toks[1]
+                rts = on.efo.related_terms(toks[1])
+                for rt in rts:
+                    print rt
+                    print on.efo.term(rt[1])
 
 if __name__ == '__main__':
     main()
