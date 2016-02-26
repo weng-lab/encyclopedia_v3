@@ -107,10 +107,12 @@ $(document).ready(function(){
                 }
 
                 if("url" in got){
-                    return window.open(got["url"], '_blank');
+                    document.location.href = got["url"];
+                } else{
+                    document.open();
+                    document.write(got["html"]);
+                    document.close();
                 }
-                var w = window.open();
-                $(w.document.body).html(got["html"]);
             }
         });
     });
