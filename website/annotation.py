@@ -75,6 +75,9 @@ class AnnotationSearchUcsc(object):
         us.parse()
         url = us.configureUcscHubLink()
 
+        if us.psb.userErrMsg:
+            return { "err" : us.psb.userErrMsg }
+
         if self.args.debug:
             return {"html" : self.templates("ucsc",
                                             us = us,
@@ -115,17 +118,22 @@ class AnnotationSearchUcsc(object):
         ret = None
 
         try:
-            self.psb = ParseSearchBox(self.epigenomes, self.dbSnps, input_json)
-            self.coord = self.psb.search()
-            if self.coord:
-                expIDs = self.db.findBedOverlap(self.psb.assembly,
-                                                self.coord.chrom,
-                                                self.coord.start,
-                                                self.coord.end)
-                ret = self.epigenomes.getWebIDsFromExpIDs(self.psb.assembly,
+            psb = ParseSearchBox(self.epigenomes, self.dbSnps, input_json)
+            coord = psb.search()
+            if coord:
+                expIDs = self.db.findBedOverlap(psb.assembly,
+                                                coord.chrom,
+                                                coord.start,
+                                                coord.end)
+                ret = self.epigenomes.getWebIDsFromExpIDs(psb.assembly,
                                                           expIDs)
+            if psb.userErrMsg:
+                return { "err" : psb.userErrMsg }
+
+            return {"ret" : ret}
+
         except:
             if self.args.debug:
                 raise
 
-        return {"input_json" : input_json, "ret" : ret}
+        return {"err" : "Problem parsing coordinate"}

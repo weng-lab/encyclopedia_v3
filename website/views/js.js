@@ -98,6 +98,12 @@ $(document).ready(function(){
             dataType: "json",
             contentType : "application/json",
             success: function(got){
+                if("err" in got){
+                    $("#errMsg").text(got["err"]);
+                    $("#errBox").show()
+                    return true;
+                }
+
                 if("url" in got){
                     return window.open(got["url"], '_blank');
                 }
@@ -134,9 +140,8 @@ $(document).ready(function(){
                 $('#wait').fadeOut( "slow", function() {
                     // Animation complete.
                 });
-                console.log(got["ret"]["total"]);
+
                 if(0 == got["ret"]["total"]){
-                    console.log("hi!");
                     $("#errMsg").text("No intersecting peaks found");
                     $("#errBox").show()
                 }

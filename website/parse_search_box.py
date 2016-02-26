@@ -14,6 +14,7 @@ class ParseSearchBox:
         self.params = params
 
         self.halfWindow = 7500
+        self.userErrMsg = ""
 
         self._parse()
 
@@ -38,7 +39,7 @@ class ParseSearchBox:
         elif self.loci.lower().startswith("rs"):
             # SNP
             coord = self.parseSnp()
-        elif self.loci.isdigit() and 1 == len(self.tissue_ids):
+        elif self.loci.isdigit():
             # a ranked peak for a single selected tissue
             coord = self.getRankedPeakCoord()
         return coord
@@ -58,11 +59,16 @@ class ParseSearchBox:
         return c
 
     def getRankedPeakCoord(self):
+        if 1 != len(self.tissue_ids):
+            self.userErrMsg = "Please only select one tissue"
+            return None
+
         wepis = self.epigenomes.GetByAssemblyAndAssays(self.assembly, self.assays)
         wepis = filter(lambda e: e.web_id() in self.tissue_ids, wepis.epis)
 
         if 1 != len(wepis):
-            raise Exception("too many tissues")
+            self.userErrMsg = "Please only select one tissue"
+            return None
 
         wepi = wepis[0]
 
@@ -73,7 +79,8 @@ class ParseSearchBox:
         rank = int(self.loci) - 1
 
         if rank < 0:
-            raise Exception("invalid (negative) rank")
+            self.userErrMsg = "Ranks start at 0"
+            return None
 
         row = None
         with open(fnp) as f:
@@ -85,7 +92,8 @@ class ParseSearchBox:
                 if i > rank:
                     break
         if not row:
-            raise Exception("invalid (too large) rank")
+            self.userErrMsg = "Only %d peaks in file" % i
+            return None
 
         toks = row.rstrip().split('\t')
         c = Coord(toks[0], toks[1], toks[2])
