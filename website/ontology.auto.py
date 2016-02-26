@@ -47,11 +47,19 @@ def main():
         for line in f:
             toks = line.rstrip().split()
             if toks[1].startswith('EFO:'):
-                print "*******************************", toks[0], toks[1]
+                print "\n\n*******************************", toks[0], toks[1]
+                print on.efo.term(toks[1])
                 rts = on.efo.related_terms(toks[1])
                 for rt in rts:
                     print rt
                     print on.efo.term(rt[1])
+            elif toks[1].startswith("UBERON"):
+                print on.uberon.term(toks[1])
+                rts = on.uberon.related_terms(toks[1])
+                for rt in rts:
+                    if rt[0] == "is_a" or rt[0] == "part_of":
+                        print rt
+                        print on.uberon.term(rt[1])
 
 if __name__ == '__main__':
     main()
