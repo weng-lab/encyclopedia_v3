@@ -64,7 +64,18 @@ class Ontology:
         return ""
 
     def getCellType(self, epi):
-        return epi.biosample_type
+        bt = epi.biosample_type
+        if bt == "PrimaryCulture":
+            return "primary cell"
+        if bt == "PrimaryCell":
+            return "primary cell"
+        if bt == "ESCDerived":
+            return "esc derived"
+        if bt == "PrimaryTissue":
+            return "tissue"
+        if bt == "CellLine":
+            return "immortalized cell line"
+        return bt
 
 def main():
     on = Ontology()
