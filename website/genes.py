@@ -28,7 +28,7 @@ WHERE gene = %(gene)s
                 return curs.fetchall()
             return None
 
-def setupAndCopy(cur, fnp, table_name):
+def setupAndCopy(cur, fnp, fileType, table_name):
     print "loading", fnp
 
     cur.execute("""
@@ -43,7 +43,7 @@ gene text
 );
 """.format(table=table_name))
 
-    ggff = Genes(fnp, "gtf")
+    ggff = Genes(fnp, fileType)
 
     outF = StringIO.StringIO()
     for g in ggff.getGenes():
@@ -52,16 +52,18 @@ gene text
     outF.seek(0)
     cur.copy_from(outF, table_name, '\t',
                   columns=("chrom", "chromStart", "chromEnd", "gene"))
-
+    print "\t", fnp, cur.rowcount
     cur.execute("""
 CREATE INDEX {table}_idx01 ON {table}(gene);
 """.format(table=table_name))
 
 def setupAll(cur):
+    setupAndCopy(cur, Dirs.GenomeFnp("gencode.m4/gencode.vM4.annotation.gtf.gz"),
+                 "gtf", "genes_mm10")
     setupAndCopy(cur, Dirs.GenomeFnp("gencode.m1/gencode.vM1.annotation.gtf.gz"),
-                 "genes_mm9")
-    #setupAndCopy(cur, Genome.mouse_gencode_m1_tss, "genes_hg19")
-    #setupAndCopy(cur, Genome.mouse_gencode_m4_tss, "genes_mm10")
+                 "gtf", "genes_mm9")
+    setupAndCopy(cur, Dirs.GenomeFnp("gencode.v19/gencode.v19.annotation.gff3.gz"),
+                 "gff", "genes_hg19")
 
 def parse_args():
     parser = argparse.ArgumentParser()
