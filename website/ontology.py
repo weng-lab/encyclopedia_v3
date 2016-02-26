@@ -51,11 +51,13 @@ class Ontology:
         fnp = os.path.join(os.path.dirname(__file__),
                            "manual.ontology.txt")
         with open(fnp) as f:
-            lines = [line.rstrip().split('\t') for line in f]
+            lines = [line.rstrip().split('\t') for line in f if line]
         self.manual = dict((a[0], a[2]) for a in lines)
 
     def getTissue(self, epi):
         btn = epi.biosample_term_name
+        if "induced pluripotent stem cell" == btn:
+            return "ipsc"
         if btn in self.ucsc:
             return self.ucsc[btn]
         if btn in self.manual:
@@ -69,7 +71,7 @@ class Ontology:
             return "limb"
         if "neural tube" == epi.biosample_term_name:
             return "brain"
-        print btn, "\t", bti
+        #print btn, "\t", bti
         return ""
 
     def getCellType(self, epi):

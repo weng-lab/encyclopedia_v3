@@ -92,4 +92,4 @@ T-helper 2 cell	CL:0000546	blood
 T-helper 2 cell	CL:0000546	blood
 T-helper 2 cell	CL:0000546	blood
 urothelium cell line	EFO:0005913	ureter
-cardiac muscle cell	CL:0000746      heart
+cardiac muscle cell	CL:0000746	heart
