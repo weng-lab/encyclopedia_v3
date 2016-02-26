@@ -243,7 +243,11 @@ class WebEpigenome:
         return self.epi.predictionFnp(self.assays, self.DNase, self.H3K27ac)
 
     def predictionFnpExists(self):
-        return os.path.exists(self.epi.predictionFnp(self.assays, self.DNase, self.H3K27ac))
+        fnp = self.epi.predictionFnp(self.assays, self.DNase, self.H3K27ac)
+        ret = os.path.exists(fnp)
+        if 0 and not ret:
+            print "missing", self.epi.assembly, os.path.basename(fnp)
+        return ret
 
     def webName(self):
         if self.args.debug:

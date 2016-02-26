@@ -83,7 +83,12 @@ class RoadmapEpigenome:
 
     def predictionFnp(self, assays, DNase, H3K27ac):
         path = os.path.join(Dirs.encyclopedia, "Enhancer-Prediction-Tracks")
-        fn = "{eid}_predictions.bigBed".format(eid = self.eid)
+        if "H3K27ac" == assays:
+            fn = "{eid}_H3K27ac_predictions.bigBed".format(eid = self.eid)
+        if "DNase" == assays:
+            fn = "{eid}_DNase_predictions.bigBed".format(eid = self.eid)
+        if "Both" == assays:
+            fn = "{eid}_predictions.bigBed".format(eid = self.eid)
         return os.path.join(path, fn)
 
 class RoadmapMetadata:
