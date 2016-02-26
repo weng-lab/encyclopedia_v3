@@ -8,10 +8,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from files_and_paths import Dirs
 
 class UcscSearch:
-    def __init__(self, epigenomes, db, dbsnps, host, args, params, uid):
+    def __init__(self, epigenomes, db, dbsnps, genes, host, args, params, uid):
         self.epigenomes = epigenomes
         self.db = db
         self.dbsnps = dbsnps
+        self.genes = genes
         self.host = host
         self.args = args
         self.params = params
@@ -24,7 +25,7 @@ class UcscSearch:
 
     def parse(self):
         try:
-            self.psb = ParseSearchBox(self.epigenomes, self.dbsnps, self.params)
+            self.psb = ParseSearchBox(self.epigenomes, self.dbsnps, self.genes, self.params)
             self.coord = self.psb.search()
             self.hubNum = self.db.insertOrUpdate(self.psb.assembly,
                                                  self.psb.assays,

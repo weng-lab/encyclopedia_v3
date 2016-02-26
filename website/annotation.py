@@ -16,6 +16,7 @@ from web_epigenomes import WebEpigenomesLoader
 from dbsnps import dbSnps
 from defaults import Defaults
 from parse_search_box import ParseSearchBox
+from genes import LookupGenes
 
 class Templates:
     def __init__(self, viewDir):
@@ -35,6 +36,7 @@ class AnnotationSearchUcsc(object):
         self.db = AnnotationDB(DBCONN)
         self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
+        self.genes = LookupGenes(DBCONN)
 
         viewDir = os.path.join(os.path.dirname(__file__), "views")
         self.templates = Templates(viewDir)
@@ -70,7 +72,7 @@ class AnnotationSearchUcsc(object):
 
         input_json = cherrypy.request.json
 
-        us = UcscSearch(self.epigenomes, self.db, self.dbSnps,
+        us = UcscSearch(self.epigenomes, self.db, self.dbSnps, self.genes,
                         self.host, self.args, input_json, uid)
         us.parse()
         url = us.configureUcscHubLink()
@@ -118,7 +120,7 @@ class AnnotationSearchUcsc(object):
         ret = None
 
         try:
-            psb = ParseSearchBox(self.epigenomes, self.dbSnps, input_json)
+            psb = ParseSearchBox(self.epigenomes, self.dbSnps, self.genes, input_json)
             coord = psb.search()
             if coord:
                 expIDs = self.db.findBedOverlap(psb.assembly,

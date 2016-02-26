@@ -8,9 +8,10 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from files_and_paths import Dirs
 
 class ParseSearchBox:
-    def __init__(self, epigenomes, dbsnps, params):
+    def __init__(self, epigenomes, dbsnps, genes, params):
         self.epigenomes = epigenomes
         self.dbsnps = dbsnps
+        self.genes = genes
         self.params = params
 
         self.halfWindow = 7500
@@ -42,7 +43,7 @@ class ParseSearchBox:
         elif self.loci.isdigit():
             # a ranked peak for a single selected tissue
             coord = self.getRankedPeakCoord()
-        return coord
+        return self.parseGene()
 
     def parseSnp(self):
         snps = self.dbsnps.lookup(self.assembly, self.loci)
@@ -55,6 +56,20 @@ class ParseSearchBox:
 
         snp = snps[0]
         c = Coord(snp[0], snp[1], snp[2])
+        c.resize(self.halfWindow)
+        return c
+
+    def parseGene(self):
+        genes = self.genes.lookup(self.assembly, self.loci)
+        if not genes:
+            return None
+
+        if 0 and len(genes) > 1:
+            self.userErrMsg = "Multiple genomic positions found; using first found..."
+            return None
+
+        gene = genes[0]
+        c = Coord(gene[0], gene[1], gene[2])
         c.resize(self.halfWindow)
         return c
 
