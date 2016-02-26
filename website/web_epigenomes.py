@@ -215,12 +215,10 @@ class WebEpigenome:
         raise Exception("unknown assay type " + self.assays)
 
     def predictionFnp(self):
-        return self.epi.predictionFnp(self.DNase, self.H3K27ac)
+        return self.epi.predictionFnp(self.assays, self.DNase, self.H3K27ac)
 
     def predictionFnpExists(self):
-        if self.DNase and self.H3K27ac:
-            return os.path.exists(self.predictionFnp())
-        return False
+        return os.path.exists(self.epi.predictionFnp(self.assays, self.DNase, self.H3K27ac))
 
     def webName(self):
         if self.args.debug:
