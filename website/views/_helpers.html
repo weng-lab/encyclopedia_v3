@@ -33,7 +33,12 @@ style="display: none;"
     <thead>
       <tr>
         {% for idx, h, selectorName in epigenomes.Header(assembly, assays) -%}
+
+        {% if idx < 3 -%}
         <th>
+        {% else -%}
+        <th class="no-sort">
+        {% endif -%}
             {% if idx < 3 -%}
             {{h}}
             {% else -%}
