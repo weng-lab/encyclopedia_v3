@@ -107,9 +107,12 @@ class WebEpigenomesLoader:
 
     def getWebIDsFromExpIDs(self, assembly, expIDs):
         ret = {}
+        total = 0
         for assays in ["Both", "H3K27ac", "DNase"]:
             epis = self.GetByAssemblyAndAssays(assembly, assays)
             ret[assays] = epis.getWebIDsFromExpIDs(expIDs)
+            total += len(ret[assays])
+        ret["total"] = total
         return ret
 
 class WebEpigenome:

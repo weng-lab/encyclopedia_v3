@@ -15,7 +15,16 @@
   </div>
 
   <div class="row">
-    <div class="col-md-10">
+    <div class="col-md-6">
+      <div class="alert alert-warning alert-dismissible" role="alert" style="display: none" id="errBox">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <strong>Warning!</strong> <span id="errMsg"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
       <div>
         <a href="#search"></a>
         <b>Search Candidate Enhancers</b>
@@ -77,7 +86,6 @@
 </div>
 
 <br>
-
 
 <script src="static/tablesort.min.js"></script>
 <script>

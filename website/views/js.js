@@ -134,6 +134,12 @@ $(document).ready(function(){
                 $('#wait').fadeOut( "slow", function() {
                     // Animation complete.
                 });
+                console.log(got["ret"]["total"]);
+                if(0 == got["ret"]["total"]){
+                    console.log("hi!");
+                    $("#errMsg").text("No intersecting peaks found");
+                    $("#errBox").show()
+                }
             }
         });
     });

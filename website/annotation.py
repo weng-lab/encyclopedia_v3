@@ -112,7 +112,7 @@ class AnnotationSearchUcsc(object):
     @cherrypy.tools.json_out()
     def bedsInRange(self, *args, **params):
         input_json = cherrypy.request.json
-        ret = []
+        ret = None
 
         try:
             self.psb = ParseSearchBox(self.epigenomes, self.dbSnps, input_json)
