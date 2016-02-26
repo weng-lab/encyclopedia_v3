@@ -89,6 +89,8 @@ $(document).ready(function(){
     $( "#searchForm" ).submit(function( event ) {
         event.preventDefault();
 
+        $("#errBox").hide()
+
         var formData = $("#searchForm").serializeJSON();
 
         $.ajax({
@@ -114,6 +116,7 @@ $(document).ready(function(){
     });
 
     $("#selectIntersect").click(function() {
+        $("#errBox").hide()
         $('#wait').show();
 
         var formData = $("#searchForm").serializeJSON();
