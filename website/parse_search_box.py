@@ -43,7 +43,9 @@ class ParseSearchBox:
         elif self.loci.isdigit():
             # a ranked peak for a single selected tissue
             coord = self.getRankedPeakCoord()
-        return self.parseGene()
+        else:
+            coord = self.parseGene()
+        return coord
 
     def parseSnp(self):
         snps = self.dbsnps.lookup(self.assembly, self.loci)
