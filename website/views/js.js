@@ -128,6 +128,13 @@ $(document).ready(function(){
             dataType: "json",
             contentType : "application/json",
             success: function(got){
+                if("err" in got){
+                    $("#errMsg").text(got["err"]);
+                    $("#errBox").show()
+                    $('#wait').fadeOut( "slow", function() {});
+                    return true;
+                }
+
                 var assembly = activeAssembly()
                 $.each(["Both", "H3K27ac", "DNase"], function(idx, assays) {
                     var section = $("#content" + assembly + assays);
