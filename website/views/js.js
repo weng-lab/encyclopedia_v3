@@ -108,6 +108,8 @@ $(document).ready(function(){
     });
 
     $("#selectIntersect").click(function() {
+        $('#wait').show();
+
         var formData = $("#searchForm").serializeJSON();
 
         $.ajax({
@@ -129,7 +131,9 @@ $(document).ready(function(){
                             .prop('checked', true);
                     });
                 });
-
+                $('#wait').fadeOut( "slow", function() {
+                    // Animation complete.
+                });
             }
         });
     });
