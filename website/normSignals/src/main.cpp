@@ -34,6 +34,7 @@ namespace a = arma;
 class Norm{
     std::string inFnp_;
 
+/*
     void writeSignalOverlapingPeaks(){
         a::mat m(peaks_.size(), distance_, a::fill::zeros);
 
@@ -43,7 +44,7 @@ class Norm{
 
         saveMatrix(m, dataFnp_.string() + ".gz");
     }
-
+*/
 public:
     Norm(std::string inFnp)
         : inFnp_(inFnp)
@@ -51,13 +52,15 @@ public:
 
     void run(){
         if(!bfs::exists(inFnp_)){
-            throw std::runtime_error("ERROR: could not read file: " + inFnp_);
+            throw std::runtime_error("ERROR: file missing: " + inFnp_);
         }
 
-        zentlib::BigWig bw(inFnp_);
-        const auto chromsAndSize = bw.ChromsAndSizes();
-        for(const auto& kv : ChromsAndSizes){
+        std::map<std::string, std::vector<zentlib::Interval>> bwData;
 
+        zentlib::BigWig bw(inFnp_);
+        for(const auto& chrAndSize : bw.ChromsAndSizes()){
+            auto chr = chrAndSize.first;
+            bwData[chr] = bw.Data(chr);
 
         }
 
@@ -72,7 +75,7 @@ int main(int argc, char** argv){
     const auto args = std::vector<std::string>(argv + 1, argv + argc);
 
     bib::Norm n(args.at(0));
-    mm.run();
+    n.run();
 
     return 0;
 }
