@@ -15,7 +15,6 @@
 
 #include <zi/zargs/zargs.hpp>
 ZiARG_string(assembly, "", "assembly");
-ZiARG_string(chrLenFnp, "", "chrom lengths file");
 ZiARG_bool(debug, false, "debug");
 
 #include "cpp/files.hpp"
@@ -29,7 +28,7 @@ namespace a = arma;
 class Norm{
     const bfs::path inFnp_;
     const std::string assembly_;
-    const bfs::path chrLenFnp_;
+    bfs::path chrLenFnp_;
 
     std::map<std::string, std::vector<zentlib::Interval>> bwData_;
     uint64_t totalBases_ = 0;
@@ -47,7 +46,7 @@ class Norm{
         }
     }
 
-    auto combineAll(){
+    auto calcMeanStddev(){
         std::cout << "combining all values..." << std::endl;
 
         std::vector<float> values;
@@ -112,12 +111,22 @@ class Norm{
         std::cout << "wrote " << outFnp << std::endl;
     }
 
+    void writeBigWig(const bfs::path outFnp){
+        bfs::path bwFnp = outFnp;
+        bwFnp.replace_extension(".bigWig");
+        std::cout << "writing bigWig..." << std::endl;
+        zentlib::BigWig::BedToBigWig(outFnp, bwFnp, chrLenFnp_);
+        std::cout << "wrote " << bwFnp << std::endl;
+    }
+
 public:
-    Norm(std::string inFnp, std::string assembly, std::string chrLenFnp)
+    Norm(std::string inFnp, std::string assembly)
         : inFnp_(inFnp)
         , assembly_(assembly)
-        , chrLenFnp_(chrLenFnp)
-    {}
+    {
+        //TODO:
+        //chrLenFnp_ =
+    }
 
     void run(){
         if(!bfs::exists(inFnp_)){
@@ -126,7 +135,7 @@ public:
         }
 
         loadData();
-        combineAll();
+        calcMeanStddev();
         normalize();
 
         bfs::path outFnp = str::replace(inFnp_.string(),
@@ -135,10 +144,7 @@ public:
         files::ensureDir(outFnp);
 
         writeBed(outFnp);
-
-        bfs::path bwFnp = outFnp;
-        bwFnp.replace_extension(".bigWig");
-        //BigWig::BedToBigWig(outFnp, bwFnp, chromLenFnp_);
+        writeBigWig(outFnp);
     }
 };
 
@@ -148,7 +154,7 @@ int main(int argc, char** argv){
     zi::parse_arguments(argc, argv, true);  // modifies argc and argv
     const auto args = std::vector<std::string>(argv + 1, argv + argc);
 
-    bib::Norm n(args.at(0), ZiARG_assembly, ZiARG_chrLenFnp);
+    bib::Norm n(args.at(0), ZiARG_assembly);
     n.run();
 
     return 0;
