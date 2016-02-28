@@ -124,8 +124,18 @@ public:
         : inFnp_(inFnp)
         , assembly_(assembly)
     {
-        //TODO:
-        //chrLenFnp_ =
+        bfs::path genomeFnp = "/project/umw_zhiping_weng/0_metadata/genome/";
+
+        std::map<std::string, bfs::path> chrLenFnps{
+            {"hg19", genomeFnp / "hg19.chromInfo"},
+            {"mm9", genomeFnp / "mm9.chromInfo"},
+            {"mm10", genomeFnp / "mm10.chromInfo"}};
+
+        if(0 == chrLenFnps.count(assembly)){
+            std::runtime_error("assembly not found: '" + assembly + "'");
+        }
+
+        chrLenFnp_ = chrLenFnps.at(assembly);
     }
 
     void run(){
