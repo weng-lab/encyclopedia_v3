@@ -82,7 +82,6 @@ class Norm{
                 auto& d = intervals[i];
                 d.val = (d.val - mean_) / stddev_;
                 d.val = clamp(d.val, -1.96, 1.96); // ignore extremes
-                d.val += 1.96; // shift up
             }
         }
     }
@@ -149,7 +148,7 @@ public:
         normalize();
 
         bfs::path outFnp = str::replace(inFnp_.string(),
-                                        "encode/data/", "encode/norm");
+                                        "encode/data/", "encode/norm/");
         outFnp.replace_extension(".norm.bed");
         files::ensureDir(outFnp);
 
