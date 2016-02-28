@@ -7,18 +7,23 @@ from web_epigenomes import WebEpigenomesLoader
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
 from utils import Utils, printWroteNumLines
+from job_runner import JobRunner, PythonJob
 from metadataws import MetadataWS
 from files_and_paths import Datasets
 
+normBin = "/home/purcarom/annotations/normSignals/bin/normBigWig"
+
 def process(args, exp):
     try:
-        bigWigFnp, bedAssembly = exp.getSingleBigWigSingleFnp(args)
+        bigWigFnp, bwAssembly = exp.getSingleBigWigSingleFnp(args)
         if not bigWigFnp:
             print exp.getSingleBigWigSingleFnp(args)
             print "missing", exp
         else:
-            cmds = ["
-            fnps.append(bigWigFnp)
+            cmds = [normBin,
+                    "--assembly=" + bwAssembly,
+                    bigWigFnp]
+            return Utils.runCmds(cmds)
     except Exception, e:
         return "bad " + str(e)
 
@@ -33,7 +38,7 @@ def build(args):
             epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
             for epi in epis.epis:
                 for exp in epi.exps():
-                    jr.append([[args, exps.append(exp)]])
+                    jr.append([args, exp])
 
     if args.test:
         return jr.runOne(process)
