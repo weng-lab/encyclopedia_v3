@@ -13,7 +13,9 @@ from files_and_paths import Datasets
 
 normBin = "/home/purcarom/annotations/normSignals/bin/normBigWig"
 
-def process(args, exp):
+def process(idx, job):
+    args = job[0]
+    exp = job[1]
     try:
         bigWigFnp, bwAssembly = exp.getSingleBigWigSingleFnp(args)
         if not bigWigFnp:
@@ -38,10 +40,12 @@ def build(args):
             epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
             for epi in epis.epis:
                 for exp in epi.exps():
-                    jr.append([args, exp])
+                    jr.append([[args, exp]])
 
     if args.test:
         return jr.runOne(process)
+
+    jr.run(process)
 
 def parse_args():
     parser = argparse.ArgumentParser()
