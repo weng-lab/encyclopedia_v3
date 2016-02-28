@@ -29,10 +29,16 @@ ZiARG_bool(doCorr, false, "do corr");
 
 namespace bib {
 
+template <typename T>
+T clamp(const T& n, const T& lower, const T& upper) {
+    // http://stackoverflow.com/a/9324086
+    return std::max(lower, std::min(n, upper));
+}
+
 namespace a = arma;
 
 class Norm{
-    std::string inFnp_;
+    bfs::path inFnp_;
 
 /*
     void writeSignalOverlapingPeaks(){
@@ -52,7 +58,8 @@ public:
 
     void run(){
         if(!bfs::exists(inFnp_)){
-            throw std::runtime_error("ERROR: file missing: " + inFnp_);
+            throw std::runtime_error("ERROR: file missing: " +
+                                     inFnp_.string());
         }
 
         std::map<std::string, std::vector<zentlib::Interval>> bwData;
@@ -61,10 +68,47 @@ public:
         for(const auto& chrAndSize : bw.ChromsAndSizes()){
             auto chr = chrAndSize.first;
             bwData[chr] = bw.Data(chr);
-
         }
 
+        std::vector<double> values;
+        for(const auto& chrAndData : bwData){
+            for(const auto& d : chrAndData.second){
+                for (uint32_t i = d.start; i < d.end; ++i) {
+                    if(0){
+                        // check unmappable....
+                    }
+                    values.push_back(d.val);
+                }
+            }
+        }
 
+        // z-score normalize
+        a::vec av(values.data(), values.size(), false, true);
+        const double mean = a::mean(a::vectorise(av));
+        const double stddev = a::stddev(a::vectorise(av));
+
+        for(auto& chrAndData : bwData){
+            for(auto& d : chrAndData.second){
+                d.val = (d.val - mean) / stddev;
+                d.val = clamp(d.val, -1.96, 1.96); // ignore extremes
+                d.val += -1.96; // shift up
+            }
+        }
+
+        bfs::path outFnp = inFnp_.replace_extension(".norm.bed");
+        std::ofstream out(outFnp.string());
+        if(!out.is_open()){
+            throw std::runtime_error("could not open file " + outFnp.string());
+        }
+        for(auto& chrAndData : bwData){
+            for(auto& d : chrAndData.second){
+                out << chrAndData.first << "\t"
+                    << d.start << "\t"
+                    << d.end << "\t"
+                    << d.val << "\n";
+            }
+        }
+        out.close();
     }
 };
 
