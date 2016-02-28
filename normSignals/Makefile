@@ -12,7 +12,7 @@ HEADERS = $(call rwildcard, src/, *.h) \
 	$(call rwildcard, src/, *.hpp)
 SRC = -I../ -I$(BIGWIG)/src -I$(COMMON_PATH)
 
-BIN := bin/makeMatrix
+BIN := bin/normBigWig
 
 .PHONY: all
 all: $(OBJ_DIR) $(BIN_DIR) $(BIN)
