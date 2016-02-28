@@ -149,6 +149,9 @@ public:
 
         bfs::path outFnp = str::replace(inFnp_.string(),
                                         "encode/data/", "encode/norm/");
+        outFnp = str::replace(outFnp.string(),
+                              "roadmap/data/consolidated",
+                              "roadmap/data/norm/consolidated");
         outFnp.replace_extension(".norm.bed");
         files::ensureDir(outFnp);
 

@@ -46,6 +46,13 @@ class RoadmapExp:
         bedFnp = os.path.join("/home/purcarom/0_metadata/roadmap/data/consolidated", self.eid, fn)
         return bedFnp, "hg19"
 
+    def getSingleBigWigSingleFnp(self, args = None):
+        fn = "{eid}-H3K27ac.fc.signal.bigwig".format(eid=self.eid)
+        if self.isDNaseSeq():
+            fn = "{eid}-DNase.fc.signal.bigwig".format(eid=self.eid)
+        bedFnp = os.path.join("/home/purcarom/0_metadata/roadmap/data/consolidated", self.eid, fn)
+        return bedFnp, "hg19"
+
 class RoadmapEpigenome:
     def __init__(self, eid, biosample_term_name, tissue, biosample_type,
                  DNase, H3K27ac):
