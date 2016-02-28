@@ -14,43 +14,20 @@
 #include<json/writer.h>
 
 #include <zi/zargs/zargs.hpp>
-ZiARG_string(subPeakFnp, "", "subPeakFnp");
-ZiARG_string(bigWigFnp, "", "bigWigFnp");
-ZiARG_string(dataFnp, "", "outDir");
+ZiARG_string(assembly, "", "assembly");
 ZiARG_bool(debug, false, "debug");
-ZiARG_int32(windowSize, 5000, "half of the window size (5000 for histone, 1000 for tf)");
-ZiARG_bool(doCorr, false, "do corr");
 
 #include "cpp/files.hpp"
+#include "cpp/utility.hpp"
 #include "BigWigWrapper.hpp"
 
-#define likely(x) __builtin_expect ((x), 1)
-#define unlikely(x) __builtin_expect ((x), 0)
-
 namespace bib {
-
-template <typename T>
-T clamp(const T& n, const T& lower, const T& upper) {
-    // http://stackoverflow.com/a/9324086
-    return std::max(lower, std::min(n, upper));
-}
 
 namespace a = arma;
 
 class Norm{
     bfs::path inFnp_;
 
-/*
-    void writeSignalOverlapingPeaks(){
-        a::mat m(peaks_.size(), distance_, a::fill::zeros);
-
-        // z-score norm
-        m = (m - a::mean(a::vectorise(m))) / a::stddev(a::vectorise(m));
-        m = a::clamp(m, -1.96, 1.96); // trim
-
-        saveMatrix(m, dataFnp_.string() + ".gz");
-    }
-*/
 public:
     Norm(std::string inFnp)
         : inFnp_(inFnp)
@@ -98,7 +75,8 @@ public:
         bfs::path outFnp = inFnp_.replace_extension(".norm.bed");
         std::ofstream out(outFnp.string());
         if(!out.is_open()){
-            throw std::runtime_error("could not open file " + outFnp.string());
+            throw std::runtime_error("could not open file " +
+                                     outFnp.string());
         }
         for(auto& chrAndData : bwData){
             for(auto& d : chrAndData.second){
