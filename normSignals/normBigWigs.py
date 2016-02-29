@@ -13,9 +13,22 @@ from files_and_paths import Datasets
 
 normBin = "/home/purcarom/annotations/normSignals/bin/normBigWig"
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--process', action="store_true", default=True)
+    parser.add_argument('--local', action="store_true", default=False)
+    parser.add_argument('--rebuild', action="store_true", default=False)
+    parser.add_argument('--test', action="store_true", default=False)
+    parser.add_argument('--job', type=int, default=0)
+    parser.add_argument('-j', type=int, default=4)
+    args = parser.parse_args()
+    return args
+
+args = parse_args()
+
 def process(idx, job):
-    args = job[0]
-    exp = job[1]
+    expID = job[0]
+    exp = MetadataWS.exp(expID)
     try:
         bigWigFnp, bwAssembly = exp.getSingleBigWigSingleFnp(args)
         if not bigWigFnp:
@@ -29,7 +42,7 @@ def process(idx, job):
     except Exception, e:
         return "bad " + str(e)
 
-def build(args):
+def build():
     jr = JobRunner(scriptFnp = os.path.realpath(__file__),
                    jobType = PythonJob,
                    cpus = args.j)
@@ -40,7 +53,7 @@ def build(args):
             epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
             for epi in epis.epis:
                 for exp in epi.exps():
-                    jr.append([[args, exp]])
+                    jr.append([[exp.encodeID]])
 
     if args.test:
         return jr.runOne(process)
@@ -55,21 +68,8 @@ def build(args):
 
     jr.cluster("/project/umw_zhiping_weng/encyc/norm", jobOptions)
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--process', action="store_true", default=True)
-    parser.add_argument('--local', action="store_true", default=False)
-    parser.add_argument('--rebuild', action="store_true", default=False)
-    parser.add_argument('--test', action="store_true", default=False)
-    parser.add_argument('--job', type=int, default=0)
-    parser.add_argument('-j', type=int, default=4)
-    args = parser.parse_args()
-    return args
-
 def main():
-    args = parse_args()
-
-    return build(args)
+    return build()
 
 if __name__ == '__main__':
     main()
