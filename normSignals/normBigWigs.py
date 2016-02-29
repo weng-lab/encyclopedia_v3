@@ -26,7 +26,8 @@ def process(args, expID):
                     "--assembly=" + bwAssembly,
                     bigWigFnp]
             print "running", cmds
-            return Utils.runCmds(cmds)
+            print Utils.runCmds(cmds)
+            return 0
     except Exception, e:
         print "bad " + str(e)
         return 1
