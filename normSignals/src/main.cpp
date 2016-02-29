@@ -38,6 +38,7 @@ class Norm{
     float stddev_ = 0;
     float min_ = 0;
     float max_ = 0;
+    uint64_t blacklistedBases_ = 0;
 
     void loadData(){
         std::cout << "loading data..." << std::endl;
@@ -91,6 +92,7 @@ class Norm{
                 const auto& chrBlacklist = unmappable.at(chrAndData.first);
                 for (uint32_t i = d.start; i < d.end; ++i) {
                     if(unlikely(1 == chrBlacklist.count(i))){
+                        ++blacklistedBases_;
                         continue;
                     }
                     values.push_back(d.val);
@@ -114,12 +116,15 @@ class Norm{
         std::cout << "max: " << max_ << std::endl;
         std::cout << "mean: " << mean_ << std::endl;
         std::cout << "stddev: " << stddev_ << std::endl;
+        std::cout << "# of blacklist bases: " << blacklistedBases_ << std::endl;
 
         Json::Value info;
         info["max"] = max_;
         info["min"] = min_;
         info["mean"] = mean_;
         info["stddev"] = stddev_;
+        info["numBlacklistedBases"] = Json::UInt64{blacklistedBases_};
+        info["totalBases"] = Json::UInt64{values.size()};
         bfs::path outFnp = outFnp_.string() + ".json";
         {
             std::ofstream out(outFnp.string());
