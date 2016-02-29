@@ -23,13 +23,22 @@
     </div>
   </div>
 
-  <div class="row">
-    <form id="searchForm">
+  <form id="searchForm">
+    <div class="row">
+      <div class="col-md-1">
+
+      </div>
       <div class="col-md-8">
         <a href="#search"></a>
         <b>Search Candidate Enhancers</b>
         <br>
         {% include '_genome_buttons.html' -%}
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-1">
+
       </div>
       <div class="col-md-8">
         <br>
@@ -38,18 +47,29 @@
         {% include "_examples.html" -%}
         <br>
       </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-1">
+
+      </div>
       <div class="col-md-8">
         {% include "_cell_type_buttons.html" -%}
       </div>
-      <br>
+    </div>
+
+    <div class="row">
+      <div class="col-md-1">
+
+      </div>
       <div class="col-md-8">
         {% include "_cell_type_tables.html" -%}
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
         <input type="submit" value="Visualize">
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>
 
 <br>
