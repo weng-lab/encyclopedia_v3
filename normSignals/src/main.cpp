@@ -5,9 +5,9 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <unordered_map>
 #include <unordered_set>
 #include <memory>
-#include <unordered_map>
 
 #include <boost/iostreams/filtering_stream.hpp>
 #include <boost/iostreams/filter/gzip.hpp>
@@ -29,6 +29,7 @@ class Norm{
     const bfs::path inFnp_;
     const std::string assembly_;
     bfs::path chrLenFnp_;
+    bfs::path blacklistFnp_;
 
     std::map<std::string, std::vector<zentlib::Interval>> bwData_;
     uint64_t totalBases_ = 0;
@@ -46,18 +47,48 @@ class Norm{
         }
     }
 
-    auto calcMeanStddev(){
-        std::cout << "combining all values..." << std::endl;
+    auto blacklisted(){
+        std::unordered_map<std::string, std::unordered_set<uint32_t>> ret;
 
+        std::string fnp = blacklistFnp_.string();
+        std::ifstream f(fnp);
+        if(!f.is_open()){
+            throw std::runtime_error("could not open file " + fnp + " for reading");
+        }
+
+        std::string line;
+        std::string chr;
+        uint32_t start;
+        uint32_t end;
+        while(std::getline(f, line)){
+            std::istringstream ss(line);
+            convert(line, ss, chr);
+            convert(line, ss, start);
+            convert(line, ss, end);
+
+            for (size_t i = start; i < end; ++i) {
+                ret[chr].insert(i);
+            }
+        }
+
+        return ret;
+    }
+
+    void calcMeanStddev(){
+        std::cout << "loading IDR blacklist..." << std::endl;
+        const auto unmappable = blacklisted();
+
+        std::cout << "combining all values..." << std::endl;
         std::vector<float> values;
         values.reserve(totalBases_);
         for(const auto& chrAndData : bwData_){
             auto& intervals = chrAndData.second;
             for(size_t i = 0; i < intervals.size(); ++i){
                 const auto& d = intervals[i];
+                const auto& chrBlacklist = unmappable.at(chrAndData.first);
                 for (uint32_t i = d.start; i < d.end; ++i) {
-                    if(0){
-                        // check unmappable....
+                    if(unlikely(1 == chrBlacklist.count(i))){
+                        continue;
                     }
                     values.push_back(d.val);
                 }
@@ -69,6 +100,8 @@ class Norm{
         a::fvec av(values.data(), values.size(), false, true);
         mean_ = a::mean(av);
         stddev_ = a::stddev(av);
+        std::cout << "mean: " << mean_ << std::endl;
+        std::cout << "stddev: " << stddev_ << std::endl;
     }
 
     void normalize(){
@@ -81,7 +114,7 @@ class Norm{
             for(size_t i = 0; i < intervals.size(); ++i){
                 auto& d = intervals[i];
                 d.val = (d.val - mean_) / stddev_;
-                d.val = clamp(d.val, -1.96, 1.96); // ignore extremes
+                d.val = clamp(d.val, -10.0, 10.0); // ignore extremes
             }
         }
     }
@@ -129,12 +162,25 @@ public:
             {"hg19", genomeFnp / "hg19.chromInfo"},
             {"mm9", genomeFnp / "mm9.chromInfo"},
             {"mm10", genomeFnp / "mm10.chromInfo"}};
-
         if(0 == chrLenFnps.count(assembly)){
-            std::runtime_error("assembly not found: '" + assembly + "'");
+            throw std::runtime_error("assembly not found: '" + assembly + "'");
+        }
+        chrLenFnp_ = chrLenFnps.at(assembly);
+        if(!bfs::exists(chrLenFnp_)){
+                throw std::runtime_error("missing " + chrLenFnp_.string());
         }
 
-        chrLenFnp_ = chrLenFnps.at(assembly);
+        std::map<std::string, bfs::path> blacklistFnps{
+                {"hg19", genomeFnp / "blacklist" / "hg19" / "wgEncodeDacMapabilityConsensusExcludable.bed"},
+                {"mm9",  genomeFnp / "blacklist" / "mm9"  / "mm9-blacklist.bed"},
+                {"mm10", genomeFnp / "blacklist" / "mm10" / "mm10-blacklist.bed"}};
+        if(0 == blacklistFnps.count(assembly)){
+                throw std::runtime_error("assembly not found: '" + assembly + "'");
+        }
+        blacklistFnp_ = blacklistFnps.at(assembly);
+        if(!bfs::exists(blacklistFnp_)){
+                throw std::runtime_error("missing " + blacklistFnp_.string());
+        }
     }
 
     void run(){
