@@ -45,7 +45,15 @@ def build(args):
     if args.test:
         return jr.runOne(process)
 
-    jr.run(process)
+    if args.local:
+        return jr.run(runJob)
+
+    jobOptions = {"mem" : 64000,
+                  "time" : "3:59",
+                  "cores" : 1,
+                  "queue" : "short" }
+
+    jr.cluster("/project/umw_zhiping_weng/encyc/norm", jobOptions)
 
 def parse_args():
     parser = argparse.ArgumentParser()
