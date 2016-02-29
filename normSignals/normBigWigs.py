@@ -13,22 +13,9 @@ from files_and_paths import Datasets
 
 normBin = "/home/purcarom/annotations/normSignals/bin/normBigWig"
 
-def parse_args():
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--process', action="store_true", default=True)
-    parser.add_argument('--local', action="store_true", default=False)
-    parser.add_argument('--rebuild', action="store_true", default=False)
-    parser.add_argument('--test', action="store_true", default=False)
-    parser.add_argument('--job', type=int, default=0)
-    parser.add_argument('-j', type=int, default=4)
-    args = parser.parse_args()
-    return args
-
-args = parse_args()
-
-def process(idx, job):
-    expID = job[0]
+def process(args, expID):
     exp = MetadataWS.exp(expID)
+    print exp
     try:
         bigWigFnp, bwAssembly = exp.getSingleBigWigSingleFnp(args)
         if not bigWigFnp:
@@ -38,14 +25,15 @@ def process(idx, job):
             cmds = [normBin,
                     "--assembly=" + bwAssembly,
                     bigWigFnp]
+            print "running", cmds
             return Utils.runCmds(cmds)
     except Exception, e:
-        return "bad " + str(e)
+        print "bad " + str(e)
+        return 1
+    return 0
 
-def build():
-    jr = JobRunner(scriptFnp = os.path.realpath(__file__),
-                   jobType = PythonJob,
-                   cpus = args.j)
+def build(args):
+    jr = JobRunner(cpus = 1)
 
     epigenomes = WebEpigenomesLoader(args)
     for assembly in ["hg19", "mm10", "mm9"]:
@@ -53,13 +41,15 @@ def build():
             epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
             for epi in epis.epis:
                 for exp in epi.exps():
-                    jr.append([[exp.encodeID]])
+                    jr.append([
+                            [__file__, "--job", exp.encodeID,
+                             "--process"]])
 
     if args.test:
-        return jr.runOne(process)
+        return jr.runOne()
 
     if args.local:
-        return jr.run(runJob)
+        return jr.run()
 
     jobOptions = {"mem" : 64000,
                   "time" : "3:59",
@@ -68,8 +58,27 @@ def build():
 
     jr.cluster("/project/umw_zhiping_weng/encyc/norm", jobOptions)
 
+def runJob(args):
+    return process(args, args.job)
+
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--process', action="store_true", default=True)
+    parser.add_argument('--local', action="store_true", default=False)
+    parser.add_argument('--rebuild', action="store_true", default=False)
+    parser.add_argument('--test', action="store_true", default=False)
+    parser.add_argument('--job', type=str, default="")
+    parser.add_argument('-j', type=int, default=4)
+    args = parser.parse_args()
+    return args
+
 def main():
-    return build()
+    args = parse_args()
+
+    if 0 != args.job:
+        return runJob(args)
+
+    return build(args)
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
