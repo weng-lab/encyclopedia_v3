@@ -43,14 +43,14 @@ class RoadmapExp:
         fn = "{eid}-H3K27ac.narrowPeak.gz".format(eid=self.eid)
         if self.isDNaseSeq():
             fn = "{eid}-DNase.hotspot.fdr0.01.peaks.bed.gz".format(eid=self.eid)
-        bedFnp = os.path.join("/home/purcarom/0_metadata/roadmap/data/consolidated", self.eid, fn)
+        bedFnp = os.path.join("/project/umw_zhiping_weng/0_metadata/roadmap/data/consolidated", self.eid, fn)
         return bedFnp, "hg19"
 
     def getSingleBigWigSingleFnp(self, args = None):
         fn = "{eid}-H3K27ac.fc.signal.bigwig".format(eid=self.eid)
         if self.isDNaseSeq():
             fn = "{eid}-DNase.fc.signal.bigwig".format(eid=self.eid)
-        bedFnp = os.path.join("/home/purcarom/0_metadata/roadmap/data/consolidated", self.eid, fn)
+        bedFnp = os.path.join("/project/umw_zhiping_weng/0_metadata/roadmap/data/consolidated", self.eid, fn)
         return bedFnp, "hg19"
 
 class RoadmapEpigenome:

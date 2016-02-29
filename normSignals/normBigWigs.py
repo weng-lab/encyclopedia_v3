@@ -11,7 +11,7 @@ from job_runner import JobRunner, PythonJob
 from metadataws import MetadataWS
 from files_and_paths import Datasets
 
-normBin = os.path.join(os.path.dirname(__file__), "bin/normBigWig")
+normBin = os.path.join(os.path.realpath(os.path.dirname(__file__)), "bin/normBigWig")
 if not os.path.exists(normBin):
     print "missing", normBin
     sys.exit(1)
@@ -45,9 +45,9 @@ def build(args):
             epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
             for epi in epis.epis:
                 for exp in epi.exps():
-                    if exp.encodeID.startwith("EN"):
+                    if exp.encodeID.startswith("EN"):
                         jr.append([
-                                [__file__, "--job", exp.encodeID,
+                                [os.path.realpath(__file__), "--job", exp.encodeID,
                                  "--process"]])
                     else:
                         # ROADMAP
@@ -55,9 +55,10 @@ def build(args):
                         if not bigWigFnp:
                             print "missing", exp
                         else:
-                            cmds = [normBin,
-                                    "--assembly=" + bwAssembly,
-                                    bigWigFnp]
+                            jr.append([
+                                    [normBin,
+                                     "--assembly=" + bwAssembly,
+                                     bigWigFnp]])
 
     if args.test:
         return jr.runOne()
@@ -67,7 +68,7 @@ def build(args):
 
     jobOptions = {"mem" : 64000,
                   "time" : "3:59",
-                  "cores" : 1,
+                  "cores" : 2,
                   "queue" : "short" }
 
     jr.cluster("/project/umw_zhiping_weng/encyc/norm", jobOptions)
