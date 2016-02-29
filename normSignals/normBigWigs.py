@@ -76,7 +76,7 @@ def parse_args():
 def main():
     args = parse_args()
 
-    if 0 != args.job:
+    if args.job:
         return runJob(args)
 
     return build(args)
