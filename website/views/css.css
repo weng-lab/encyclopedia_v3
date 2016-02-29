@@ -79,6 +79,7 @@ input[type=checkbox]{
 #jumboHeader {
     padding-top: 10px;
     padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 #jumboHeader p {
@@ -86,5 +87,16 @@ input[type=checkbox]{
 }
 #jumboHeader h1 {
     margin-top: 0px;
+    margin-bottom: 0px;
     font-size: 48px;
+}
+
+.btn-warning {
+    color: black;
+    background-color: #ffffb3;
+    border-color: black;
+}
+
+#searchTitle p {
+    font-size: 24px;
 }

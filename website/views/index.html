@@ -23,22 +23,27 @@
     </div>
   </div>
 
+  <a href="#search"></a>
+  <span id="searchTitle"><p>Search Candidate Enhancers</span>
+
   <form id="searchForm">
     <div class="row">
-      <div class="col-md-1">
-
+      <div class="col-md-2">
+        <button class="btn btn-warning" type="button">
+          <span class="badge">1</span>Select genome
+        </button>
       </div>
       <div class="col-md-8">
-        <a href="#search"></a>
-        <b>Search Candidate Enhancers</b>
-        <br>
         {% include '_genome_buttons.html' -%}
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-1">
-
+      <div class="col-md-2">
+        <br>
+        <button class="btn btn-warning" type="button">
+          <span class="badge">2</span>Enter gene, SNP, coordinate,<br>or rank
+        </button>
       </div>
       <div class="col-md-8">
         <br>
@@ -50,8 +55,7 @@
     </div>
 
     <div class="row">
-      <div class="col-md-1">
-
+      <div class="col-md-2">
       </div>
       <div class="col-md-8">
         {% include "_cell_type_buttons.html" -%}
@@ -59,13 +63,18 @@
     </div>
 
     <div class="row">
-      <div class="col-md-1">
-
+      <div class="col-md-2">
+        <button class="btn btn-warning" type="button">
+          <span class="badge">3</span>Select assays and cell types
+        </button>
       </div>
       <div class="col-md-8">
         {% include "_cell_type_tables.html" -%}
       </div>
-      <div class="col-md-3">
+      <div class="col-md-2">
+        <button class="btn btn-warning" type="button">
+          <span class="badge">4</span>Open Genome<br>Browser
+        </button>
         <input type="submit" value="Visualize">
       </div>
     </div>
