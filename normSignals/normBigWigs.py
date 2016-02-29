@@ -11,7 +11,10 @@ from job_runner import JobRunner, PythonJob
 from metadataws import MetadataWS
 from files_and_paths import Datasets
 
-normBin = "/home/purcarom/annotations/normSignals/bin/normBigWig"
+normBin = os.path.join(os.path.dirname(__file__), "bin/normBigWig")
+if not os.path.exists(normBin):
+    print "missing", normBin
+    sys.exit(1)
 
 def process(args, expID):
     exp = MetadataWS.exp(expID)
