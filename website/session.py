@@ -87,7 +87,7 @@ def main():
     dbs["application_name"] = os.path.realpath(__file__)
 
     import psycopg2.pool
-    DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, dbs)
+    DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
     with getcursor(DBCONN, "main") as cur:
         setupDB(cur)
