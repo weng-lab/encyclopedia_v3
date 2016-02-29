@@ -30,6 +30,7 @@ class Norm{
     const std::string assembly_;
     bfs::path chrLenFnp_;
     bfs::path blacklistFnp_;
+    bfs::path outFnp_;
 
     std::map<std::string, std::vector<zentlib::Interval>> bwData_;
     uint64_t totalBases_ = 0;
@@ -100,8 +101,33 @@ class Norm{
         a::fvec av(values.data(), values.size(), false, true);
         mean_ = a::mean(av);
         stddev_ = a::stddev(av);
+
+        writeStats(av);
+    }
+
+    void writeStats(const a::fvec& av){
+        auto mmin = a::min(av);
+        auto mmax = a::max(av);
+        std::cout << "min: " << mmin << std::endl;
+        std::cout << "max: " << mmax << std::endl;
         std::cout << "mean: " << mean_ << std::endl;
         std::cout << "stddev: " << stddev_ << std::endl;
+
+        Json::Value info;
+        info["max"] = mmax;
+        info["min"] = mmin;
+        info["mean"] = mean_;
+        info["stddev"] = stddev_;
+        bfs::path outFnp =outFnp_.string() + ".json";
+        {
+            std::ofstream out(outFnp.string());
+            if(!out.is_open()){
+                throw std::runtime_error("could not open file " + outFnp.string());
+            }
+            out << info << "\n";
+            out.close();
+            std::cout << "wrote: " << outFnp << std::endl;
+        }
     }
 
     void normalize(){
@@ -181,6 +207,14 @@ public:
         if(!bfs::exists(blacklistFnp_)){
                 throw std::runtime_error("missing " + blacklistFnp_.string());
         }
+
+        outFnp_ = str::replace(inFnp_.string(),
+                               "encode/data/", "encode/norm/");
+        outFnp_ = str::replace(outFnp_.string(),
+                              "roadmap/data/consolidated",
+                              "roadmap/data/norm/consolidated");
+        outFnp_.replace_extension(".norm.bed");
+        files::ensureDir(outFnp_);
     }
 
     void run(){
@@ -192,17 +226,8 @@ public:
         loadData();
         calcMeanStddev();
         normalize();
-
-        bfs::path outFnp = str::replace(inFnp_.string(),
-                                        "encode/data/", "encode/norm/");
-        outFnp = str::replace(outFnp.string(),
-                              "roadmap/data/consolidated",
-                              "roadmap/data/norm/consolidated");
-        outFnp.replace_extension(".norm.bed");
-        files::ensureDir(outFnp);
-
-        writeBed(outFnp);
-        writeBigWig(outFnp);
+        writeBed(outFnp_);
+        writeBigWig(outFnp_);
     }
 };
 
