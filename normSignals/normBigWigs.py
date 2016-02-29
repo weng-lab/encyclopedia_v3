@@ -42,9 +42,19 @@ def build(args):
             epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
             for epi in epis.epis:
                 for exp in epi.exps():
-                    jr.append([
-                            [__file__, "--job", exp.encodeID,
-                             "--process"]])
+                    if exp.encodeID.startwith("EN"):
+                        jr.append([
+                                [__file__, "--job", exp.encodeID,
+                                 "--process"]])
+                    else:
+                        # ROADMAP
+                        bigWigFnp, bwAssembly = exp.getSingleBigWigSingleFnp()
+                        if not bigWigFnp:
+                            print "missing", exp
+                        else:
+                            cmds = [normBin,
+                                    "--assembly=" + bwAssembly,
+                                    bigWigFnp]
 
     if args.test:
         return jr.runOne()
