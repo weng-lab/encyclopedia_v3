@@ -36,6 +36,8 @@ class Norm{
     uint64_t totalBases_ = 0;
     float mean_ = 0;
     float stddev_ = 0;
+    float min_ = 0;
+    float max_ = 0;
 
     void loadData(){
         std::cout << "loading data..." << std::endl;
@@ -97,28 +99,28 @@ class Norm{
             //std::cout << "\t" << chrAndData.first << " " << values.size() << "\n";
         }
 
-        std::cout << "computing mean/stddev..." << std::endl;
-        a::fvec av(values.data(), values.size(), false, true);
-        mean_ = a::mean(av);
-        stddev_ = a::stddev(av);
-
-        writeStats(av);
+        writeStats(values);
     }
 
-    void writeStats(const a::fvec& av){
-        auto mmin = a::min(av);
-        auto mmax = a::max(av);
-        std::cout << "min: " << mmin << std::endl;
-        std::cout << "max: " << mmax << std::endl;
+    void writeStats(std::vector<float>& values){
+        std::cout << "computing min/max/mean/stddev..." << std::endl;
+        const a::fvec av(values.data(), values.size(), false, true);
+        mean_ = a::mean(av);
+        stddev_ = a::stddev(av);
+        min_ = a::min(av);
+        max_ = a::max(av);
+
+        std::cout << "min: " << min_ << std::endl;
+        std::cout << "max: " << max_ << std::endl;
         std::cout << "mean: " << mean_ << std::endl;
         std::cout << "stddev: " << stddev_ << std::endl;
 
         Json::Value info;
-        info["max"] = mmax;
-        info["min"] = mmin;
+        info["max"] = max_;
+        info["min"] = min_;
         info["mean"] = mean_;
         info["stddev"] = stddev_;
-        bfs::path outFnp =outFnp_.string() + ".json";
+        bfs::path outFnp = outFnp_.string() + ".json";
         {
             std::ofstream out(outFnp.string());
             if(!out.is_open()){
