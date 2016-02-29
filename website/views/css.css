@@ -75,3 +75,16 @@ table th.sort-up:after {
 input[type=checkbox]{
     margin-top: 0px;
 }
+
+#jumboHeader {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+#jumboHeader p {
+    font-size: 14px;
+}
+#jumboHeader h1 {
+    margin-top: 0px;
+    font-size: 48px;
+}
