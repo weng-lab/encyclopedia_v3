@@ -288,7 +288,7 @@ class WebEpigenomes:
             yield idx, c.pretty_age, c.selectorName
 
     def Walk(self):
-        m = natsorted(self.m, key = lambda x: (x[0], x[1], x[2]))
+        m = natsorted(self.m, key = lambda x: (x[0].lower(), x[1].lower(), x[2]))
         for row in m:
             yield row[0], row[1], row[2], WalkRow(row[3:]).Walk()
 

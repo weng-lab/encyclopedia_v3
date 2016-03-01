@@ -55,8 +55,13 @@ class Ontology:
         self.manual = dict((a[0], a[2]) for a in lines)
 
     def getTissue(self, epi):
-        t = self.getTissueActual(epi)
-        return t.replace(" gland", "")
+        t = self.getTissueActual(epi).strip()
+        if "esc" == t:
+            return "ESC"
+        if "esc derived" == t:
+            return "ESC derived"
+        t = t.replace(" gland", "")
+        return t
 
     def getTissueActual(self, epi):
         btn = epi.biosample_term_name
@@ -85,7 +90,7 @@ class Ontology:
         if bt == "PrimaryCell":
             return "primary cell"
         if bt == "ESCDerived":
-            return "esc derived"
+            return "ESC derived"
         if bt == "PrimaryTissue":
             return "tissue"
         if bt == "CellLine":
