@@ -113,6 +113,13 @@ input[type=checkbox]{
     color: white;
 }
 
+.navbar-brand-text {
+    height: 50px;
+    padding: 15px 15px;
+    font-size: 18px;
+    line-height: 20px;
+}
+
 #navbar-brand-center {
     color: white;
     position: absolute;
