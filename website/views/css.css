@@ -114,3 +114,12 @@ input[type=checkbox]{
 .navbar-default .navbar-brand {
     color: white;
 }
+
+#navbar-brand-center {
+    color: white;
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: auto;
+}
