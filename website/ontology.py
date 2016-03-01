@@ -55,6 +55,10 @@ class Ontology:
         self.manual = dict((a[0], a[2]) for a in lines)
 
     def getTissue(self, epi):
+        t = self.getTissueActual(epi)
+        return t.replace(" gland", "")
+
+    def getTissueActual(self, epi):
         btn = epi.biosample_term_name
         if "induced pluripotent stem cell" == btn:
             return "ipsc"
