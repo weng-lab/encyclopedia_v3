@@ -30,7 +30,7 @@
     <div class="row">
       <div class="col-md-2">
         <button class="btn btn-warning" type="button">
-          <span class="badge">1</span>Select genome
+          <span class="badge">1</span>&nbsp;Select genome
         </button>
       </div>
       <div class="col-md-8">
@@ -42,7 +42,7 @@
       <div class="col-md-2">
         <br>
         <button class="btn btn-warning" type="button">
-          <span class="badge">2</span>Enter gene, SNP, coordinate,<br>or rank
+          <span class="badge">2</span>&nbsp;Enter gene, SNP,<br>coordinate, or rank
         </button>
       </div>
       <div class="col-md-8">
@@ -65,17 +65,20 @@
     <div class="row">
       <div class="col-md-2">
         <button class="btn btn-warning" type="button">
-          <span class="badge">3</span>Select assays and cell types
+          <span class="badge">3</span>&nbsp;Select assays<br>and cell types
         </button>
       </div>
       <div class="col-md-10">
-        {% include "_cell_type_tables.html" -%}
-        <span style=" display: inline;">
+        <div style="display: inline-block;">
+          {% include "_cell_type_tables.html" -%}
+        </div>
+        <div style="display: inline-block;">
           <button class="btn btn-warning" type="button">
-            <span class="badge">4</span>Open Genome<br>Browser
+            <span class="badge">4</span>&nbsp;Open Genome<br>Browser
           </button>
           <input type="submit" value="Visualize">
-        </span>
+        </div>
+
       </div>
     </div>
   </form>

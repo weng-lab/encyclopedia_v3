@@ -100,3 +100,8 @@ input[type=checkbox]{
 #searchTitle p {
     font-size: 24px;
 }
+
+.badge {
+
+    font-size: 22px;
+}
