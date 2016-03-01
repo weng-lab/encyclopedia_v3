@@ -62,6 +62,8 @@ class Ontology:
             return "iPSC"
         if "esc_derived" == t:
             return "ESC derived"
+        if "bone element" == t:
+            return "bone"
         t = t.replace("gi_", "")
         t = t.replace(" gland", "")
         t = t.replace("large intestine", "intestine")
