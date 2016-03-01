@@ -50,6 +50,7 @@ class Track(object):
 
         self.color = None
         self.height = None
+        self.autoScale = None
 
     @staticmethod
     def MakeDesc(name, age, biosample_term_name):
@@ -68,7 +69,6 @@ class Track(object):
                  "shortLabel " + self.desc,
                  "longLabel " + self.desc,
                  "itemRgb on",
-                 "autoScale on",
                  "visibility " + self.visibility,
                  "priority " + str(self.priority),
                  "bigDataUrl " + self.url]
@@ -76,6 +76,8 @@ class Track(object):
             track += ["color " + self.color]
         if self.height:
             track += [self.height]
+        if self.autoScale:
+            track += ["autoScale " + self.autoScale]
         track += ["\n"]
         return "\n".join(track)
 
@@ -98,6 +100,7 @@ class BigWigTrack(Track):
         self.type = "bigWig"
         self.height = "maxHeightPixels 128:32:8"
         self.visibility = "full"
+        self.autoScale = "off"
 
 class BigGenePredTrack(Track):
     def __init__(self, desc, priority, url):
