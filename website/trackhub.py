@@ -141,6 +141,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
             if "Both" == self.assays:
                 lines += [self.predictionTrackHub(wepi)]
+                lines += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
                 try:
                     lines += [self.trackhubExp(exp)]
@@ -219,6 +220,15 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         return track
 
     def trackhubExp(self, exp):
+        url, name, color = self._getUrl(exp, False)
+
+        desc = Track.MakeDesc(name, exp.age, exp.biosample_term_name)
+
+        track = BigWigTrack(desc, self.priority, url, color).track()
+        self.priority += 1
+        return track
+
+    def _getUrl(self, exp, norm):
         bigWigs = bigWigFilters(self.assembly, exp.files)
         if not bigWigs:
             if "mm10" == self.assembly:
@@ -233,6 +243,17 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         if "mm10" == self.assembly and "released" != bigWig.file_status:
             url = os.path.join(BIB5, "data", bigWig.expID, bigWig.fileID + ".bigWig")
 
+        if norm:
+            if "mm9" == self.assembly or "mm10" == self.assembly:
+                url = os.path.join(BIB5, "encode_norm", bigWig.expID, bigWig.fileID + ".norm.bigWig")
+            else:
+                if bigWig.encodeID.startswith("EN"):
+                    url = os.path.join(BIB5, "encode_norm", bigWig.expID, bigWig.fileID + ".norm.bigWig")
+                else:
+                    url = os.path.join(BIB5, "roadmap_norm/consolidated/",
+                                       bigWig.expID,
+                                       bigWig.fileID + ".norm.bigWig")
+
         if exp.isH3K27ac():
             name = "H3K27ac Signal"
             color = "18,98,235"
@@ -242,8 +263,50 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         else:
             raise Exception("unexpected exp")
 
-        desc = Track.MakeDesc(name, exp.age, exp.biosample_term_name)
+        return url, name, color
 
-        track = BigWigTrack(desc, self.priority, url, color).track()
+    def compositeTrack(self, wepi):
+        dnaseExp, h3k27acExp = wepi.exps()
+        h3k27acUrl, h3k27acName, h3k27acColor = self._getUrl(h3k27acExp, True)
+        dnaseUrl, dnaseName, dnaseColor = self._getUrl(dnaseExp, True)
+
+        desc = wepi.web_title()
+        descShort = "test"
+
+        track = """
+track composite{priority}
+container multiWig
+aggregate transparentOverlay
+showSubtrackColorOnUi on
+type bigWig 0 10.0
+shortLabel {descShort}
+longLabel {desc}
+visibility full
+priority {priority}
+html examplePage
+
+                track composite{priority}H3K27ac
+                bigDataUrl {h3k27acUrl}
+                shortLabel H3K27ac
+                longLabel H3K27ac
+                parent composite{priority}
+                type bigWig
+                color {h3k27acColor}
+
+                track composite{priority}DNase
+                bigDataUrl {dnaseUrl}
+                shortLabel DNase
+                longLabel DNase
+                parent composite{priority}
+                type bigWig
+                color {dnaseColor}
+""".format(priority = self.priority,
+           descShort = descShort,
+           desc = desc,
+           h3k27acUrl = h3k27acUrl,
+           h3k27acColor = h3k27acColor,
+           dnaseUrl = dnaseUrl,
+           dnaseColor = dnaseColor)
+
         self.priority += 1
         return track
