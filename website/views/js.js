@@ -99,6 +99,7 @@ $(document).ready(function(){
             data: formData,
             dataType: "json",
             contentType : "application/json",
+            async: false, // http://stackoverflow.com/a/20235765
             success: function(got){
                 if("err" in got){
                     $("#errMsg").text(got["err"]);
@@ -107,12 +108,10 @@ $(document).ready(function(){
                 }
 
                 if("url" in got){
-                    document.location.href = got["url"];
-                } else{
-                    document.open();
-                    document.write(got["html"]);
-                    document.close();
+                    return window.open(got["url"], '_blank');
                 }
+                var w = window.open();
+                $(w.document.body).html(got["html"]);
             }
         });
     });
