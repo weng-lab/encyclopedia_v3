@@ -128,3 +128,15 @@ input[type=checkbox]{
     text-align: center;
     margin: auto;
 }
+
+#sideBox {
+    display: inline-block;
+    float: right;
+    overflow: auto;
+}
+
+#sideBox p{
+    margin-bottom: 0px;
+    font-size: 12px;
+    font-weight: 100;
+}
