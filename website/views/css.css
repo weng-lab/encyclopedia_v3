@@ -102,12 +102,10 @@ input[type=checkbox]{
 }
 
 .badge {
-
     font-size: 22px;
 }
 
 #navbar-main {
-    /*background-color: #1995dc;*/
     background-color: #337ab7;
 }
 

@@ -58,9 +58,15 @@ class Ontology:
         t = self.getTissueActual(epi).strip()
         if "esc" == t:
             return "ESC"
-        if "esc derived" == t:
+        if "ipsc" == t:
+            return "iPSC"
+        if "esc_derived" == t:
             return "ESC derived"
+        t = t.replace("gi_", "")
         t = t.replace(" gland", "")
+        t = t.replace("large intestine", "intestine")
+        t = t.replace(" of body", "")
+        t = t.replace("skeletal muscle", "muscle")
         return t
 
     def getTissueActual(self, epi):
