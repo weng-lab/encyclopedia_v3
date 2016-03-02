@@ -141,7 +141,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
             if "Both" == self.assays:
                 lines += [self.predictionTrackHub(wepi)]
-                lines += [self.compositeTrack(wepi)]
+                #lines += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
                 try:
                     lines += [self.trackhubExp(exp)]
