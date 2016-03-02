@@ -141,7 +141,11 @@ input[type=checkbox]{
     font-weight: 100;
 }
 
-.btn.nohover:hover {
+.btn.nohover:hover,
+.btn.nohover:focus,
+.btn.nohover.focus,
+.btn-nohover:active,
+.btn-nohover.active  {
     color: black;
     background-color: #ffffb3;
     border-color: black;
