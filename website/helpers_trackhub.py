@@ -100,7 +100,7 @@ class BigWigTrack(Track):
         self.type = "bigWig"
         self.height = "maxHeightPixels 128:32:8"
         self.visibility = "full"
-        self.autoScale = "off"
+        self.autoScale = "on"
 
 class BigGenePredTrack(Track):
     def __init__(self, desc, priority, url):
