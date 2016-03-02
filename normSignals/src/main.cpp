@@ -98,7 +98,6 @@ class Norm{
                     values.push_back(d.val);
                 }
             }
-            //std::cout << "\t" << chrAndData.first << " " << values.size() << "\n";
         }
 
         writeStats(values);
@@ -106,7 +105,7 @@ class Norm{
 
     void writeStats(std::vector<float>& values){
         std::cout << "computing min/max/mean/stddev..." << std::endl;
-        const a::fvec av(values.data(), values.size(), false, true);
+        a::fvec av(values.data(), values.size(), false, true);
         mean_ = a::mean(av);
         stddev_ = a::stddev(av);
         min_ = a::min(av);
@@ -117,12 +116,22 @@ class Norm{
         std::cout << "mean: " << mean_ << std::endl;
         std::cout << "stddev: " << stddev_ << std::endl;
         std::cout << "# of blacklist bases: " << blacklistedBases_ << std::endl;
+        av = (av - mean_) / stddev_;
+
+        const float after_mean = a::mean(av);
+        const float after_stddev = a::stddev(av);
+        const float after_min = a::min(av);
+        const float after_max = a::max(av);
 
         Json::Value info;
-        info["max"] = max_;
-        info["min"] = min_;
-        info["mean"] = mean_;
-        info["stddev"] = stddev_;
+        info["before-max"] = max_;
+        info["before-min"] = min_;
+        info["before-mean"] = mean_;
+        info["before-stddev"] = stddev_;
+        info["after-max"] = after_max;
+        info["after-min"] = after_min;
+        info["after-mean"] = after_mean;
+        info["after-stddev"] = after_stddev;
         info["numBlacklistedBases"] = Json::UInt64{blacklistedBases_};
         info["totalBases"] = Json::UInt64{values.size()};
         bfs::path outFnp = outFnp_.string() + ".json";
@@ -147,7 +156,7 @@ class Norm{
             for(size_t i = 0; i < intervals.size(); ++i){
                 auto& d = intervals[i];
                 d.val = (d.val - mean_) / stddev_;
-                d.val = clamp(d.val, -10.0, 10.0); // ignore extremes
+                d.val = clamp(d.val, -100.0, 100.0); // ignore extremes
             }
         }
     }
