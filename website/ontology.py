@@ -67,8 +67,10 @@ class Ontology:
         t = t.replace("gi_", "")
         t = t.replace(" gland", "")
         t = t.replace("large intestine", "intestine")
+        t = t.replace("small intestine", "intestine")
         t = t.replace(" of body", "")
         t = t.replace("skeletal muscle", "muscle")
+        t = t.replace("muscle organ", "muscle")
         return t
 
     def getTissueActual(self, epi):
