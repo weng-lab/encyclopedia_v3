@@ -20,7 +20,12 @@ def process(args, expID):
     exp = MetadataWS.exp(expID)
     print exp
     try:
-        bigWigFnp, bwAssembly = exp.getSingleBigWigSingleFnp(args)
+        bigWigs = bigWigFilters(self.assembly, exp.files)
+        if not bigWigs:
+            return
+        bigWig = bigWigs[0]
+        bigWigFnp = bigWig.fnp()
+        bwAssembly = bigWig.assembly
         if not bigWigFnp:
             print exp.getSingleBigWigSingleFnp(args)
             print "missing", exp

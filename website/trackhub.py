@@ -12,50 +12,6 @@ from web_epigenomes import WebEpigenome
 
 BIB5 = "http://bib5.umassmed.edu/~purcarom/annotations_demo/"
 
-eidToBigWigFileID = {"ENCSR172RHR" : "ENCFF301ECS",
-                     "ENCSR179PIH" : "ENCFF138KVI",
-                     "ENCSR196VDE" : "ENCFF803VYR",
-                     "ENCSR292QBA" : "ENCFF329CUO",
-                     "ENCSR312QVY" : "ENCFF592CFE",
-                     "ENCSR337EDG" : "ENCFF849GKV",
-                     "ENCSR358ESL" : "ENCFF989TMR",
-                     "ENCSR367FCW" : "ENCFF147ZSW",
-                     "ENCSR469VGZ" : "ENCFF142WSR",
-                     "ENCSR488VEQ" : "ENCFF483YHV",
-                     "ENCSR636NXY" : "ENCFF377GSQ",
-                     "ENCSR661HDP" : "ENCFF128FJP",
-                     "ENCSR666HFH" : "ENCFF479KSE",
-                     "ENCSR687EAW" : "ENCFF091VKI",
-                     "ENCSR742DUR" : "ENCFF385BSB",
-                     "ENCSR793WUR" : "ENCFF957FAN",
-                     "ENCSR935RRY" : "ENCFF877NOP",
-                     "ENCSR959HKR" : "ENCFF617HTH",
-                     "ENCSR064DGY" : "ENCFF478ATY",
-                     "ENCSR080GQM" : "ENCFF337DHW",
-                     "ENCSR157LYR" : "ENCFF096GTH",
-                     "ENCSR196ENU" : "ENCFF079KZH",
-                     "ENCSR293ORS" : "ENCFF749FRR",
-                     "ENCSR335WME" : "ENCFF987TFU",
-                     "ENCSR417TXZ" : "ENCFF937LBE",
-                     "ENCSR425FLT" : "ENCFF588JVO",
-                     "ENCSR464MQU" : "ENCFF686SHG",
-                     "ENCSR581FAT" : "ENCFF247FWC",
-                     "ENCSR641EME" : "ENCFF577TCZ",
-                     "ENCSR765SJF" : "ENCFF884JJT",
-                     "ENCSR831YAX" : "ENCFF354SIU",
-                     "ENCSR871CGP" : "ENCFF167FIF",
-                     "ENCSR929GXP" : "ENCFF350NWQ",
-                     "ENCSR953LFI" : "ENCFF990QBR",
-                     "ENCSR871KVM" : "ENCFF309IVZ",
-                     "ENCSR446MUM" : "ENCFF077KNV",
-                     "ENCSR319PWR" : "ENCFF722AND",
-                     "ENCSR855ASN" : "ENCFF667HTC",
-                     "ENCSR998KYQ" : "ENCFF986EOX",
-                     "ENCSR767AJS" : "ENCFF061MOE",
-                     "ENCSR791AJY" : "ENCFF788SQF",
-                     "ENCSR723IXU" : "ENCFF174VMZ"
-                     }
-
 class TempWrap:
     def __init__(self, expID, fileID):
         self.expID = expID
