@@ -229,14 +229,15 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         dnaseUrl, dnaseName, dnaseColor = self._getUrl(dnaseExp, True)
 
         desc = wepi.web_title()
-        descShort = "test"
+        descShort = desc
 
         track = """
 track composite{priority}
 container multiWig
 aggregate transparentOverlay
 showSubtrackColorOnUi on
-type bigWig 0 10.0
+type bigWig 0 50.0
+maxHeightPixels 128:32:8
 shortLabel {descShort}
 longLabel {desc}
 visibility full
