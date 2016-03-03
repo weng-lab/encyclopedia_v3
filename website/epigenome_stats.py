@@ -14,3 +14,15 @@ class EpigenomeStats:
 
         self.mouse_both = len(mm9b) + len(mm10b)
         self.human_both = len(hg19b)
+
+        self.mouse_not_both = len(set([x.web_id() for x in mm9d.epis] +
+                                      [x.web_id() for x in mm9h.epis] +
+                                      [x.web_id() for x in mm10h.epis] +
+                                      [x.web_id() for x in mm10h.epis]) -
+                                  set([x.web_id() for x in mm9b.epis] +
+                                      [x.web_id() for x in mm10b.epis]))
+
+        self.human_not_both = len(set([x.web_id() for x in hg19d.epis] +
+                                      [x.web_id() for x in hg19h.epis]) -
+                                  set([x.web_id() for x in hg19b.epis]))
+
