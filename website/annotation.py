@@ -5,7 +5,7 @@ import numpy as np
 import uuid
 import StringIO
 
-from db import AnnotationDB
+from db import AnnotationDB, UrlStatusDB
 from session import Sessions
 from ucsc_search import UcscSearch
 
@@ -37,6 +37,7 @@ class AnnotationSearchUcsc(object):
         self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
+        self.urlStatus = UrlStatusDB(DBCONN)
 
         viewDir = os.path.join(os.path.dirname(__file__), "views")
         self.templates = Templates(viewDir)
@@ -44,8 +45,6 @@ class AnnotationSearchUcsc(object):
         self.epigenomes = WebEpigenomesLoader(self.args)
 
         self.defaults = Defaults()
-
-        self.urlCache = {}
 
         self.host = "http://zlab-annotations.umassmed.edu/"
         if self.args.local:
@@ -97,7 +96,7 @@ class AnnotationSearchUcsc(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHub(self.args, self.epigenomes, row)
+        th = TrackHub(self.args, self.epigenomes, self.urlStatus, row)
         return th.Custom()
 
     @cherrypy.expose
@@ -109,7 +108,7 @@ class AnnotationSearchUcsc(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHub(self.args, self.epigenomes, row)
+        th = TrackHub(self.args, self.epigenomes, self.urlStatus, row)
 
         path = args[1:]
         return th.ParsePath(path)
@@ -147,7 +146,7 @@ class AnnotationSearchUcsc(object):
         if not args:
             return self.templates("missing_list")
         row = [args[0], args[1], "[]", "loci", "hubNum"]
-        th = TrackHub(self.args, self.epigenomes, row)
-        missing = th.showMissing(self.urlCache)
+        th = TrackHub(self.args, self.epigenomes, self.urlStatus, row)
+        missing = th.showMissing()
         return self.templates("missing",
                               missing = missing)

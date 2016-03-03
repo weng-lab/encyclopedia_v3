@@ -67,9 +67,10 @@ class TempWrap:
         return self.url.endswith(".bigWig")
 
 class TrackHub:
-    def __init__(self, args, epigenomes, row):
+    def __init__(self, args, epigenomes, urlStatus, row):
         self.args = args
         self.epigenomes = epigenomes
+        self.urlStatus = urlStatus
         self.assembly = row[0]
         self.assays = row[1]
         self.tissue_ids = json.loads(row[2])
@@ -245,6 +246,9 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
             url = os.path.join(BIB5, "data", bigWig.expID, bigWig.fileID + ".bigWig")
 
         if norm:
+            assay = "DNase"
+            if exp.isH3K27ac():
+                assay = "H3K27ac"
             if "mm9" == self.assembly or "mm10" == self.assembly:
                 url = os.path.join(BIB5, "encode_norm", bigWig.expID, bigWig.fileID + ".norm.bigWig")
             else:
@@ -253,8 +257,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
                 else:
                     url = os.path.join(BIB5, "roadmap_norm/consolidated/",
                                        bigWig.expID,
-                                       bigWig.fileID + ".norm.bigWig")
-
+                                       bigWig.fileID + '-' + assay + ".fc.signal.norm.bigWig")
         if exp.isH3K27ac():
             name = "H3K27ac Signal"
             color = "18,98,235"
@@ -312,13 +315,14 @@ html examplePage
         self.priority += 1
         return track
 
-    def showMissing(self, urlCache):
+    def showMissing(self):
         wepis = self.epigenomes.GetByAssemblyAndAssays(self.assembly, self.assays)
 
         def checkUrl(url):
-            if not url in urlCache:
-                urlCache[url] = Utils.checkIfUrlExists(url)
-            if urlCache[url]:
+            if not self.urlStatus.find(url):
+                self.urlStatus.insertOrUpdate(url,
+                                              Utils.checkIfUrlExists(url))
+            if self.urlStatus.find(url):
                 return ""
             return url
 

@@ -94,6 +94,57 @@ WHERE uid = %(uid)s
 """, {"uid" : uid})
             return curs.fetchone()
 
+class UrlStatusDB:
+    def __init__(self, DBCONN):
+        self.DBCONN = DBCONN
+
+    def setupDB(self):
+        with getcursor(self.DBCONN, "setupDB") as curs:
+            curs.execute("""
+DROP TABLE IF EXISTS urlExists;
+CREATE TABLE urlExists
+(id serial PRIMARY KEY,
+url text,
+exists boolean
+    ) """)
+
+    def find(self, url):
+        with getcursor(self.DBCONN, "findBedOverlap") as curs:
+            curs.execute("""
+SELECT exists
+FROM urlExists
+WHERE url = %(url)s
+""", {"url" : url})
+            ret = curs.fetchone()
+            if ret:
+                return ret[0]
+            return False
+
+    def insertOrUpdate(self, url, exists):
+        with getcursor(self.DBCONN, "insertOrUpdate") as curs:
+            curs.execute("""
+SELECT exists FROM urlExists
+WHERE url = %(url)s
+""", {"url" : url})
+            if (curs.rowcount > 0):
+                curs.execute("""
+UPDATE urlExists
+SET
+exists = %(exists)s
+WHERE url = %(url)s
+RETURNING id;
+""", {"url" : url,
+      "exists" : exists
+})
+            else:
+                curs.execute("""
+INSERT INTO urlExists
+(url, exists)
+VALUES (
+%(url)s,
+%(exists)s
+)""", {"url" : url, "exists" : exists})
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--local', action="store_true", default=False)
@@ -114,6 +165,9 @@ def main():
 
     with getcursor(DBCONN, "main") as cur:
         setupDB(cur)
+
+        ue = UrlStatusDB(DBCONN)
+        ue.setupDB()
 
 if __name__ == '__main__':
     main()
