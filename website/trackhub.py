@@ -187,6 +187,10 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         if not exp:
             return None, None, None
 
+        assay = "DNase"
+        if exp.isH3K27ac():
+            assay = "H3K27ac"
+
         bigWigs = bigWigFilters(self.assembly, exp.files)
 
         if not bigWigs:
@@ -194,13 +198,11 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         bigWig = bigWigs[0]
 
         url = bigWig.url
-        if "mm10" == self.assembly and "released" != bigWig.file_status:
-            url = os.path.join(BIB5, "data", bigWig.expID, bigWig.fileID + ".bigWig")
+        if self.urlStatus.find(url) and not self.urlStatus.get(url):
+            url = os.path.join(BIB5, "data", bigWig.expID,
+                               bigWig.fileID + ".bigWig")
 
         if norm:
-            assay = "DNase"
-            if exp.isH3K27ac():
-                assay = "H3K27ac"
             if "mm9" == self.assembly or "mm10" == self.assembly:
                 url = os.path.join(BIB5, "encode_norm", bigWig.expID, bigWig.fileID + ".norm.bigWig")
             else:
@@ -210,6 +212,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
                     url = os.path.join(BIB5, "roadmap_norm/consolidated/",
                                        bigWig.expID,
                                        bigWig.fileID + '-' + assay + ".fc.signal.norm.bigWig")
+
         if exp.isH3K27ac():
             name = "H3K27ac Signal"
             color = "18,98,235"
@@ -227,14 +230,15 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         dnaseUrl, dnaseName, dnaseColor = self._getUrl(dnaseExp, True)
 
         desc = wepi.web_title()
-        descShort = "test"
+        descShort = desc
 
         track = """
 track composite{priority}
 container multiWig
 aggregate transparentOverlay
 showSubtrackColorOnUi on
-type bigWig 0 10.0
+type bigWig 0 50.0
+maxHeightPixels 128:32:8
 shortLabel {descShort}
 longLabel {desc}
 visibility full
@@ -274,7 +278,7 @@ html examplePage
             if not self.urlStatus.find(url):
                 self.urlStatus.insertOrUpdate(url,
                                               Utils.checkIfUrlExists(url))
-            if self.urlStatus.find(url):
+            if self.urlStatus.get(url):
                 return ""
             return url
 

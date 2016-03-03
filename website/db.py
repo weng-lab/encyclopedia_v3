@@ -115,9 +115,17 @@ SELECT exists
 FROM urlExists
 WHERE url = %(url)s
 """, {"url" : url})
-            ret = curs.fetchone()
-            if ret:
-                return ret[0]
+            return curs.rowcount > 0
+
+    def get(self, url):
+        with getcursor(self.DBCONN, "get") as curs:
+            curs.execute("""
+SELECT exists
+FROM urlExists
+WHERE url = %(url)s
+""", {"url" : url})
+            if curs.rowcount > 0:
+                return curs.fetchone()[0]
             return False
 
     def insertOrUpdate(self, url, exists):

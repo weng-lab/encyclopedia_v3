@@ -17,6 +17,7 @@ from dbsnps import dbSnps
 from defaults import Defaults
 from parse_search_box import ParseSearchBox
 from genes import LookupGenes
+from epigenome_stats import EpigenomeStats
 
 class Templates:
     def __init__(self, viewDir):
@@ -38,13 +39,12 @@ class AnnotationSearchUcsc(object):
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
+        self.wepigenomes = WebEpigenomesLoader(self.args)
+        self.defaults = Defaults()
+        self.epigenome_stats = EpigenomeStats(self.wepigenomes)
 
         viewDir = os.path.join(os.path.dirname(__file__), "views")
         self.templates = Templates(viewDir)
-
-        self.epigenomes = WebEpigenomesLoader(self.args)
-
-        self.defaults = Defaults()
 
         self.host = "http://zlab-annotations.umassmed.edu/"
         if self.args.local:
@@ -55,8 +55,9 @@ class AnnotationSearchUcsc(object):
     @cherrypy.expose
     def default(self, *args, **params):
         return self.templates("index",
-                              epigenomes = self.epigenomes,
-                              defaults = self.defaults)
+                              epigenomes = self.wepigenomes,
+                              defaults = self.defaults,
+                              stats = self.epigenome_stats)
 
     def makeUid(self):
         return str(uuid.uuid4())
@@ -73,7 +74,7 @@ class AnnotationSearchUcsc(object):
 
         input_json = cherrypy.request.json
 
-        us = UcscSearch(self.epigenomes, self.db, self.dbSnps, self.genes,
+        us = UcscSearch(self.wepigenomes, self.db, self.dbSnps, self.genes,
                         self.host, self.args, input_json, uid)
         us.parse()
         url = us.configureUcscHubLink()
@@ -96,7 +97,7 @@ class AnnotationSearchUcsc(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHub(self.args, self.epigenomes, self.urlStatus, row)
+        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         return th.Custom()
 
     @cherrypy.expose
@@ -108,7 +109,7 @@ class AnnotationSearchUcsc(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHub(self.args, self.epigenomes, self.urlStatus, row)
+        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
 
         path = args[1:]
         return th.ParsePath(path)
@@ -121,14 +122,14 @@ class AnnotationSearchUcsc(object):
         ret = None
 
         try:
-            psb = ParseSearchBox(self.epigenomes, self.dbSnps, self.genes, input_json)
+            psb = ParseSearchBox(self.wepigenomes, self.dbSnps, self.genes, input_json)
             coord = psb.search()
             if coord:
                 expIDs = self.db.findBedOverlap(psb.assembly,
                                                 coord.chrom,
                                                 coord.start,
                                                 coord.end)
-                ret = self.epigenomes.getWebIDsFromExpIDs(psb.assembly,
+                ret = self.wepigenomes.getWebIDsFromExpIDs(psb.assembly,
                                                           expIDs)
             if psb.userErrMsg:
                 return { "err" : psb.userErrMsg }
@@ -146,7 +147,7 @@ class AnnotationSearchUcsc(object):
         if not args:
             return self.templates("missing_list")
         row = [args[0], args[1], "[]", "loci", "hubNum"]
-        th = TrackHub(self.args, self.epigenomes, self.urlStatus, row)
+        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
         return self.templates("missing",
                               missing = missing)
