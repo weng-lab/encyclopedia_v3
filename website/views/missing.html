@@ -1,3 +1,23 @@
+{% import '_helpers.html' as hh -%}
+
+{% include '_header.html' -%}
+
+{% macro classErr(e) -%}
+{% if e["title"].startswith("ERROR") -%}
+"btn btn-danger"
+{% else -%}
+"btn btn-success"
+{% endif -%}
+{% endmacro -%}
+
+{% macro row(e) -%}
+{% if None != e["title"] -%}
+<button type="button" class={{classErr(e)}}>
+  <a href="{{e.url}}" style="color: inherit;">{{e.title}}</a>
+</button>
+{% endif -%}
+{% endmacro -%}
+
 <table border=1>
   <thead>
     <th>desc</th>
@@ -10,10 +30,11 @@
     {% for desc, DNase, DNaseNorm, H3K27ac, H3K27acNorm in missing -%}
     <tr>
       <td>{{desc}}</td>
-      <td>{{DNase}}</td>
-      <td>{{DNaseNorm}}</td>
-      <td>{{H3K27ac}}</td>
-      <td>{{H3K27acNorm}}</td>
+      <td>{{row(DNase)}}</td>
+      <td>{{row(DNaseNorm)}}</td>
+      <td>{{row(H3K27ac)}}</td>
+      <td>{{row(H3K27acNorm)}}</td>
     </tr>
     {% endfor -%}
 </table>
+{% include '_footer.html' -%}

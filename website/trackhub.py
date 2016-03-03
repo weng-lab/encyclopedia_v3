@@ -275,12 +275,28 @@ html examplePage
         wepis = self.epigenomes.GetByAssemblyAndAssays(self.assembly, self.assays)
 
         def checkUrl(url):
+            if not url:
+                return {"title" : None, "url" : None}
+
             if not self.urlStatus.find(url):
                 self.urlStatus.insertOrUpdate(url,
                                               Utils.checkIfUrlExists(url))
             if self.urlStatus.get(url):
-                return ""
-            return url
+                if "encodeproject" in url:
+                    return {"title" : "OK - ENCODE", "url" : url}
+                if BIB5 in url:
+                    return {"title" : "OK - zlab", "url" : url}
+                if "wustl.edu" in url:
+                    return {"title" : "OK - roadmap", "url" : url}
+                return {"title" : "OK", "url" : url}
+
+            if "encodeproject" in url:
+                return {"title" : "ERROR - ENCODE", "url" : url}
+            if BIB5 in url:
+                return {"title" : "ERROR - zlab", "url" : url}
+            if "wustl.edu" in url:
+                return {"title" : "ERROR - roadmap", "url" : url}
+            return {"title" : "ERROR", "url" : url}
 
         def checkExp(exp):
             u, _, _ = self._getUrl(exp, False)
