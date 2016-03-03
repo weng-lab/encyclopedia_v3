@@ -4,6 +4,7 @@ import os, sys, json, argparse
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../website/'))
 from web_epigenomes import WebEpigenomesLoader
+from helpers_trackhub import bigWigFilters
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
 from utils import Utils, printWroteNumLines
@@ -20,7 +21,7 @@ def process(args, expID):
     exp = MetadataWS.exp(expID)
     print exp
     try:
-        bigWigs = bigWigFilters(self.assembly, exp.files)
+        bigWigs = bigWigFilters(args.assembly, exp.files)
         if not bigWigs:
             return
         bigWig = bigWigs[0]
@@ -54,7 +55,7 @@ def build(args):
                         print exp.encodeID
                         jr.append([
                                 [os.path.realpath(__file__), "--job", exp.encodeID,
-                                 "--process"]])
+                                 "--assembly", assembly, "--process"]])
                     else:
                         # ROADMAP
                         bigWigFnp, bwAssembly = exp.getSingleBigWigSingleFnp()
@@ -88,6 +89,7 @@ def parse_args():
     parser.add_argument('--local', action="store_true", default=False)
     parser.add_argument('--rebuild', action="store_true", default=False)
     parser.add_argument('--test', action="store_true", default=False)
+    parser.add_argument('--assembly', type=str, default="hg19")
     parser.add_argument('--job', type=str, default="")
     parser.add_argument('-j', type=int, default=4)
     args = parser.parse_args()
