@@ -1,0 +1,19 @@
+<table border=1>
+  <thead>
+    <th>desc</th>
+    <th>DNase</th>
+    <th>DNase Norm</th>
+    <th>H3K27ac</th>
+    <th>H3K27ac Norm</th>
+  </thead>
+  <tbody>
+    {% for desc, DNase, DNaseNorm, H3K27ac, H3K27acNorm in missing -%}
+    <tr>
+      <td>{{desc}}</td>
+      <td>{{DNase}}</td>
+      <td>{{DNaseNorm}}</td>
+      <td>{{H3K27ac}}</td>
+      <td>{{H3K27acNorm}}</td>
+    </tr>
+    {% endfor -%}
+</table>

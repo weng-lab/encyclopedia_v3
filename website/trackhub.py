@@ -82,9 +82,7 @@ class TrackHub:
         lines = []
         #lines += ["browser hide all"]
         #lines += ["browser pack knownGene refGene ensGene"]
-
-        if "mm9" == self.assembly:
-            lines += ["browser dense snp128"]
+        #lines += ["browser dense snp128"]
 
         f = StringIO.StringIO()
         map(lambda line: f.write(line + "\n"), lines)
@@ -141,7 +139,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
             if "Both" == self.assays:
                 lines += [self.predictionTrackHub(wepi)]
-                #lines += [self.compositeTrack(wepi)]
+                lines += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
                 try:
                     lines += [self.trackhubExp(exp)]
@@ -229,6 +227,9 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         return track
 
     def _getUrl(self, exp, norm):
+        if not exp:
+            return None, None, None
+
         bigWigs = bigWigFilters(self.assembly, exp.files)
         if not bigWigs:
             if "mm10" == self.assembly:
@@ -247,7 +248,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
             if "mm9" == self.assembly or "mm10" == self.assembly:
                 url = os.path.join(BIB5, "encode_norm", bigWig.expID, bigWig.fileID + ".norm.bigWig")
             else:
-                if bigWig.encodeID.startswith("EN"):
+                if bigWig.expID.startswith("EN"):
                     url = os.path.join(BIB5, "encode_norm", bigWig.expID, bigWig.fileID + ".norm.bigWig")
                 else:
                     url = os.path.join(BIB5, "roadmap_norm/consolidated/",
@@ -310,3 +311,38 @@ html examplePage
 
         self.priority += 1
         return track
+
+    def showMissing(self, urlCache):
+        wepis = self.epigenomes.GetByAssemblyAndAssays(self.assembly, self.assays)
+
+        def checkUrl(url):
+            if not url in urlCache:
+                urlCache[url] = Utils.checkIfUrlExists(url)
+            if urlCache[url]:
+                return ""
+            return url
+
+        def checkExp(exp):
+            u, _, _ = self._getUrl(exp, False)
+            u = checkUrl(u)
+            un, _, _ = self._getUrl(exp, True)
+            un = checkUrl(un)
+            return u, un
+
+        for wepi in wepis.epis:
+            dnaseExp = None
+            h3k27acExp = None
+            exps = wepi.exps()
+            if "Both" == self.assays:
+                dnaseExp, h3k27acExp = exps
+            if "H3K27ac" == self.assays:
+                h3k27acExp = exps[0]
+            if "DNase" == self.assays:
+                dnaseExp = exps[0]
+
+            desc = wepi.web_title()
+            dnaseUrl, dnaseUrlNorm = checkExp(dnaseExp)
+            h3k27acUrl, h3k27acUrlNorm = checkExp(h3k27acExp)
+            yield(desc, dnaseUrl, dnaseUrlNorm,
+                  h3k27acUrl, h3k27acUrlNorm)
+

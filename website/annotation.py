@@ -45,6 +45,8 @@ class AnnotationSearchUcsc(object):
 
         self.defaults = Defaults()
 
+        self.urlCache = {}
+
         self.host = "http://zlab-annotations.umassmed.edu/"
         if self.args.local:
             fnp = os.path.expanduser("~/.ws_host.txt")
@@ -139,3 +141,13 @@ class AnnotationSearchUcsc(object):
                 raise
 
         return {"err" : "Problem parsing coordinate"}
+
+    @cherrypy.expose
+    def missing(self, *args, **params):
+        if not args:
+            return self.templates("missing_list")
+        row = [args[0], args[1], "[]", "loci", "hubNum"]
+        th = TrackHub(self.args, self.epigenomes, row)
+        missing = th.showMissing(self.urlCache)
+        return self.templates("missing",
+                              missing = missing)
