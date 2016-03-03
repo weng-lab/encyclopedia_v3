@@ -280,6 +280,9 @@ class WebEpigenomes:
 
         self.setupMatrix()
 
+    def __len__(self):
+        return len(self.epis)
+
     def getWebIDsFromExpIDs(self, expIDs):
         return [self.expIDtoWebId[k] for k in expIDs if k in self.expIDtoWebId]
 
