@@ -39,9 +39,7 @@ def process(args, expID):
                     "--assembly=" + bwAssembly,
                     "--bwFnp=" + bigWig.normFnp(),
                     bigWigFnp]
-            print "running", cmds
-            print Utils.runCmds(cmds)
-            return 0
+            return Utils.runCmds(cmds)
     except Exception, e:
         print "bad " + str(e)
         return 1
