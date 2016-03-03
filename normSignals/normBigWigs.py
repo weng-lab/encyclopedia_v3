@@ -19,13 +19,17 @@ if not os.path.exists(normBin):
 
 def process(args, expID):
     exp = MetadataWS.exp(expID)
-    print exp
     try:
         bigWigs = bigWigFilters(args.assembly, exp.files)
         if not bigWigs:
             return
         bigWig = bigWigs[0]
         bigWigFnp = bigWig.fnp()
+        if os.path.exists(bigWig.normFnp()):
+            print "skipping", exp
+            return 0
+        else:
+            print "missing", bigWig.normFnp()
         bwAssembly = bigWig.assembly
         if not bigWigFnp:
             print exp.getSingleBigWigSingleFnp(args)
@@ -52,7 +56,7 @@ def build(args):
             for epi in epis.epis:
                 for exp in epi.exps():
                     if exp.encodeID.startswith("EN"):
-                        print exp.encodeID
+                        #print exp.encodeID
                         jr.append([
                                 [os.path.realpath(__file__), "--job", exp.encodeID,
                                  "--assembly", assembly, "--process"]])
