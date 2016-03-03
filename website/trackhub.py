@@ -232,10 +232,6 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
             return None, None, None
 
         bigWigs = bigWigFilters(self.assembly, exp.files)
-        if not bigWigs:
-            if "mm10" == self.assembly:
-                bigWigs = [TempWrap(exp.encodeID,
-                                    eidToBigWigFileID[exp.encodeID])]
 
         if not bigWigs:
             raise Exception("missing bigWigs for " + exp.encodeID)

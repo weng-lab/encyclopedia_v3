@@ -46,6 +46,7 @@ def build(args):
             for epi in epis.epis:
                 for exp in epi.exps():
                     if exp.encodeID.startswith("EN"):
+                        print exp.encodeID
                         jr.append([
                                 [os.path.realpath(__file__), "--job", exp.encodeID,
                                  "--process"]])
