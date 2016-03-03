@@ -125,7 +125,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
 
     def phastcons(self):
         if "mm9" == self.assembly:
-            url = os.path.join(BIB5, "conservation", "mm9.phastCons30way.bw")
+            url = os.path.join(BIB5, "conservation", "mm9.phastCons30way.bigWig")
         if "mm10" == self.assembly:
             url =  "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/phastCons60way/mm10.60way.phastCons.bw"
         if "hg19" == self.assembly:
