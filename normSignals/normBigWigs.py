@@ -47,7 +47,7 @@ def process(args, expID):
     return 0
 
 def build(args):
-    jr = JobRunner(cpus = 1)
+    jr = JobRunner(cpus = args.j)
 
     epigenomes = WebEpigenomesLoader(args)
     for assembly in ["hg19", "mm10", "mm9"]:
