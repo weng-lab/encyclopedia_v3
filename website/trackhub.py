@@ -187,6 +187,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         if not exp:
             return None, None, None
 
+        assay = "DNase"
         bigWigs = bigWigFilters(self.assembly, exp.files)
 
         if not bigWigs:
@@ -194,11 +195,11 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         bigWig = bigWigs[0]
 
         url = bigWig.url
-        if "mm10" == self.assembly and "released" != bigWig.file_status:
-            url = os.path.join(BIB5, "data", bigWig.expID, bigWig.fileID + ".bigWig")
+        if not self.urlStatus.find(url):
+            url = os.path.join(BIB5, "data", bigWig.expID,
+                               bigWig.fileID + ".bigWig")
 
         if norm:
-            assay = "DNase"
             if exp.isH3K27ac():
                 assay = "H3K27ac"
             if "mm9" == self.assembly or "mm10" == self.assembly:
@@ -210,6 +211,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
                     url = os.path.join(BIB5, "roadmap_norm/consolidated/",
                                        bigWig.expID,
                                        bigWig.fileID + '-' + assay + ".fc.signal.norm.bigWig")
+
         if exp.isH3K27ac():
             name = "H3K27ac Signal"
             color = "18,98,235"
