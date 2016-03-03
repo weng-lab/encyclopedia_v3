@@ -37,6 +37,7 @@ def process(args, expID):
         else:
             cmds = [normBin,
                     "--assembly=" + bwAssembly,
+                    "--bwFnp=" + bigWig.normFnp(),
                     bigWigFnp]
             print "running", cmds
             print Utils.runCmds(cmds)
@@ -62,15 +63,16 @@ def build(args):
                                  "--assembly", assembly, "--process"]])
                     else:
                         # ROADMAP
-                        bigWigFnp, bwAssembly = exp.getSingleBigWigSingleFnp()
-                        if not bigWigFnp:
+                        bigWig = exp.files[0]
+                        if not bigWig:
                             print "missing", exp
                         else:
-                            jr.append([
-                                    [normBin,
-                                     "--assembly=" + bwAssembly,
-                                     bigWigFnp]])
-
+                            if not os.path.exists(bigWig.normFnp()):
+                                jr.append([
+                                        [normBin,
+                                         "--assembly=" + bigWig.assembly,
+                                         "--bwFnp=" + bigWig.normFnp(),
+                                         bigWig.fnp()]])
     if args.test:
         return jr.runOne()
 

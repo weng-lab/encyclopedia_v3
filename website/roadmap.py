@@ -26,7 +26,7 @@ class RoadmapExp:
             if "DNase-seq" == assay_term_name:
                 fn = eid + "-DNase.fc.signal.bigwig"
 
-            expF = ExpFile.fromRoadmap(eid)
+            expF = ExpFile.fromRoadmap(eid, self.assay_term_name)
             expF.url = os.path.join(UrlBase, fn)
             expF.output_type = "fold change over control"
             expF.file_type = "bigWig"

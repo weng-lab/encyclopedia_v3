@@ -15,6 +15,7 @@
 
 #include <zi/zargs/zargs.hpp>
 ZiARG_string(assembly, "", "assembly");
+ZiARG_string(bwFnp, "", "bigWig output name");
 ZiARG_bool(debug, false, "debug");
 
 #include "cpp/files.hpp"
@@ -27,12 +28,13 @@ namespace a = arma;
 
 class Norm{
     const bfs::path inFnp_;
+    const bfs::path bwFnp_;
     const std::string assembly_;
     bfs::path chrLenFnp_;
     bfs::path blacklistFnp_;
-    bfs::path outFnp_;
 
-    std::map<std::string, std::vector<zentlib::Interval>> bwData_;
+    using BwDataT = std::map<std::string, std::vector<zentlib::Interval>>;
+
     uint64_t totalBases_ = 0;
     float mean_ = 0;
     float stddev_ = 0;
@@ -40,14 +42,14 @@ class Norm{
     float max_ = 0;
     uint64_t blacklistedBases_ = 0;
 
-    void loadData(){
+    void loadData(BwDataT& bwData){
         std::cout << "loading data..." << std::endl;
 
         zentlib::BigWig bw(inFnp_);
         for(const auto& chrAndSize : bw.ChromsAndSizes()){
             auto chr = chrAndSize.first;
             totalBases_ += chrAndSize.second + 1;
-            bwData_[chr] = bw.Data(chr);
+            bwData[chr] = bw.Data(chr);
         }
     }
 
@@ -78,14 +80,14 @@ class Norm{
         return ret;
     }
 
-    void calcMeanStddev(){
+    void calcMeanStddev(BwDataT& bwData){
         std::cout << "loading IDR blacklist..." << std::endl;
         const auto unmappable = blacklisted();
 
         std::cout << "combining all values..." << std::endl;
         std::vector<float> values;
         values.reserve(totalBases_);
-        for(const auto& chrAndData : bwData_){
+        for(const auto& chrAndData : bwData){
             auto& intervals = chrAndData.second;
             for(size_t i = 0; i < intervals.size(); ++i){
                 const auto& d = intervals[i];
@@ -106,22 +108,27 @@ class Norm{
     void writeStats(std::vector<float>& values){
         std::cout << "computing min/max/mean/stddev..." << std::endl;
         a::fvec av(values.data(), values.size(), false, true);
+
         mean_ = a::mean(av);
         stddev_ = a::stddev(av);
         min_ = a::min(av);
         max_ = a::max(av);
-
         std::cout << "min: " << min_ << std::endl;
         std::cout << "max: " << max_ << std::endl;
         std::cout << "mean: " << mean_ << std::endl;
         std::cout << "stddev: " << stddev_ << std::endl;
         std::cout << "# of blacklist bases: " << blacklistedBases_ << std::endl;
+
         av = (av - mean_) / stddev_;
 
         const float after_mean = a::mean(av);
         const float after_stddev = a::stddev(av);
         const float after_min = a::min(av);
         const float after_max = a::max(av);
+        std::cout << "after_min: " << after_min << std::endl;
+        std::cout << "after_max: " << after_max << std::endl;
+        std::cout << "after_mean: " << after_mean << std::endl;
+        std::cout << "after_stddev: " << after_stddev << std::endl;
 
         Json::Value info;
         info["before-max"] = max_;
@@ -134,8 +141,9 @@ class Norm{
         info["after-stddev"] = after_stddev;
         info["numBlacklistedBases"] = Json::UInt64{blacklistedBases_};
         info["totalBases"] = Json::UInt64{values.size()};
-        bfs::path outFnp = outFnp_.string() + ".json";
+
         {
+            bfs::path outFnp = bwFnp_.string() + ".json";
             std::ofstream out(outFnp.string());
             if(!out.is_open()){
                 throw std::runtime_error("could not open file " + outFnp.string());
@@ -146,10 +154,10 @@ class Norm{
         }
     }
 
-    void normalize(){
+    void normalize(BwDataT& bwData){
         // z-score normalize
         std::cout << "transforming..." << std::endl;
-        for(auto& chrAndData : bwData_){
+        for(auto& chrAndData : bwData){
             auto& intervals = chrAndData.second;
             //std::cout << "\t" << chrAndData.first << std::endl;
             #pragma omp parallel for
@@ -161,15 +169,15 @@ class Norm{
         }
     }
 
-    void writeBed(bfs::path outFnp){
+    void writeBed(const BwDataT& bwData, bfs::path bedFnp){
         std::cout << "writing transformed bed..." << std::endl;
 
-        std::ofstream out(outFnp.string());
+        std::ofstream out(bedFnp.string());
         if(!out.is_open()){
             throw std::runtime_error("could not open file " +
-                                     outFnp.string());
+                                     bedFnp.string());
         }
-        for(auto& chrAndData : bwData_){
+        for(auto& chrAndData : bwData){
             //std::cout << "\t" << chrAndData.first << std::endl;
             for(auto& d : chrAndData.second){
                 if(0 == d.val){
@@ -182,20 +190,19 @@ class Norm{
             }
         }
         out.close();
-        std::cout << "wrote " << outFnp << std::endl;
+        std::cout << "wrote " << bedFnp << std::endl;
     }
 
-    void writeBigWig(const bfs::path outFnp){
-        bfs::path bwFnp = outFnp;
-        bwFnp.replace_extension(".bigWig");
+    void writeBigWig( bfs::path bedFnp){
         std::cout << "writing bigWig..." << std::endl;
-        zentlib::BigWig::BedToBigWig(outFnp, bwFnp, chrLenFnp_);
-        std::cout << "wrote " << bwFnp << std::endl;
+        zentlib::BigWig::BedToBigWig(bedFnp, bwFnp_, chrLenFnp_);
+        std::cout << "wrote " << bwFnp_ << std::endl;
     }
 
 public:
-    Norm(std::string inFnp, std::string assembly)
+    Norm(std::string inFnp, std::string bwFnp, std::string assembly)
         : inFnp_(inFnp)
+        , bwFnp_(bwFnp)
         , assembly_(assembly)
     {
         bfs::path genomeFnp = "/project/umw_zhiping_weng/0_metadata/genome/";
@@ -224,13 +231,7 @@ public:
                 throw std::runtime_error("missing " + blacklistFnp_.string());
         }
 
-        outFnp_ = str::replace(inFnp_.string(),
-                               "encode/data/", "encode/norm/");
-        outFnp_ = str::replace(outFnp_.string(),
-                              "roadmap/data/consolidated",
-                              "roadmap/data/norm/consolidated");
-        outFnp_.replace_extension(".norm.bed");
-        files::ensureDir(outFnp_);
+        files::ensureDir(bwFnp_);
     }
 
     void run(){
@@ -239,11 +240,18 @@ public:
                                      inFnp_.string());
         }
 
-        loadData();
-        calcMeanStddev();
-        normalize();
-        writeBed(outFnp_);
-        writeBigWig(outFnp_);
+        bfs::path bedFnp(bwFnp_);
+        bedFnp.replace_extension(".norm.bed");
+
+        {
+            BwDataT bwData;
+            loadData(bwData);
+            calcMeanStddev(bwData);
+            normalize(bwData);
+            writeBed(bwData, bedFnp);
+        }
+
+        writeBigWig(bedFnp);
     }
 };
 
@@ -253,7 +261,7 @@ int main(int argc, char** argv){
     zi::parse_arguments(argc, argv, true);  // modifies argc and argv
     const auto args = std::vector<std::string>(argv + 1, argv + argc);
 
-    bib::Norm n(args.at(0), ZiARG_assembly);
+    bib::Norm n(args.at(0), ZiARG_bwFnp, ZiARG_assembly);
     n.run();
 
     return 0;
