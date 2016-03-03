@@ -188,6 +188,9 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
             return None, None, None
 
         assay = "DNase"
+        if exp.isH3K27ac():
+            assay = "H3K27ac"
+
         bigWigs = bigWigFilters(self.assembly, exp.files)
 
         if not bigWigs:
@@ -195,13 +198,11 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         bigWig = bigWigs[0]
 
         url = bigWig.url
-        if not self.urlStatus.find(url):
+        if self.urlStatus.find(url) and not self.urlStatus.get(url):
             url = os.path.join(BIB5, "data", bigWig.expID,
                                bigWig.fileID + ".bigWig")
 
         if norm:
-            if exp.isH3K27ac():
-                assay = "H3K27ac"
             if "mm9" == self.assembly or "mm10" == self.assembly:
                 url = os.path.join(BIB5, "encode_norm", bigWig.expID, bigWig.fileID + ".norm.bigWig")
             else:
@@ -277,7 +278,7 @@ html examplePage
             if not self.urlStatus.find(url):
                 self.urlStatus.insertOrUpdate(url,
                                               Utils.checkIfUrlExists(url))
-            if self.urlStatus.find(url):
+            if self.urlStatus.get(url):
                 return ""
             return url
 
