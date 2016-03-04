@@ -91,13 +91,21 @@ class Norm{
             auto& intervals = chrAndData.second;
             for(size_t i = 0; i < intervals.size(); ++i){
                 const auto& d = intervals[i];
-                const auto& chrBlacklist = unmappable.at(chrAndData.first);
-                for (uint32_t i = d.start; i < d.end; ++i) {
-                    if(unlikely(1 == chrBlacklist.count(i))){
-                        ++blacklistedBases_;
-                        continue;
+                const auto& chr = chrAndData.first;
+                if(1 == unmappable.count(chr)){
+                    const auto& chrBlacklist = unmappable.at(chr);
+                    for (uint32_t i = d.start; i < d.end; ++i) {
+                        if(unlikely(1 == chrBlacklist.count(i))){
+                            ++blacklistedBases_;
+                            continue;
+                        }
+                        values.push_back(d.val);
                     }
-                    values.push_back(d.val);
+                } else{
+                    //std::cout << "missing " << chr << std::endl;
+                    for (uint32_t i = d.start; i < d.end; ++i) {
+                        values.push_back(d.val);
+                    }
                 }
             }
         }

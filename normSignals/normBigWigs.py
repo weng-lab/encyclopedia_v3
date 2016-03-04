@@ -39,11 +39,12 @@ def process(args, expID):
                     "--assembly=" + bwAssembly,
                     "--bwFnp=" + bigWig.normFnp(),
                     bigWigFnp]
-            return Utils.runCmds(cmds)
+            print " ".join(cmds)
+            print Utils.runCmds(cmds)
+            return 0
     except Exception, e:
         print "bad " + str(e)
-        return 1
-    return 0
+    return 1
 
 def build(args):
     jr = JobRunner(cpus = args.j)
