@@ -71,6 +71,7 @@ class Ontology:
         t = t.replace(" of body", "")
         t = t.replace("skeletal muscle", "muscle")
         t = t.replace("muscle organ", "muscle")
+        t = t.replace("gi", "intestine")
         return t
 
     def getTissueActual(self, epi):
