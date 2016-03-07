@@ -48,6 +48,38 @@ function select(devPt, checked){
         .prop('checked', checked);
 }
 
+function processFormSubmitRet(event, local_url){
+    event.preventDefault();
+
+    $("#errBox").hide()
+
+    var formData = $("#searchForm").serializeJSON();
+
+    $.ajax({
+        type: "POST",
+        url: local_url,
+        data: formData,
+        dataType: "json",
+        contentType : "application/json",
+        async: false, // http://stackoverflow.com/a/20235765
+        success: function(got){
+            console.log("hi!");
+
+            if("err" in got){
+                $("#errMsg").text(got["err"]);
+                $("#errBox").show()
+                return true;
+            }
+
+            if("url" in got){
+                return window.open(got["url"], '_blank');
+            }
+            var w = window.open();
+            $(w.document.body).html(got["html"]);
+        }
+    });
+}
+
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip()
 
@@ -86,34 +118,12 @@ $(document).ready(function(){
         new Tablesort(obj);
     });
 
-    $( "#searchForm" ).submit(function( event ) {
-        event.preventDefault();
+    $("#searchForm").submit(function(event) {
+        processFormSubmitRet(event, "ucsc");
+    });
 
-        $("#errBox").hide()
-
-        var formData = $("#searchForm").serializeJSON();
-
-        $.ajax({
-            type: "POST",
-            url: "ucsc",
-            data: formData,
-            dataType: "json",
-            contentType : "application/json",
-            async: false, // http://stackoverflow.com/a/20235765
-            success: function(got){
-                if("err" in got){
-                    $("#errMsg").text(got["err"]);
-                    $("#errBox").show()
-                    return true;
-                }
-
-                if("url" in got){
-                    return window.open(got["url"], '_blank');
-                }
-                var w = window.open();
-                $(w.document.body).html(got["html"]);
-            }
-        });
+    $("#washuSubmit").click(function(event) {
+        processFormSubmitRet(event, "washu");
     });
 
     $("#selectIntersect").click(function() {

@@ -89,6 +89,32 @@ class AnnotationSearchUcsc(object):
         return {"url" : url}
 
     @cherrypy.expose
+    @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
+    def washu(self, *args, **params):
+        uid = self.sessions.get(cherrypy.session.id)
+        if not uid:
+            uid = self.makeUid()
+            cherrypy.session["uid"] = uid
+            self.sessions.insertOrUpdate(cherrypy.session.id, uid)
+
+        input_json = cherrypy.request.json
+
+        us = UcscSearch(self.wepigenomes, self.db, self.dbSnps, self.genes,
+                        self.host, self.args, input_json, uid)
+        us.parse()
+        url = us.configureWashuHubLink()
+
+        if us.psb.userErrMsg:
+            return { "err" : us.psb.userErrMsg }
+
+        if self.args.debug:
+            return {"html" : self.templates("ucsc",
+                                            us = us,
+                                            url = url)}
+        return {"url" : url}
+
+    @cherrypy.expose
     def trackhubCustom(self, *args, **params):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
