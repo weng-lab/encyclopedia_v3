@@ -17,9 +17,9 @@ def job(args):
         with open(outFnp, 'w') as outF:
             for idx, line in enumerate(inF):
                 toks = line.rstrip().split('\t')
-                attrs = "id:"+str(idx)
+                attrs = "id:"+str(idx)+',name:"'+toks[3]+'"'
                 if 8 == len(toks):
-                    attrs += ",struct:{{thin:[],thick:[[{s},{e}]]}}".format(s=toks[6], e=toks[7])
+                    attrs += ",struct:{{thick:[[{s},{e}],],}}".format(s=toks[6], e=toks[7])
                 out = toks[:3] + [attrs]
                 outF.write("\t".join(out) + '\n')
     Utils.sortFile(outFnp)
