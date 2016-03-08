@@ -140,8 +140,15 @@ $(document).ready(function(){
                 if("err" in got){
                     $("#errMsg").text(got["err"]);
                     $("#errBox").show()
-                    $('#wait').fadeOut( "slow", function() {});
                     return true;
+                }
+
+                if("ret" in got){
+                    if(null == got["ret"]){
+                        $("#errMsg").text("not found");
+                        $("#errBox").show()
+                        return true;
+                    }
                 }
 
                 var assembly = activeAssembly()
@@ -156,15 +163,15 @@ $(document).ready(function(){
                             .prop('checked', true);
                     });
                 });
-                $('#wait').fadeOut( "slow", function() {
-                    // Animation complete.
-                });
-
                 if(0 == got["ret"]["total"]){
                     $("#errMsg").text("No intersecting peaks found");
                     $("#errBox").show()
                 }
             }
+        }).always(function(){
+            $('#wait').fadeOut( "slow", function() {
+                // Animation complete.
+            });
         });
     });
 
