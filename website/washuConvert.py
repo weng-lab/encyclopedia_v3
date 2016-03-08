@@ -23,10 +23,9 @@ def main():
             with open(outFnp, 'w') as outF:
                 for idx, line in enumerate(inF):
                     toks = line.rstrip().split('\t')
-                    if 4 == len(toks):
-                        out = toks + [str(idx), '.']
+                    out = toks[:3] + ["id:"+str(idx)]
                     if 8 == len(toks):
-                        out = toks[:3] + ["struct:{thin:[],thick:[[{s},{e}]]}".format(s=toks[6], e=toks[7])]
+                        out += ["struct:{thin:[],thick:[[{s},{e}]]}".format(s=toks[6], e=toks[7])]
                     outF.write("\t".join(out) + '\n')
         Utils.sortFile(outFnp)
         printWroteNumLines(outFnp)
