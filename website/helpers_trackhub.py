@@ -102,8 +102,11 @@ class Track(object):
         if not self.type:
             raise Exception("unknown type")
         url = self.url
+        typee = self.type
+        if "bigBed 8" == typee:
+            typee = "hammock"
         track = {"name" : self.desc,
-                 "type" : self.type,
+                 "type" : typee,
                  "mode" : "show",
                  #"priority " + str(self.priority),
                  "url" : url}
@@ -117,10 +120,7 @@ class PredictionTrack(Track):
     def __init__(self, desc, priority, url):
         super(PredictionTrack, self).__init__(desc, priority, url)
         self.color = "6,218,147"
-        if url.endswith(".bed") or url.endswith(".bed.gz"):
-            self.type = "bed"
-        else:
-            self.type = "bigBed 8"
+        self.type = "bigBed 8"
 
 class VistaTrack(Track):
     def __init__(self, desc, priority, url):
