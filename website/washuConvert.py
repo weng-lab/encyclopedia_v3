@@ -25,6 +25,7 @@ def main():
                     toks = line.rstrip().split('\t')
                     toks + [str(idx), '.']
                     outF.write("\t".join(toks) + '\n')
+        Utils.sortFile(outFnp)
         printWroteNumLines(outFnp)
 
         cmds = ["bgzip", '-f', outFnp]
