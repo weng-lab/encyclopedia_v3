@@ -147,7 +147,7 @@ class TrackHubWashu:
         bigWig = bigWigs[0]
 
         url = bigWig.url
-        if self.urlStatus.find(url) and not self.urlStatus.get(url):
+        if 1: #self.urlStatus.find(url) and not self.urlStatus.get(url):
             url = os.path.join(BIB5, "data", bigWig.expID,
                                bigWig.fileID + ".bigWig")
 

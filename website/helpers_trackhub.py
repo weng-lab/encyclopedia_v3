@@ -101,7 +101,7 @@ class Track(object):
     def track_washu(self):
         if not self.type:
             raise Exception("unknown type")
-        url = self.url.replace("?proxy=true", "")
+        url = self.url
         track = {"name" : self.desc,
                  "type" : self.type,
                  "mode" : "show",
