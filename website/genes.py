@@ -28,6 +28,17 @@ WHERE gene = %(gene)s
                 return curs.fetchall()
             return None
 
+    def fuzzy_lookup(self, assembly, gene):
+        with getcursor(self.DBCONN, "lookup") as curs:
+            curs.execute("""
+SELECT gene FROM {table}
+WHERE gene ~ %(gene)s
+""".format(table=self.tableNames[assembly]),
+                             {"gene" : gene})
+            if (curs.rowcount > 0):
+                return [x[0] for x in curs.fetchall()]
+            return None
+
 def setupAndCopy(cur, fnp, fileType, table_name):
     print "loading", fnp
 

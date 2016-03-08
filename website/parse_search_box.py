@@ -64,9 +64,14 @@ class ParseSearchBox:
     def parseGene(self):
         genes = self.genes.lookup(self.assembly, self.loci)
         if not genes:
+            genes = self.genes.fuzzy_lookup(self.assembly, self.loci)
+            if not genes:
+                self.userErrMsg = "'{loci}' not found".format(loci=self.loci)
+            else:
+                self.userErrMsg = "'{loci}' not found; potential matches: {genes}".format(loci=self.loci, genes=", ".join(sorted(genes)))
             return None
 
-        if 0 and len(genes) > 1:
+        if len(genes) > 1:
             self.userErrMsg = "Multiple genomic positions found; using first found..."
             return None
 
