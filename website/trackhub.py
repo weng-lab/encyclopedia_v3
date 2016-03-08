@@ -3,24 +3,12 @@
 import os, sys, json
 import StringIO
 
-from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters
+from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from utils import Utils
 from files_and_paths import Dirs
 from web_epigenomes import WebEpigenome
-
-BIB5 = "http://bib5.umassmed.edu/~purcarom/annotations_demo/"
-
-class TempWrap:
-    def __init__(self, expID, fileID):
-        self.expID = expID
-        self.fileID = fileID
-        self.url = os.path.join(BIB5, "data", expID, fileID + ".bigWig")
-        self.file_status = "not known"
-
-    def isBigWig(self):
-        return self.url.endswith(".bigWig")
 
 class TrackHub:
     def __init__(self, args, epigenomes, urlStatus, row):

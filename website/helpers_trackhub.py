@@ -1,3 +1,20 @@
+BIB5 = "http://bib5.umassmed.edu/~purcarom/annotations_demo/"
+
+class TempWrap:
+    def __init__(self, expID, fileID):
+        self.expID = expID
+        self.fileID = fileID
+        self.url = os.path.join(BIB5, "data", expID, fileID + ".bigWig")
+        self.file_status = "not known"
+
+    def isBigWig(self):
+        return self.url.endswith(".bigWig")
+
+def rgb_to_hex(rgbStr):
+    # from http://stackoverflow.com/a/214657
+    rgb = tuple([int(x) for x in rgbStr.split(',')])
+    return '#%02x%02x%02x' % rgb
+
 def bedFilters(assembly, files):
     files = filter(lambda x: x.assembly == assembly, files)
     bfs = [lambda x: x.isBedNarrowPeak() and '1' in x.bio_rep and '2' in x.bio_rep,
@@ -81,11 +98,29 @@ class Track(object):
         track += ["\n"]
         return "\n".join(track)
 
+    def track_washu(self):
+        if not self.type:
+            raise Exception("unknown type")
+        url = self.url.replace("?proxy=true", "")
+        track = {"name" : self.desc,
+                 "type" : self.type,
+                 "mode" : "show",
+                 #"priority " + str(self.priority),
+                 "url" : url}
+        if self.color:
+            track["colorpositive"] = rgb_to_hex(self.color)
+        if self.height:
+            track["height"] = int(self.height.split(':')[1])
+        return track
+
 class PredictionTrack(Track):
     def __init__(self, desc, priority, url):
         super(PredictionTrack, self).__init__(desc, priority, url)
         self.color = "6,218,147"
-        self.type = "bigBed 8"
+        if url.endswith(".bed") or url.endswith(".bed.gz"):
+            self.type = "bed"
+        else:
+            self.type = "bigBed 8"
 
 class VistaTrack(Track):
     def __init__(self, desc, priority, url):

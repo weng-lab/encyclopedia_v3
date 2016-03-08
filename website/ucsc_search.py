@@ -89,8 +89,6 @@ class UcscSearch:
         return url
 
     def configureWashuHubLink(self):
-        ucscParams = self.ucscParams()
-
         self.trackdbUrl = os.path.join(self.host,
                                        "trackhub_washu",
                                        self.uid,
@@ -100,7 +98,8 @@ class UcscSearch:
 
         urlBase = "http://epigenomegateway.wustl.edu/browser/"
         assembly = "?genome=" + self.psb.assembly
-        trackhub = "&datahub_ucsc=" + self.trackdbUrl
+        trackhub = "&datahub=" + self.trackdbUrl
+        coord = "&coordinate=" + str(self.coord)
 
-        url = urlBase + assembly + trackhub
+        url = urlBase + assembly + trackhub + coord
         return url

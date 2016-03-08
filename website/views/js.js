@@ -63,8 +63,6 @@ function processFormSubmitRet(event, local_url){
         contentType : "application/json",
         async: false, // http://stackoverflow.com/a/20235765
         success: function(got){
-            console.log("hi!");
-
             if("err" in got){
                 $("#errMsg").text(got["err"]);
                 $("#errBox").show()

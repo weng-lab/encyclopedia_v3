@@ -84,7 +84,8 @@ class AnnotationSearchUcsc(object):
             return { "err" : us.psb.userErrMsg }
 
         if self.args.debug:
-            return {"html" : self.templates("ucsc",
+            return {"inner-url" : url,
+                    "html" : self.templates("ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
@@ -110,7 +111,8 @@ class AnnotationSearchUcsc(object):
             return { "err" : us.psb.userErrMsg }
 
         if self.args.debug:
-            return {"html" : self.templates("ucsc",
+            return {"inner-url" : url,
+                    "html" : self.templates("ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
