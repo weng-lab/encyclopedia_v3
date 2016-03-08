@@ -27,11 +27,16 @@ namespace bib {
 namespace a = arma;
 
 struct Stats {
-    float min_ = 0;
-    float max_ = 0;
-    float mean_ = 0;
-    float stddev_ = 0;
-}
+    double min_ = 0;
+    double max_ = 0;
+    double mean_ = 0;
+    double stddev_ = 0;
+
+    Stats(){}
+    Stats(double mmin, double mmax, double mmean, double stddev)
+        : min_(mmin), max_(mmax), mean_(mmean), stddev_(stddev)
+    {}
+};
 
 class Norm{
     const bfs::path inFnp_;
@@ -126,14 +131,11 @@ class Norm{
     }
 
     Stats calcAndShowAndStore(std::string prefix, const a::fvec& av){
-        Stats s{a::min(av),
-                a::max(av),
-                a::mean(av),
-                a::stddev(av)};
-        showAndStore(prefix + "-min", s.min);
-        showAndStore(prefix + "-max", s.max);
-        showAndStore(prefix + "-mean", s.mean);
-        showAndStore(prefix + "-stddev", s.stddev);
+        Stats s(a::min(av), a::max(av), a::mean(av), a::stddev(av));
+        showAndStore(prefix + "-min", s.min_);
+        showAndStore(prefix + "-max", s.max_);
+        showAndStore(prefix + "-mean", s.mean_);
+        showAndStore(prefix + "-stddev", s.stddev_);
         return s;
     }
 
@@ -141,29 +143,16 @@ class Norm{
         std::cout << "computing min/max/mean/stddev..." << std::endl;
         a::fvec av(values.data(), values.size(), false, true);
 
-        Stats initial = calcAndShowAndStore("initial", av);
+        calcAndShowAndStore("initial", av);
 
-        av = (av - mean_) / stddev_;
+        av = a::asinh(av);
+        Stats postAsinh = calcAndShowAndStore("after_asinh", av);
 
-        const float after_mean = a::mean(av);
-        const float after_stddev = a::stddev(av);
-        const float after_min = a::min(av);
-        const float after_max = a::max(av);
-        std::cout << "after_min: " << after_min << std::endl;
-        std::cout << "after_max: " << after_max << std::endl;
-        std::cout << "after_mean: " << after_mean << std::endl;
-        std::cout << "after_stddev: " << after_stddev << std::endl;
+        av = (av - postAsinh.mean_) / postAsinh.stddev_;
+        calcAndShowAndStore("after_asinh_zscore", av);
 
-        info["before-max"] = max_;
-        info["before-min"] = min_;
-        info["before-mean"] = mean_;
-        info["before-stddev"] = stddev_;
-        info["after-max"] = after_max;
-        info["after-min"] = after_min;
-        info["after-mean"] = after_mean;
-        info["after-stddev"] = after_stddev;
-        info["numBlacklistedBases"] = Json::UInt64{blacklistedBases_};
-        info["totalBases"] = Json::UInt64{values.size()};
+        info_["numBlacklistedBases"] = Json::UInt64{blacklistedBases_};
+        info_["totalBases"] = Json::UInt64{values.size()};
 
         {
             bfs::path outFnp = bwFnp_.string() + ".json";
@@ -171,7 +160,7 @@ class Norm{
             if(!out.is_open()){
                 throw std::runtime_error("could not open file " + outFnp.string());
             }
-            out << info << "\n";
+            out << info_ << "\n";
             out.close();
             std::cout << "wrote: " << outFnp << std::endl;
         }
@@ -186,7 +175,7 @@ class Norm{
             #pragma omp parallel for
             for(size_t i = 0; i < intervals.size(); ++i){
                 auto& d = intervals[i];
-                d.val = (d.val - mean_) / stddev_;
+                d.val = (std::asinh(d.val) - stats_.mean_) / stats_.stddev_;
                 d.val = clamp(d.val, -100.0, 100.0); // ignore extremes
             }
         }
