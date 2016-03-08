@@ -26,6 +26,13 @@ namespace bib {
 
 namespace a = arma;
 
+struct Stats {
+    float min_ = 0;
+    float max_ = 0;
+    float mean_ = 0;
+    float stddev_ = 0;
+}
+
 class Norm{
     const bfs::path inFnp_;
     const bfs::path bwFnp_;
@@ -36,10 +43,6 @@ class Norm{
     using BwDataT = std::map<std::string, std::vector<zentlib::Interval>>;
 
     uint64_t totalBases_ = 0;
-    float mean_ = 0;
-    float stddev_ = 0;
-    float min_ = 0;
-    float max_ = 0;
     uint64_t blacklistedBases_ = 0;
 
     void loadData(BwDataT& bwData){
@@ -113,19 +116,32 @@ class Norm{
         writeStats(values);
     }
 
+    Json::Value info_;
+    Stats stats_;
+
+    template <typename T>
+    void showAndStore(const std::string key, const T value){
+        std::cout << key << ": " << value << std::endl;
+        info_[key] = value;
+    }
+
+    Stats calcAndShowAndStore(std::string prefix, const a::fvec& av){
+        Stats s{a::min(av),
+                a::max(av),
+                a::mean(av),
+                a::stddev(av)};
+        showAndStore(prefix + "-min", s.min);
+        showAndStore(prefix + "-max", s.max);
+        showAndStore(prefix + "-mean", s.mean);
+        showAndStore(prefix + "-stddev", s.stddev);
+        return s;
+    }
+
     void writeStats(std::vector<float>& values){
         std::cout << "computing min/max/mean/stddev..." << std::endl;
         a::fvec av(values.data(), values.size(), false, true);
 
-        mean_ = a::mean(av);
-        stddev_ = a::stddev(av);
-        min_ = a::min(av);
-        max_ = a::max(av);
-        std::cout << "min: " << min_ << std::endl;
-        std::cout << "max: " << max_ << std::endl;
-        std::cout << "mean: " << mean_ << std::endl;
-        std::cout << "stddev: " << stddev_ << std::endl;
-        std::cout << "# of blacklist bases: " << blacklistedBases_ << std::endl;
+        Stats initial = calcAndShowAndStore("initial", av);
 
         av = (av - mean_) / stddev_;
 
@@ -138,7 +154,6 @@ class Norm{
         std::cout << "after_mean: " << after_mean << std::endl;
         std::cout << "after_stddev: " << after_stddev << std::endl;
 
-        Json::Value info;
         info["before-max"] = max_;
         info["before-min"] = min_;
         info["before-mean"] = mean_;
