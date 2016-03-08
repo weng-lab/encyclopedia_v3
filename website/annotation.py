@@ -12,6 +12,7 @@ from ucsc_search import UcscSearch
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from utils import Utils
 from trackhub import TrackHub
+from trackhub_washu import TrackHubWashu
 from web_epigenomes import WebEpigenomesLoader
 from dbsnps import dbSnps
 from defaults import Defaults
@@ -136,6 +137,20 @@ class AnnotationSearchUcsc(object):
             raise Exception("uuid not found")
 
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
+
+        path = args[1:]
+        return th.ParsePath(path)
+
+    @cherrypy.expose
+    def trackhub_washu(self, *args, **params):
+        cherrypy.response.headers['Content-Type'] = 'text/plain'
+
+        uid = args[0]
+        row = self.db.get(uid)
+        if not row:
+            raise Exception("uuid not found")
+
+        th = TrackHubWashu(self.args, self.wepigenomes, self.urlStatus, row)
 
         path = args[1:]
         return th.ParsePath(path)

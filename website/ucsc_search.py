@@ -91,15 +91,16 @@ class UcscSearch:
     def configureWashuHubLink(self):
         ucscParams = self.ucscParams()
 
-        self.trackhubUrl = os.path.join(self.host,
-                                        "trackhub",
-                                        self.uid,
-                                        "hub_{hubNum}.txt".format(hubNum =
+        self.trackdbUrl = os.path.join(self.host,
+                                       "trackhub_washu",
+                                       self.uid,
+                                       self.psb.assembly,
+                                       "trackDb_{hn}.json".format(hn =
                                                                   self.hubNum))
 
         urlBase = "http://epigenomegateway.wustl.edu/browser/"
         assembly = "?genome=" + self.psb.assembly
-        trackhub = "&datahub_ucsc=" + self.trackhubUrl
+        trackhub = "&datahub_ucsc=" + self.trackdbUrl
 
         url = urlBase + assembly + trackhub
         return url
