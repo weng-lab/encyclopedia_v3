@@ -177,3 +177,6 @@ input[type=checkbox]{
   height: 500px;
 }
 
+#sideWell {
+    text-align: center;
+}
