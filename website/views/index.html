@@ -66,12 +66,23 @@
           <span class="badge">2</span>&nbsp;Enter gene, SNP,<br>coordinate, or rank
         </button>
       </div>
-      <div class="col-md-8">
+      <div class="col-md-5">
         <br>
         <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
         <br>
         {% include "_examples.html" -%}
         <br>
+      </div>
+      <div class="col-md-5">
+        <div style="display: inline-block;">
+          <button class="btn btn-warning nohover" type="button">
+            <span class="badge">4</span>&nbsp;Open Genome<br>Browser
+          </button>
+          <div style="display: inline-block; vertical-align: middle;">
+            <input role="button" class="btn btn-success btn-sm" type="submit" value="UCSC" style="width: 85px;"><br>
+            <input role="button" class="btn btn-success btn-sm" id="washuSubmit" value="WashU" style="width: 85px; margin-top: 3px;">
+          </div>
+        </div>
       </div>
     </div>
 
@@ -93,15 +104,6 @@
       <div class="col-md-10">
         <div style="display: inline-block;">
           {% include "_cell_type_tables.html" -%}
-        </div>
-        <div style="display: inline-block;">
-          <button class="btn btn-warning nohover" type="button">
-            <span class="badge">4</span>&nbsp;Open Genome<br>Browser
-          </button>
-          <div style="display: inline-block; vertical-align: middle;">
-            <input role="button" class="btn btn-success btn-sm" type="submit" value="UCSC" style="width: 85px;"><br>
-            <input role="button" class="btn btn-success btn-sm" id="washuSubmit" value="WashU" style="width: 85px; margin-top: 3px;">
-          </div>
         </div>
       </div>
 
