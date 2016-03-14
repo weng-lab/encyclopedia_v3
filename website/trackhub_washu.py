@@ -58,7 +58,7 @@ class TrackHubWashu:
 
 #        if self.enableVistaTrack():
 #            ret += [self.vista()]
-#        ret += [self.phastcons()]
+        ret += [self.phastcons()]
 
         ret = filter(lambda x: x, ret)
 
