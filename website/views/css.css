@@ -109,7 +109,7 @@ input[type=checkbox]{
     background-color: #337ab7;
 }
 
-.navbar-default .navbar-brand {
+.navbar-default .navbar-nav>li>a {
     color: white;
 }
 
