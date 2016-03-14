@@ -107,6 +107,7 @@ input[type=checkbox]{
 
 #navbar-main {
     background-color: #337ab7;
+    margin-bottom: 0px;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -179,6 +180,7 @@ input[type=checkbox]{
 
 #sideWell {
     text-align: center;
+
 }
 
 .inner-item {
