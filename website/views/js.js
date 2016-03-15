@@ -182,6 +182,16 @@ $(document).ready(function(){
     });
 
     $("#firstGalleryPane").click(function(event){
+        // mm10 at
+        var fd = {"assembly":"mm10",
+                  "loci":"chr19:26839562-26851786",
+                  "assays":"Both",
+                  "mm10Both":["neural_tube_embryonic_11_5_day"]
+                 };
+        processFormSubmitRet(event, "washu", fd);
+    });
+
+    $("#secondGalleryPane").click(function(event){
         // hg19 at
         var fd = {"assembly":"hg19",
                   "loci":"rs11742570",
@@ -193,7 +203,7 @@ $(document).ready(function(){
         processFormSubmitRet(event, "ucsc", fd);
     });
 
-    $("#secondGalleryPane").click(function(event){
+    $("#thirdGalleryPane").click(function(event){
         // mm10 at
         var fd = {"assembly":"mm10",
                   "loci":"rs27106747",
