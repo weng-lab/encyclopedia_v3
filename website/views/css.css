@@ -107,7 +107,7 @@ input[type=checkbox]{
 
 #navbar-main {
     background-color: #337ab7;
-    margin-bottom: 0px;
+    margin-bottom: 5px;
 }
 
 .navbar-default .navbar-nav>li>a {
@@ -153,13 +153,20 @@ input[type=checkbox]{
     cursor:default !important;
 }
 
+#sideWell {
+    text-align: center;
+}
+
 /* CUSTOMIZE THE carousel-------------------------------------------------- */
 
 /* Carousel base class */
 .carousel {
-  height: 500px;
-  margin-bottom: 15px;
+  height: 345px;
+  margin-bottom: 5px;
+  background-color: #777;
+  padding-top: 5px;
 }
+
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
   z-index: 10;
@@ -167,29 +174,13 @@ input[type=checkbox]{
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  height: 500px;
   background-color: #777;
-}
-.carousel-inner > .item > img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  min-width: 100%;
-  height: 500px;
-}
-
-#sideWell {
-    text-align: center;
 }
 
 .inner-item {
     text-align: center;
-    img {
-        margin: 0 auto;
-    }
 }
 
-.carousel-indicators .active {
-    background-color: #black;
+.carousel-indicators {
+    bottom: 0px;
 }
-
