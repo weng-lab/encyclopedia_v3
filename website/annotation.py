@@ -19,17 +19,7 @@ from defaults import Defaults
 from parse_search_box import ParseSearchBox
 from genes import LookupGenes
 from epigenome_stats import EpigenomeStats
-
-class Templates:
-    def __init__(self, viewDir):
-        self.views = jinja2.Environment(loader=jinja2.FileSystemLoader(viewDir))
-
-    def __call__(self, t, **kwargs):
-        if "title" not in kwargs:
-            kwargs["title"] = ""
-        if "meta" not in kwargs:
-            kwargs["meta"] = []
-        return self.views.get_template(t+".html").render(kwargs)
+from templates import Templates
 
 class AnnotationSearchUcsc(object):
     def __init__(self, DBCONN, args):
