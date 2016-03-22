@@ -52,24 +52,8 @@
           <span class="badge">1</span>&nbsp;Select genome
         </button>
       </div>
-      <div class="col-md-8">
-        {% include '_genome_buttons.html' -%}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-2">
-        <br>
-        <button class="btn btn-warning nohover" type="button">
-          <span class="badge">2</span>&nbsp;Enter gene, SNP,<br>coordinate, or rank
-        </button>
-      </div>
       <div class="col-md-5">
-        <br>
-        <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
-        <br>
-        {% include "_examples.html" -%}
-        <br>
+        {% include '_genome_buttons.html' -%}
       </div>
       <div class="col-md-5">
         <div style="display: inline-block;">
@@ -81,6 +65,22 @@
             <input role="button" class="btn btn-success btn-sm" id="washuSubmit" value="WashU" style="width: 85px; margin-top: 3px;">
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2">
+        <br>
+        <button class="btn btn-warning nohover" type="button">
+          <span class="badge">2</span>&nbsp;Enter gene, SNP,<br>coordinate, or rank
+        </button>
+      </div>
+      <div class="col-md-6">
+        <br>
+        <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
+        <br>
+        {% include "_examples.html" -%}
+        <br>
       </div>
     </div>
 
