@@ -77,9 +77,12 @@ input[type=checkbox]{
 }
 
 #jumboHeader {
+    margin-top: 5px;
     padding-top: 10px;
     padding-bottom: 10px;
-    margin-bottom: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: #eee;
 }
 
 #jumboHeader p {
@@ -161,9 +164,10 @@ input[type=checkbox]{
 
 /* Carousel base class */
 .carousel {
+  margin-top: 5px;
   height: 345px;
   margin-bottom: 5px;
-  background-color: #777;
+  background-color: #eee;
   padding-top: 5px;
 }
 
@@ -174,7 +178,6 @@ input[type=checkbox]{
 
 /* Declare heights because of positioning of img element */
 .carousel .item {
-  background-color: #777;
 }
 
 .inner-item {
@@ -183,6 +186,19 @@ input[type=checkbox]{
 
 .carousel-indicators {
     bottom: 0px;
+}
+
+.carousel-indicators li {
+    background-color: #337ab7;
+}
+
+.carousel-indicators .active {
+    background-color: #337ab7;
+}
+
+.carousel-control.left, .carousel-control.right {
+    /* no gradient */
+    background-image: none
 }
 
 #encode_logo {
