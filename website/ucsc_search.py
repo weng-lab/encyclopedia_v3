@@ -17,6 +17,7 @@ class UcscSearch:
         self.args = args
         self.params = params
         self.uid = uid
+        self.coord = None
 
     def Coord(self):
         if self.coord:
