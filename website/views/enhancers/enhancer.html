@@ -3,15 +3,15 @@
     <div class="col-md-6">
       <div class="jumbotron" id="jumboHeader">
         <h3 style="margin-top: 0px;">Candidate enhancers based on DNase and H3K27ac signals</h3>
-        {% include 'enhancer/_blurb.html' -%}
+        {% include 'enhancers/_blurb.html' -%}
       </div>
       <a href="#search"></a>
       <span id="searchTitle"><p>Search Candidate Enhancers</span>
     </div>
     <div class="col-md-6">
-      {% include 'enhancer/_gallery.html' -%}
+      {% include 'enhancers/_gallery.html' -%}
       <div id="sideBox">
-        {% include 'enhancer/_side_blurb.html' -%}
+        {% include 'enhancers/_side_blurb.html' -%}
       </div>
     </div>
   </div>
@@ -33,7 +33,7 @@
         </button>
       </div>
       <div class="col-md-5">
-        {% include 'enhancer/_genome_buttons.html' -%}
+        {% include 'enhancers/_genome_buttons.html' -%}
       </div>
       <div class="col-md-5">
         <div style="display: inline-block;">
@@ -59,7 +59,7 @@
         <br>
         <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
         <br>
-        {% include 'enhancer/_examples.html' -%}
+        {% include 'enhancers/_examples.html' -%}
         <br>
       </div>
     </div>
@@ -68,7 +68,7 @@
       <div class="col-md-2">
       </div>
       <div class="col-md-8">
-        {% include 'enhancer/_cell_type_buttons.html' -%}
+        {% include 'enhancers/_cell_type_buttons.html' -%}
       </div>
     </div>
 
@@ -81,7 +81,7 @@
 
       <div class="col-md-10">
         <div style="display: inline-block;">
-          {% include 'enhancer/_cell_type_tables.html' -%}
+          {% include 'enhancers/_cell_type_tables.html' -%}
         </div>
       </div>
 
@@ -95,6 +95,6 @@
 <script>
   var selectorNames = {{epigenomes.SelectorNames()}};
   var annotationDefaults = {{defaults.json()}};
-  {% include 'enhancer/js.js' -%}
+  {% include 'enhancers/js.js' -%}
 </script>
 <script src="static/jquery.serialize-object.min.js"></script>

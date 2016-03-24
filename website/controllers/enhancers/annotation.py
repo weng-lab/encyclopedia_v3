@@ -186,3 +186,8 @@ class AnnotationSearchUcsc(object):
         missing = th.showMissing()
         return self.templates("missing",
                               missing = missing)
+
+    @cherrypy.expose
+    def methods(self, *args, **params):
+        return self.templates("enhancers/methods",
+                              stats = self.epigenome_stats)
