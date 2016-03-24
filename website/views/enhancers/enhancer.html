@@ -4,8 +4,6 @@
       <div class="jumbotron" id="jumboHeader">
         {% include 'enhancers/_blurb.html' -%}
       </div>
-      <a href="#search"></a>
-      <span id="searchTitle"><p>Search Candidate Enhancers</span>
     </div>
     <div class="col-md-4">
       {% include 'enhancers/_gallery.html' -%}
@@ -22,70 +20,66 @@
   </div>
 
   <form id="searchForm">
-    <div class="row">
-      <div class="col-md-2">
-        <button class="btn btn-warning nohover" type="button">
-          <span class="badge">1</span>&nbsp;Select genome
-        </button>
-      </div>
-      <div class="col-md-5">
-        {% include 'enhancers/_genome_buttons.html' -%}
-      </div>
-      <div class="col-md-5">
-        <div style="display: inline-block;">
+    <table id="formTable">
+      <tr>
+        <td colspan=2>
+          <a href="#search"></a>
+          <span id="searchTitle"><p>Search Candidate Enhancers</span>
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>
           <button class="btn btn-warning nohover" type="button">
-            <span class="badge">4</span>&nbsp;Open Genome<br>Browser
+            <span class="badge">1</span>&nbsp;Select genome
           </button>
-          <div style="display: inline-block; vertical-align: middle;">
-            <input role="button" class="btn btn-success btn-sm" type="submit" value="UCSC" style="width: 85px;"><br>
-            <input role="button" class="btn btn-success btn-sm" id="washuSubmit" value="WashU" style="width: 85px; margin-top: 3px;">
+        </td>
+        <td>
+          {% include 'enhancers/_genome_buttons.html' -%}
+        </td>
+        <td>
+          {% include 'enhancers/_browser_buttons.html' -%}
+        </td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>
+          <button class="btn btn-warning nohover" type="button">
+            <span class="badge">2</span>&nbsp;Enter gene, SNP,<br>coordinate, or rank
+          </button>
+        </td>
+        <td>
+          <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
+          <br>
+          {% include 'enhancers/_examples.html' -%}
+        </td>
+        <td></td>
+        <td></td>
+      </tr>
+
+      <tr>
+        <td>
+          <br>
+          <button class="btn btn-warning nohover" type="button">
+            <span class="badge">3</span>&nbsp;Select assays<br>and cell types
+          </button>
+        </td>
+        <td colspan=3>
+          <br>
+          {% include 'enhancers/_cell_type_buttons.html' -%}
+          <br>
+          <div style="display: inline-block;">
+            {% include 'enhancers/_cell_type_tables.html' -%}
           </div>
-        </div>
-      </div>
-    </div>
+        </td>
+      </tr>
 
-    <div class="row">
-      <div class="col-md-2">
-        <br>
-        <button class="btn btn-warning nohover" type="button">
-          <span class="badge">2</span>&nbsp;Enter gene, SNP,<br>coordinate, or rank
-        </button>
-      </div>
-      <div class="col-md-6">
-        <br>
-        <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
-        <br>
-        {% include 'enhancers/_examples.html' -%}
-        <br>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-2">
-      </div>
-      <div class="col-md-8">
-        {% include 'enhancers/_cell_type_buttons.html' -%}
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-md-2">
-        <button class="btn btn-warning nohover" type="button">
-          <span class="badge">3</span>&nbsp;Select assays<br>and cell types
-        </button>
-      </div>
-
-      <div class="col-md-10">
-        <div style="display: inline-block;">
-          {% include 'enhancers/_cell_type_tables.html' -%}
-        </div>
-      </div>
-
-    </div>
+    </table>
   </form>
 </div>
-
-<br>
 
 <script src="static/tablesort.min.js"></script>
 <script>

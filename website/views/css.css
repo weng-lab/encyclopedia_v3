@@ -177,8 +177,9 @@ input[type=checkbox]{
   z-index: 10;
 }
 
-/* Declare heights because of positioning of img element */
-.carousel .item {
+.carousel-inner > .item > img {
+    width: auto;
+    max-width: auto;
 }
 
 .inner-item {
@@ -259,4 +260,14 @@ input[type=checkbox]{
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
+}
+
+#formTable td {
+    padding-right: 25px;
+    vertical-align: top;
+}
+
+#browserButtons {
+    display: inline-block;
+    padding-left: 150px;
 }
