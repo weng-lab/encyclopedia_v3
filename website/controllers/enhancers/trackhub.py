@@ -5,12 +5,14 @@ import StringIO
 
 from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
+from models.enhancers.web_epigenomes import WebEpigenome
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
 from files_and_paths import Dirs
-from web_epigenomes import WebEpigenome
 
-class TrackHubWashu:
+class TrackHub:
     def __init__(self, args, epigenomes, urlStatus, row):
         self.args = args
         self.epigenomes = epigenomes
@@ -23,47 +25,86 @@ class TrackHubWashu:
 
         self.priority = 1
 
+    def Custom(self):
+        lines = []
+        #lines += ["browser hide all"]
+        #lines += ["browser pack knownGene refGene ensGene"]
+        #lines += ["browser dense snp128"]
+
+        f = StringIO.StringIO()
+        map(lambda line: f.write(line + "\n"), lines)
+
+        return f.getvalue()
+
     def ParsePath(self, path):
         if not path:
             raise Exception("no path")
 
+        if 1 == len(path):
+            if path[0].startswith("hub_") and path[0].endswith(".txt"):
+                return self.makeHub()
+            if path[0].startswith("genomes_") and path[0].endswith(".txt"):
+                return self.makeGenomes()
+            return "ERROR"
+
         if 2 != len(path):
-            raise Exception("invalid path length")
+            raise Exception("path too long")
 
         if path[0] in ["hg19", "hg38", "mm9", "mm10"]:
             if path[0] == self.assembly:
-                if path[1].startswith("trackDb_") and path[1].endswith(".json"):
+                if path[1].startswith("trackDb_") and path[1].endswith(".txt"):
                     return self.makeTrackDb()
 
         raise Exception("invalid path")
+
+    def makeHub(self):
+        f = StringIO.StringIO()
+        t = ""
+        if self.args.debug:
+            t += "debug "
+        t += "ENCODE Encyclopedia Annotations " + self.assembly
+        for r in [["hub", t],
+                  ["shortLabel", t],
+                  ["longLabel", t],
+                  ["genomesFile", "genomes_{hubNum}.txt".format(hubNum=self.hubNum)],
+                  ["email", "zhiping.weng@umassmed.edu"]]:
+            f.write(" ".join(r) + "\n")
+        return f.getvalue()
+
+    def makeGenomes(self):
+        return """genome\t{assembly}
+trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
+                                                   hubNum = self.hubNum)
 
     def makeTrackDb(self):
         epis = self.epigenomes.GetByAssemblyAndAssays(self.assembly, self.assays)
         epis = filter(lambda e: e.web_id() in self.tissue_ids, epis.epis)
 
-        ret = []
-        #ret += [self.genes()]
+        lines = []
+        lines += [self.genes()]
 
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
             if "Both" == self.assays:
-                ret += [self.predictionTrackHub(wepi)]
-                #ret += [self.compositeTrack(wepi)]
+                lines += [self.predictionTrackHub(wepi)]
+                lines += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
                 try:
-                    ret += [self.trackhubExp(exp)]
+                    lines += [self.trackhubExp(exp)]
                 except:
                     if self.args.debug:
                         raise
                     pass
 
-#        if self.enableVistaTrack():
-#            ret += [self.vista()]
-        ret += [self.phastcons()]
+        if self.enableVistaTrack():
+            lines += [self.vista()]
+        lines += [self.phastcons()]
 
-        ret = filter(lambda x: x, ret)
+        lines = filter(lambda x: x, lines)
 
         f = StringIO.StringIO()
-        return json.dumps(ret, f)
+        map(lambda line: f.write(line + "\n"), lines)
+
+        return f.getvalue()
 
     def enableVistaTrack(self):
         if "mm10" == self.assembly:
@@ -82,7 +123,7 @@ class TrackHubWashu:
 
         desc = "phastCons"
 
-        track = BigWigTrack(desc, self.priority, url, "0,255,0").track_washu()
+        track = BigWigTrack(desc, self.priority, url, "0,255,0").track()
         self.priority += 1
         return track
 
@@ -100,7 +141,7 @@ class TrackHubWashu:
                          "hg19" : os.path.join(BIB5, "genes", "gencode.v24.annotation.bb")}
         url = byAssemblyURl[self.assembly]
 
-        track = BigGenePredTrack(desc, self.priority, url).track_washu()
+        track = BigGenePredTrack(desc, self.priority, url).track()
         self.priority += 1
         return track
 
@@ -117,9 +158,9 @@ class TrackHubWashu:
                               wepi.epi.biosample_term_name)
 
         url = os.path.join(BIB5, "Enhancer-Prediction-Tracks",
-                           "washu", os.path.basename(fnp).replace(".bigBed", ".bed.gz"))
+                           os.path.basename(fnp))
 
-        track = PredictionTrack(desc, self.priority, url).track_washu()
+        track = PredictionTrack(desc, self.priority, url).track()
         self.priority += 1
         return track
 
@@ -128,7 +169,7 @@ class TrackHubWashu:
 
         desc = Track.MakeDesc(name, exp.age, exp.biosample_term_name)
 
-        track = BigWigTrack(desc, self.priority, url, color).track_washu()
+        track = BigWigTrack(desc, self.priority, url, color).track()
         self.priority += 1
         return track
 
@@ -147,7 +188,7 @@ class TrackHubWashu:
         bigWig = bigWigs[0]
 
         url = bigWig.url
-        if 1: #self.urlStatus.find(url) and not self.urlStatus.get(url):
+        if self.urlStatus.find(url) and not self.urlStatus.get(url):
             url = os.path.join(BIB5, "data", bigWig.expID,
                                bigWig.fileID + ".bigWig")
 
@@ -219,3 +260,55 @@ html examplePage
 
         self.priority += 1
         return track
+
+    def showMissing(self):
+        wepis = self.epigenomes.GetByAssemblyAndAssays(self.assembly, self.assays)
+
+        def checkUrl(url):
+            if not url:
+                return {"title" : None, "url" : None}
+
+            if not self.urlStatus.find(url):
+                self.urlStatus.insertOrUpdate(url,
+                                              Utils.checkIfUrlExists(url))
+            if self.urlStatus.get(url):
+                if "encodeproject" in url:
+                    return {"title" : "OK - ENCODE", "url" : url}
+                if BIB5 in url:
+                    return {"title" : "OK - zlab", "url" : url}
+                if "wustl.edu" in url:
+                    return {"title" : "OK - roadmap", "url" : url}
+                return {"title" : "OK", "url" : url}
+
+            if "encodeproject" in url:
+                return {"title" : "ERROR - ENCODE", "url" : url}
+            if BIB5 in url:
+                return {"title" : "ERROR - zlab", "url" : url}
+            if "wustl.edu" in url:
+                return {"title" : "ERROR - roadmap", "url" : url}
+            return {"title" : "ERROR", "url" : url}
+
+        def checkExp(exp):
+            u, _, _ = self._getUrl(exp, False)
+            u = checkUrl(u)
+            un, _, _ = self._getUrl(exp, True)
+            un = checkUrl(un)
+            return u, un
+
+        for wepi in wepis.epis:
+            dnaseExp = None
+            h3k27acExp = None
+            exps = wepi.exps()
+            if "Both" == self.assays:
+                dnaseExp, h3k27acExp = exps
+            if "H3K27ac" == self.assays:
+                h3k27acExp = exps[0]
+            if "DNase" == self.assays:
+                dnaseExp = exps[0]
+
+            desc = wepi.web_title()
+            dnaseUrl, dnaseUrlNorm = checkExp(dnaseExp)
+            h3k27acUrl, h3k27acUrlNorm = checkExp(h3k27acExp)
+            yield(desc, dnaseUrl, dnaseUrlNorm,
+                  h3k27acUrl, h3k27acUrlNorm)
+

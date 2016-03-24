@@ -5,20 +5,22 @@ import numpy as np
 import uuid
 import StringIO
 
-from db import AnnotationDB, UrlStatusDB
-from session import Sessions
 from ucsc_search import UcscSearch
-
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
-from utils import Utils
 from trackhub import TrackHub
 from trackhub_washu import TrackHubWashu
-from web_epigenomes import WebEpigenomesLoader
-from dbsnps import dbSnps
-from defaults import Defaults
 from parse_search_box import ParseSearchBox
-from genes import LookupGenes
-from epigenome_stats import EpigenomeStats
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
+from models.enhancers.db import AnnotationDB, UrlStatusDB
+from models.enhancers.session import Sessions
+from models.enhancers.web_epigenomes import WebEpigenomesLoader
+from models.enhancers.dbsnps import dbSnps
+from models.enhancers.defaults import Defaults
+from models.enhancers.genes import LookupGenes
+from models.enhancers.epigenome_stats import EpigenomeStats
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
+from utils import Utils
 from templates import Templates
 
 class AnnotationSearchUcsc(object):
@@ -34,7 +36,7 @@ class AnnotationSearchUcsc(object):
         self.defaults = Defaults()
         self.epigenome_stats = EpigenomeStats(self.wepigenomes)
 
-        viewDir = os.path.join(os.path.dirname(__file__), "views")
+        viewDir = os.path.join(os.path.dirname(__file__), "../../views")
         self.templates = Templates(viewDir)
 
         self.host = "http://zlab-annotations.umassmed.edu/"
@@ -44,7 +46,7 @@ class AnnotationSearchUcsc(object):
                 self.host = open(fnp).read().strip()
 
     @cherrypy.expose
-    def default(self, *args, **params):
+    def index(self, *args, **params):
         return self.templates("index",
                               epigenomes = self.wepigenomes,
                               defaults = self.defaults,

@@ -4,7 +4,7 @@ import os, sys, cherrypy, json, argparse
 
 import psycopg2, psycopg2.pool
 
-from website.annotation import AnnotationSearchUcsc
+from controllers.enhancers.annotation import AnnotationSearchUcsc
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../metadata/utils'))
 from dbs import DBS
@@ -22,9 +22,9 @@ def main():
     args = parse_args()
 
     staticDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
-                                              "website/views/static"))
+                                              "views/static"))
     cacheDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
-                                             "website/cache"))
+                                             "cache"))
     asu_config = {
         '/': {
             'tools.sessions.on' : True,
