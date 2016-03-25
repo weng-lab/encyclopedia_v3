@@ -166,24 +166,28 @@ input[type=checkbox]{
 /* Carousel base class */
 .carousel {
   margin-top: 5px;
-  /*height: 345px;*/
   margin-bottom: 5px;
   background-color: white;
   padding-top: 5px;
+
+  max-width: 50%;
+  overflow: hidden;
+
+  .item {
+      text-align: center;
+  }
+
+  .item img {
+    width: 50%;
+    height: auto;
+    max-width: 50% !important;
+    max-height: 50% !important;
+  }
 }
 
 /* Since positioning the image, we need to help out the caption */
 .carousel-caption {
   z-index: 10;
-}
-
-.carousel-inner > .item > img {
-    width: auto;
-    max-width: auto;
-}
-
-.inner-item {
-    text-align: center;
 }
 
 .carousel-indicators {
@@ -209,48 +213,8 @@ input[type=checkbox]{
     color: black;
 }
 
-/* from http://stackoverflow.com/a/25561642 */
-/* Mobile */
-@media (max-width: 767px) {
-    .slider-size {
-        height: auto;
-    }
-    .slider-size > img {
-        /*width: 80%;*/
-    }
-}
-
-/* tablets */
-@media (max-width: 991px) and (min-width: 768px) {
-    .slider-size {
-        height: auto;
-    }
-    .slider-size > img {
-        /*width: 80%;*/
-    }
-}
-
-/* laptops */
-@media (max-width: 1023px) and (min-width: 992px) {
-    .slider-size {
-         height: 275px;
-    }
-    .slider-size > img {
-        /*width: 80%;*/
-    }
-}
-
-/* desktops */
-@media (min-width: 1024px) {
-    .slider-size {
-        height: 275px;
-    }
-    .slider-size > img {
-        /*width: 60%;*/
-    }
-}
-
 #encode_logo {
+    background-color: white;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
     -moz-box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
     -webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
@@ -263,11 +227,11 @@ input[type=checkbox]{
 }
 
 #formTable td {
-    padding-right: 25px;
+    /* padding-right: 25px; */
     vertical-align: top;
 }
 
 #browserButtons {
     display: inline-block;
-    padding-left: 150px;
+    /*padding-left: 150px;*/
 }

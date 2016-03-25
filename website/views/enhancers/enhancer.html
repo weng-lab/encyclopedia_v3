@@ -1,85 +1,77 @@
-<div class="container-fluid">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="jumbotron" id="jumboHeader">
-        {% include 'enhancers/_blurb.html' -%}
-      </div>
-    </div>
-    <div class="col-md-4">
-      {% include 'enhancers/_gallery.html' -%}
-    </div>
-  </div>
+<form id="searchForm">
+  <table id="formTable" border=1>
+    <tr>
+      <td colspan="2" width="50%">
+        <div class="jumbotron" id="jumboHeader">
+          {% include 'enhancers/_blurb.html' -%}
+        </div>
+      </td>
+      <td colspan="2">
+        {% include 'enhancers/_gallery.html' -%}
+      </td>
+    </tr>
 
-  <div class="row">
-    <div class="col-md-6">
-      <div class="alert alert-warning alert-dismissible" role="alert" style="display: none" id="errBox">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <strong>Warning!</strong> <span id="errMsg"></span>
-      </div>
-    </div>
-  </div>
+    <tr>
+      <td colspan="4">
+        <div class="alert alert-warning alert-dismissible" role="alert" style="display: none" id="errBox">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Warning!</strong> <span id="errMsg"></span>
+      </td>
+    </tr>
 
-  <form id="searchForm">
-    <table id="formTable">
-      <tr>
-        <td colspan=2>
-          <a href="#search"></a>
-          <span id="searchTitle"><p>Search Candidate Enhancers</span>
-        </td>
-        <td></td>
-        <td></td>
-      </tr>
+    <tr>
+      <td colspan="4">
+        <a href="#search"></a>
+        <span id="searchTitle"><p>Search Candidate Enhancers</span>
+      </td>
+    </tr>
 
-      <tr>
-        <td>
+    <tr>
+      <td>
           <button class="btn btn-warning nohover" type="button">
             <span class="badge">1</span>&nbsp;Select genome
           </button>
-        </td>
-        <td>
-          {% include 'enhancers/_genome_buttons.html' -%}
-        </td>
-        <td>
-          {% include 'enhancers/_browser_buttons.html' -%}
-        </td>
-        <td></td>
-      </tr>
+      </td>
+      <td colspan="2">
+        {% include 'enhancers/_genome_buttons.html' -%}
+      </td>
+      <td>
+        {% include 'enhancers/_browser_buttons.html' -%}
+      </td>
+    </tr>
 
-      <tr>
-        <td>
-          <button class="btn btn-warning nohover" type="button">
-            <span class="badge">2</span>&nbsp;Enter gene, SNP,<br>coordinate, or rank
-          </button>
-        </td>
-        <td>
-          <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
-          <br>
-          {% include 'enhancers/_examples.html' -%}
-        </td>
-        <td></td>
-        <td></td>
-      </tr>
+    <tr>
+      <td>
+        <button class="btn btn-warning nohover" type="button">
+          <span class="badge">2</span>&nbsp;Enter gene, SNP,<br>coordinate, or rank
+        </button>
+      </td>
+      <td colspan="2">
+        <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
+        <br>
+        {% include 'enhancers/_examples.html' -%}
+      </td>
+      <td></td>
+    </tr>
 
-      <tr>
-        <td>
-          <br>
-          <button class="btn btn-warning nohover" type="button">
-            <span class="badge">3</span>&nbsp;Select assays<br>and cell types
-          </button>
-        </td>
-        <td colspan=3>
-          <br>
-          {% include 'enhancers/_cell_type_buttons.html' -%}
-          <br>
-          <div style="display: inline-block;">
-            {% include 'enhancers/_cell_type_tables.html' -%}
-          </div>
-        </td>
-      </tr>
-
-    </table>
-  </form>
-</div>
+    <tr>
+      <td>
+        <br>
+        <button class="btn btn-warning nohover" type="button">
+          <span class="badge">3</span>&nbsp;Select assays<br>and cell types
+        </button>
+      </td>
+      <td colspan="3">
+        <br>
+        {% include 'enhancers/_cell_type_buttons.html' -%}
+        <br>
+        <div style="display: inline-block;">
+          {% include 'enhancers/_cell_type_tables.html' -%}
+        </div>
+      </td>
+    </tr>
+  </table>
+</form>
 
 <script src="static/tablesort.min.js"></script>
 <script>
