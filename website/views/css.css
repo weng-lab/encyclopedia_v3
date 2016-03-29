@@ -161,58 +161,6 @@ input[type=checkbox]{
     /* text-align: center; */
 }
 
-/* CUSTOMIZE THE carousel-------------------------------------------------- */
-
-/* Carousel base class */
-.carousel {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  background-color: white;
-  padding-top: 5px;
-
-  max-width: 50%;
-  overflow: hidden;
-
-  .item {
-      text-align: center;
-  }
-
-  .item img {
-    width: 50%;
-    height: auto;
-    max-width: 50% !important;
-    max-height: 50% !important;
-  }
-}
-
-/* Since positioning the image, we need to help out the caption */
-.carousel-caption {
-  z-index: 10;
-}
-
-.carousel-indicators {
-    bottom: 0px;
-}
-
-.carousel-indicators li {
-    background-color: #337ab7;
-}
-
-.carousel-indicators .active {
-    background-color: #337ab7;
-}
-
-.carousel-control.left, .carousel-control.right {
-    /* no gradient */
-    background-image: none
-}
-
-.carousel-control .glyphicon-chevron-right,
-.carousel-control .glyphicon-chevron-left,
-.carousel-control .icon-next {
-    color: black;
-}
-
 #encode_logo {
     background-color: white;
     box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
@@ -226,8 +174,13 @@ input[type=checkbox]{
     -webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
 }
 
+
+#formTable {
+    width: 100%;
+    table-layout: fixed;
+}
+
 #formTable td {
-    /* padding-right: 25px; */
     vertical-align: top;
 }
 
@@ -235,3 +188,42 @@ input[type=checkbox]{
     display: inline-block;
     /*padding-left: 150px;*/
 }
+
+/* carousel */
+.carousel-control.left, .carousel-control.right {
+    /* no gradient */
+    background-image: none
+}
+
+.carousel-control .glyphicon-chevron-right,
+.carousel-control .glyphicon-chevron-left,
+.carousel-control .icon-next {
+    color: black;
+}
+
+/*
+-.carousel {
+-  margin-top: 5px;
+-  margin-bottom: 5px;
+-  background-color: white;
+-  padding-top: 5px;
+-
+-  max-width: 50%;
+-  background-color: white;
+-  padding-top: 5px;
+-
+-  max-width: 50%;
+-  overflow: hidden;
+-
+-  .item {
+-      text-align: center;
+-  }
+-
+-  .item img {
+-    width: 50%;
+-    height: auto;
+-    max-width: 50% !important;
+-    max-height: 50% !important;
+-  }
+-}
+-
