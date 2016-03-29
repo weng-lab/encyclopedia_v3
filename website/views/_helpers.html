@@ -1,3 +1,9 @@
+{% macro badge(num, txt) -%}
+<button class="btn btn-warning nohover" type="button">
+  <span class="badge">{{num}}</span>&nbsp;{{txt}}
+</button>
+{% endmacro -%}
+
 {% macro makeTissueActive(e) -%}
 {% if e.isActive() -%}
 checked="checked"
