@@ -131,7 +131,31 @@ function selectIntersect(){
     });
 }
 
+function fixGallery(){
+    var blurb = $("#jumboTD");
+    var height = blurb.height();
+
+    var gal = $("#myCarousel");
+    gal.height(height);
+    gal.show();
+
+    $(".galleryImg").each(function(i, e){
+        $(this).css("height", height);
+    });
+
+    var maxWidth = Math.max.apply(Math, $('.galleryImg').map(function(){
+        return $(this).width(); }).get());
+
+    gal.width(maxWidth);
+}
+
 $(document).ready(function(){
+    fixGallery();
+
+    $(window).resize(function(){
+        fixGallery();
+    });
+
     $('[data-toggle="tooltip"]').tooltip()
 
     $("#selectAssembly :input").change(function() {

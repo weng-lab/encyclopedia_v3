@@ -1,39 +1,35 @@
 <form id="searchForm">
   <table id="formTable">
     <tr>
-      <td colspan="3">
+      <td colspan="2" id="jumboTD">
         <div class="jumbotron" id="jumboHeader">
           {% include 'enhancers/_blurb.html' -%}
         </div>
+        <a href="#search"></a>
+        <span id="searchTitle"><p>Search Candidate Enhancers</span>
       </td>
-      <td colspan="2" rowspan="2">
+
+      <td colspan="2">
         {% include 'enhancers/_gallery.html' -%}
       </td>
     </tr>
 
     <tr>
-      <td colspan="6">
-        <a href="#search"></a>
-        <span id="searchTitle"><p>Search Candidate Enhancers</span>
-      </td>
-    </tr>
-
-    <tr>
-      <td>{{ hh.badge(1, "Select genome") }}</td>
       <td colspan="2">
+        {{ hh.badge(1, "Select genome") }}
         {% include 'enhancers/_genome_buttons.html' -%}
       </td>
+      <td>
+        {% include 'enhancers/_browser_buttons.html' -%}
+      </td>
     </tr>
 
     <tr>
-      <td>{{ hh.badge(2, "Enter gene, SNP,<br>coordinate, or rank") }}</td>
       <td colspan="3">
+        {{ hh.badge(2, "Enter gene, SNP,<br>coordinate, or rank") }}
         <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
         <br>
         {% include 'enhancers/_examples.html' -%}
-      </td>
-      <td colspan="2">
-        {% include 'enhancers/_browser_buttons.html' -%}
       </td>
     </tr>
 
@@ -46,15 +42,15 @@
     </tr>
 
     <tr>
-      <td>{{ hh.badge(3, "Select assays<br>and cell types") }}</td>
       <td colspan="4">
+        {{ hh.badge(3, "Select assays<br>and cell types") }}
         {% include 'enhancers/_cell_type_buttons.html' -%}
-        <div style="display: inline-block;">
+        <br>
+        <div id="cellTypeTable">
           {% include 'enhancers/_cell_type_tables.html' -%}
         </div>
       </td>
     </tr>
-
 
   </table>
 </form>

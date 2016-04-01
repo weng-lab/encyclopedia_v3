@@ -1,7 +1,9 @@
 {% macro badge(num, txt) -%}
-<button class="btn btn-warning nohover" type="button">
-  <span class="badge">{{num}}</span>&nbsp;{{txt}}
-</button>
+<div class="myBadge">
+  <button class="btn btn-warning nohover" type="button">
+    <span class="badge">{{num}}</span>&nbsp;{{txt}}
+  </button>
+</div>
 {% endmacro -%}
 
 {% macro makeTissueActive(e) -%}

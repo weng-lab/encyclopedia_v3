@@ -134,18 +134,6 @@ input[type=checkbox]{
     margin: auto;
 }
 
-#sideBox {
-    display: inline-block;
-    float: right;
-    overflow: auto;
-}
-
-#sideBox p{
-    margin-bottom: 0px;
-    font-size: 12px;
-    font-weight: 100;
-}
-
 .btn.nohover:hover,
 .btn.nohover:focus,
 .btn.nohover.focus,
@@ -186,10 +174,13 @@ input[type=checkbox]{
 
 #browserButtons {
     display: inline-block;
-    /*padding-left: 150px;*/
 }
 
 /* carousel */
+#myCarousel {
+    display: none;
+}
+
 .carousel-control.left, .carousel-control.right {
     /* no gradient */
     background-image: none
@@ -201,29 +192,16 @@ input[type=checkbox]{
     color: black;
 }
 
-/*
--.carousel {
--  margin-top: 5px;
--  margin-bottom: 5px;
--  background-color: white;
--  padding-top: 5px;
--
--  max-width: 50%;
--  background-color: white;
--  padding-top: 5px;
--
--  max-width: 50%;
--  overflow: hidden;
--
--  .item {
--      text-align: center;
--  }
--
--  .item img {
--    width: 50%;
--    height: auto;
--    max-width: 50% !important;
--    max-height: 50% !important;
--  }
--}
--
+.myBadge {
+    width: 175px;
+    display: block;
+    float: left;
+}
+
+#cellTypeTable {
+    display: inline-block;
+ }
+
+.examples {
+    display: inline;
+}
