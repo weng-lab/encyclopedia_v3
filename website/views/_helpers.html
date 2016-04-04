@@ -1,5 +1,5 @@
 {% macro badge(num, txt) -%}
-<div class="myBadge">
+<div class="myBadge" id="myBadge{{num}}">
   <button class="btn btn-warning nohover" type="button">
     <span class="badge">{{num}}</span>&nbsp;{{txt}}
   </button>

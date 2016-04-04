@@ -173,7 +173,17 @@ input[type=checkbox]{
 }
 
 #browserButtons {
+    padding-left: 50px;
     display: inline-block;
+}
+
+#myBadge1 {
+    padding-bottom: 5px;
+}
+
+#myBadge4 {
+    width: inherit;
+    padding-right: 10px;
 }
 
 /* carousel */

@@ -19,17 +19,17 @@
         {{ hh.badge(1, "Select genome") }}
         {% include 'enhancers/_genome_buttons.html' -%}
       </td>
-      <td>
-        {% include 'enhancers/_browser_buttons.html' -%}
-      </td>
     </tr>
 
     <tr>
       <td colspan="3">
         {{ hh.badge(2, "Enter gene, SNP,<br>coordinate, or rank") }}
-        <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
-        <br>
-        {% include 'enhancers/_examples.html' -%}
+        <div style="display: inline-block;">
+             <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
+             <br>
+             {% include 'enhancers/_examples.html' -%}
+        </div>
+        {% include 'enhancers/_browser_buttons.html' -%}
       </td>
     </tr>
 
