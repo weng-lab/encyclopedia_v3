@@ -77,7 +77,7 @@ class AnnotationSearchUcsc(object):
 
         if self.args.debug:
             return {"inner-url" : url,
-                    "html" : self.templates("ucsc",
+                    "html" : self.templates("enhancers/ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
@@ -104,7 +104,7 @@ class AnnotationSearchUcsc(object):
 
         if self.args.debug:
             return {"inner-url" : url,
-                    "html" : self.templates("ucsc",
+                    "html" : self.templates("enhancers/ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}

@@ -34,9 +34,7 @@ def job(args):
     print("wrote", inFnp, outFnp)
 
 def main():
-    d = os.path.join(Dirs.encyclopedia,
-                     "Enhancer-Prediction-Tracks",
-                     "March-2016")
+    d = Dirs.enhancerPromoterTracks
     outD = os.path.join(d, "washu")
     Utils.mkdir_p(outD)
 

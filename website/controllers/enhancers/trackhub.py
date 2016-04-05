@@ -157,7 +157,8 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
                               wepi.epi.age_display,
                               wepi.epi.biosample_term_name)
 
-        url = os.path.join(BIB5, "Enhancer-Prediction-Tracks",
+        url = os.path.join(BIB5,
+                           Dirs.enhancerPromoterTracksBase,
                            os.path.basename(fnp))
 
         track = PredictionTrack(desc, self.priority, url).track()

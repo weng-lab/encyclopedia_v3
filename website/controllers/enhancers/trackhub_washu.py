@@ -118,8 +118,11 @@ class TrackHubWashu:
                               wepi.epi.age_display,
                               wepi.epi.biosample_term_name)
 
-        url = os.path.join(BIB5, "Enhancer-Prediction-Tracks",
-                           "washu", os.path.basename(fnp).replace(".bigBed", ".bed.gz"))
+        url = os.path.join(BIB5,
+                           Dirs.enhancerPromoterTracksBase,
+                           "washu",
+                           os.path.basename(fnp).replace(".bigBed",
+                                                         ".bed.gz"))
 
         track = PredictionTrack(desc, self.priority, url).track_washu()
         self.priority += 1
