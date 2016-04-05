@@ -180,11 +180,11 @@ class AnnotationSearchUcsc(object):
     @cherrypy.expose
     def missing(self, *args, **params):
         if not args:
-            return self.templates("missing_list")
+            return self.templates("enhancers/missing_list")
         row = [args[0], args[1], "[]", "loci", "hubNum"]
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
-        return self.templates("missing",
+        return self.templates("enhancers/missing",
                               missing = missing)
 
     @cherrypy.expose
