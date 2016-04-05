@@ -3,7 +3,7 @@
 import os, sys, shutil
 from joblib import Parallel, delayed
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils, printWroteNumLines
 from files_and_paths import Dirs
 
@@ -31,9 +31,12 @@ def job(args):
     cmds = ["tabix", '-f', outFnp + '.gz']
     Utils.runCmds(cmds)
 
+    print("wrote", inFnp, outFnp)
+
 def main():
-    d = os.path.join("/home/purcarom/public_html/annotations_demo",
-                     "Enhancer-Prediction-Tracks")
+    d = os.path.join(Dirs.encyclopedia,
+                     "Enhancer-Prediction-Tracks",
+                     "March-2016")
     outD = os.path.join(d, "washu")
     Utils.mkdir_p(outD)
 
@@ -45,8 +48,8 @@ def main():
         inFnp = os.path.join(d, fn)
         jobs.append([fn, inFnp, outD])
 
-    ret = Parallel(n_jobs = 10)(delayed(job)(j)
-                                for idx, j in enumerate(jobs))
+    ret = Parallel(n_jobs = 4)(delayed(job)(j)
+                               for idx, j in enumerate(jobs))
 
 
 if __name__ == '__main__':
