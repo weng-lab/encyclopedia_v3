@@ -1,0 +1,15 @@
+<div id="selectAssays" class="btn-group" data-toggle="buttons">
+  <label class="btn btn-primary active">
+    <input type="radio" name="assays" value="Both" id="assaysBoth" autocomplete="off" checked>DNase + H3K27ac
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="assays" value="DNase" id="assaysDNase" autocomplete="off" >DNase
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" name="assays" value="H3K27ac" id="assaysH3K27ac" autocomplete="off">H3K27ac
+  </label>
+</div>
+<button type="button" class="btn btn-default btn-xs" id="selectAll">All</button>
+<button type="button" class="btn btn-default btn-xs" id="selectNone">None</button>
+<button type="button" class="btn btn-default btn-xs" id="selectIntersect"><a style="color: inherit;" data-toggle="tooltip" title="" data-original-title="Selects cell types (below) that have peaks overlapping genes, SNPs, or coordinates in the search box">Intersect</button>
+<img id="wait" src="static/ajax-loader.gif" alt="loading" style="display: none;">

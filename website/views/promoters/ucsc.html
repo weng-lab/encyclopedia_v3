@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <script src=//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js></script>
+    <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css">
+    <script src=//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js></script>
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha256-Sk3nkD6mLTMOF0EOpNtsIry+s1CsaqQC1rVLTAy+0yc= sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+
+    <style>
+      html, body { height: 100% }
+    </style>
+
+  </head>
+  <body>
+
+    <div>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>Assembly</th>
+            <th>Assays</th>
+            <th>Tissues</th>
+            <th>Coord</th>
+            <th>Loci</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>{{us.psb.assembly}}</td>
+            <td>{{us.psb.assays}}</td>
+            <td>{{", ".join(us.psb.tissue_ids)}}</td>
+            <td>{{us.Coord()}}</td>
+            <td><a href="{{url}}">{{us.psb.loci}}</a></td>
+          </tr>
+          <tr>
+            <td colspan=5>
+              <a href="{{trackdbUrl}}">{{us.trackdbUrl}}</a>
+              <br>
+              <a href="{{trackhubUrl}}">{{us.trackhubUrl}}</a>
+              <br>
+              <a href="{{url}}">{{url}}</a>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <br>
+
+    <iframe src="{{url}}" style='height: 100%; width: 100%;' frameborder="0" id="iframe"></iframe>
+
+  </body>
+</html>

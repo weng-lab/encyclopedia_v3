@@ -23,7 +23,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/ut
 from utils import Utils
 from templates import Templates
 
-class AnnotationSearchUcsc(object):
+class EnhancersSite(object):
     def __init__(self, DBCONN, args):
         self.args = args
 
@@ -44,6 +44,7 @@ class AnnotationSearchUcsc(object):
             fnp = os.path.expanduser("~/.ws_host.txt")
             if os.path.exists(fnp):
                 self.host = open(fnp).read().strip()
+        self.host += "enhancers/"
 
     @cherrypy.expose
     def index(self, *args, **params):

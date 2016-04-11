@@ -4,7 +4,8 @@ import os, sys, cherrypy, json, argparse
 
 import psycopg2, psycopg2.pool
 
-from controllers.enhancers.annotation import AnnotationSearchUcsc
+from controllers.enhancers.enhancers import EnhancersSite
+from controllers.promoters.promoters import PromotersSite
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../metadata/utils'))
 from dbs import DBS
@@ -18,35 +19,49 @@ def parse_args():
     args = parser.parse_args()
     return args
 
-def main():
-    args = parse_args()
+class MainApp():
+    def __init__(self, args):
+        self.args = args
 
-    staticDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
-                                              "views/static"))
-    cacheDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
-                                             "cache"))
-    asu_config = {
-        '/': {
-            'tools.sessions.on' : True,
-            'tools.sessions.timeout' : 60000,
-            'tools.sessions.storage_type' : "file",
-            'tools.sessions.storage_path' : cacheDir
-            },
-        '/static': {
-            'tools.staticdir.on': True,
-            'tools.staticdir.dir': staticDir
-            }
-        }
+        staticDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
+                                                  "views/static"))
+        self.config = {'/static': {
+                'tools.staticdir.on': True,
+                'tools.staticdir.dir': staticDir
+                }
+                       }
 
+    @cherrypy.expose
+    def index(self):
+        return ""
+
+def dbconn(args):
     if args.local:
         dbs = DBS.localAnnotations()
     else:
         dbs = DBS.pgdsn("Annotations")
     dbs["application_name"] = os.path.realpath(__file__)
-    DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
+    return psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
-    cherrypy.tree.mount(AnnotationSearchUcsc(DBCONN, args), '/',
-                        config=asu_config)
+def main():
+    args = parse_args()
+
+    mainIndex = MainApp(args)
+    cherrypy.tree.mount(mainIndex, '/', config = mainIndex.config)
+
+    DBCONN = dbconn(args)
+    cacheDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
+                                             "cache"))
+    root_config = {
+        '/': {
+            'tools.sessions.on' : True,
+            'tools.sessions.timeout' : 60000,
+            'tools.sessions.storage_type' : "file",
+            'tools.sessions.storage_path' : cacheDir
+            }
+        }
+    cherrypy.tree.mount(EnhancersSite(DBCONN, args), '/enhancers',
+                        config=root_config)
 
     if args.dev:
         cherrypy.config.update({'server.environment': "development", })
