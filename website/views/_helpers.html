@@ -21,14 +21,20 @@ style="display: none;"
 {% macro downloadLink(assembly, assays) -%}
 <div>
   <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>&nbsp;
-  {% if "Both" == assays -%}
+  {% if "BothDNaseAndH3K27ac" == assays -%}
   <a href="">Download</a> candidate enhancers computed using DNase and H3K27ac signals for cell types below (genome wide)
+  {% endif -%}
+  {% if "BothDNaseAndH3K4me3" == assays -%}
+  <a href="">Download</a> candidate enhancers computed using DNase and H3K4me3 signals for cell types below (genome wide)
   {% endif -%}
   {% if "DNase" == assays -%}
   <a href="">Download</a> candidate enhancers computed using DNase signals for cell types below (genome wide)
   {% endif -%}
   {% if "H3K27ac" == assays -%}
   <a href="">Download</a> candidate enhancers computed using H3K27ac signals for for cell types below (genome wide)
+  {% endif -%}
+  {% if "H3K4me3" == assays -%}
+  <a href="">Download</a> candidate enhancers computed using H3K4me3 signals for for cell types below (genome wide)
   {% endif -%}
 </div>
 {% endmacro -%}
