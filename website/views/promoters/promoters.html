@@ -5,7 +5,7 @@
   <table id="formTable">
     <tr>
       <td colspan="2" id="jumboTD">
-        <div class="jumbotron" id="jumboHeader" style="background-color: #FFA07A;">
+        <div class="jumbotron" id="jumboHeader" style="background-color: #FFC8C8;">
           {% include 'promoters/_blurb.html' -%}
         </div>
         <a href="#search"></a>
@@ -58,12 +58,12 @@
   </table>
 </form>
 
-<script src="static/tablesort.min.js"></script>
+<script src="../static/tablesort.min.js"></script>
 <script>
   var selectorNames = {{epigenomes.SelectorNames()}};
   var annotationDefaults = {{defaults.json()}};
   {% include 'promoters/js.js' -%}
 </script>
-<script src="static/jquery.serialize-object.min.js"></script>
+<script src="../static/jquery.serialize-object.min.js"></script>
 
 {% include '_footer.html' -%}
