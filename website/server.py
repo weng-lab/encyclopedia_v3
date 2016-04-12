@@ -9,6 +9,7 @@ from controllers.promoters.promoters import PromotersSite
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../metadata/utils'))
 from dbs import DBS
+from templates import Templates
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -23,17 +24,21 @@ class MainApp():
     def __init__(self, args):
         self.args = args
 
+        viewDir = os.path.join(os.path.dirname(__file__), "views")
+        self.templates = Templates(viewDir)
+
         staticDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
                                                   "views/static"))
-        self.config = {'/static': {
+        self.config = {
+            '/static': {
                 'tools.staticdir.on': True,
                 'tools.staticdir.dir': staticDir
                 }
-                       }
+            }
 
     @cherrypy.expose
     def index(self):
-        return ""
+        return self.templates("index")
 
 def dbconn(args):
     if args.local:
