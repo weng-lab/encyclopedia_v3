@@ -88,13 +88,13 @@ class RoadmapEpigenome:
     def hasBothDNaseAndH3K27ac(self):
         return self.hasDNase() and self.hasH3K27ac()
 
-    def predictionFnp(self, assays, DNase, H3K27ac):
-        path = Dirs.enhancerPromoterTracks
+    def enhancerLikeFnp(self, assays, DNase, H3K27ac):
+        path = Dirs.enhancerTracks
         if "H3K27ac" == assays:
             fn = "{eid}_H3K27ac_predictions.bigBed".format(eid = self.eid)
         if "DNase" == assays:
             fn = "{eid}_DNase_predictions.bigBed".format(eid = self.eid)
-        if "Both" == assays:
+        if "BothDNaseAndH3K27ac" == assays:
             fn = "{eid}_predictions.bigBed".format(eid = self.eid)
         return os.path.join(path, fn)
 

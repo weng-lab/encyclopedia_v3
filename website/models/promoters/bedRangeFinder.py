@@ -4,7 +4,7 @@ import os, sys, json, psycopg2, argparse, fileinput, StringIO
 
 from web_epigenomes import WebEpigenomesLoader
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils/'))
 from utils import Utils, printWroteNumLines
 from dbs import DBS
 from metadataws import MetadataWS
@@ -49,7 +49,7 @@ def build(args, conn, cur):
 
     epigenomes = WebEpigenomesLoader(args)
     for assembly in ["hg19", "mm10", "mm9"]:
-        for assays in ["H3K27ac", "DNase"]:
+        for assays in ["H3K27ac", "H3K4me3", "DNase"]:
             epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
             for epi in epis.epis:
                 for exp in epi.exps():

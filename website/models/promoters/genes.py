@@ -2,7 +2,7 @@
 
 import os, sys, json, psycopg2, argparse, StringIO
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils/'))
 from utils import Utils
 from dbs import DBS
 from files_and_paths import Dirs

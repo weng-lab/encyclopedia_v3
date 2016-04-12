@@ -6,9 +6,9 @@ import StringIO
 from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from models.enhancers.web_epigenomes import WebEpigenome
+from models.promoters.web_epigenomes import WebEpigenome
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
 from files_and_paths import Dirs
 
@@ -114,12 +114,12 @@ class TrackHubWashu:
         if not os.path.exists(fnp):
             return None
 
-        desc = Track.MakeDesc("candidate enhancers",
+        desc = Track.MakeDesc("Promoter-like",
                               wepi.epi.age_display,
                               wepi.epi.biosample_term_name)
 
         url = os.path.join(BIB5,
-                           Dirs.enhancerPromoterTracksBase,
+                           Dirs.promoterTracksBase,
                            "washu",
                            os.path.basename(fnp).replace(".bigBed",
                                                          ".bed.gz"))
@@ -142,8 +142,8 @@ class TrackHubWashu:
             return None, None, None
 
         assay = "DNase"
-        if exp.isH3K27ac():
-            assay = "H3K27ac"
+        if exp.isH3K4me3():
+            assay = "H3K4me3"
 
         bigWigs = bigWigFilters(self.assembly, exp.files)
 
@@ -167,8 +167,8 @@ class TrackHubWashu:
                                        bigWig.expID,
                                        bigWig.fileID + '-' + assay + ".fc.signal.norm.bigWig")
 
-        if exp.isH3K27ac():
-            name = "H3K27ac Signal"
+        if exp.isH3K4me3():
+            name = "H3K4me3 Signal"
             color = "18,98,235"
         elif exp.isDNaseSeq():
             name = "DNase Signal"
@@ -199,10 +199,10 @@ visibility full
 priority {priority}
 html examplePage
 
-                track composite{priority}H3K27ac
+                track composite{priority}H3K4me3
                 bigDataUrl {h3k27acUrl}
-                shortLabel H3K27ac
-                longLabel H3K27ac
+                shortLabel H3K4me3
+                longLabel H3K4me3
                 parent composite{priority}
                 type bigWig
                 color {h3k27acColor}

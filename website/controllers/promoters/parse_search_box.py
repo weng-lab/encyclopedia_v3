@@ -3,7 +3,7 @@
 import os, sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from models.enhancers.coord import Coord
+from models.promoters.coord import Coord
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from files_and_paths import Dirs

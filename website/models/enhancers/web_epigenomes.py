@@ -82,7 +82,7 @@ class WebEpigenomesLoader:
 
         self.byAssemblyAssays = defaultdict(lambda : defaultdict(None))
         for assembly in ["mm9", "mm10", "hg19"]:
-            for assays in ["Both", "H3K27ac", "DNase"]:
+            for assays in ["BothDNaseAndH3K27ac", "H3K27ac", "DNase"]:
                 epis = byAssembly[assembly].GetByAssays(assays)
                 if epis:
                     epis = [WebEpigenome(self.args, epi, assays, self.ontology) for epi in epis]
@@ -100,7 +100,7 @@ class WebEpigenomesLoader:
     def SelectorNames(self):
         ret = []
         for assembly in ["mm9", "mm10", "hg19"]:
-            for assays in ["Both", "H3K27ac", "DNase"]:
+            for assays in ["BothDNaseAndH3K27ac", "H3K27ac", "DNase"]:
                 epis = self.GetByAssemblyAndAssays(assembly, assays)
                 for epi in epis.epis:
                     ret.append(epi.SelectorName())
@@ -109,7 +109,7 @@ class WebEpigenomesLoader:
     def getWebIDsFromExpIDs(self, assembly, expIDs):
         ret = {}
         total = 0
-        for assays in ["Both", "H3K27ac", "DNase"]:
+        for assays in ["BothDNaseAndH3K27ac", "H3K27ac", "DNase"]:
             epis = self.GetByAssemblyAndAssays(assembly, assays)
             ret[assays] = epis.getWebIDsFromExpIDs(expIDs)
             total += len(ret[assays])
@@ -137,7 +137,7 @@ class WebEpigenome:
                 print "\t", e
             raise Exception("multiple H3K27ac experiments found")
 
-        if "Both" == self.assays:
+        if "BothDNaseAndH3K27ac" == self.assays:
             self.DNase = epi.DNase()[0]
             self.H3K27ac = epi.H3K27ac()[0]
         elif "H3K27ac" == self.assays:
@@ -235,15 +235,15 @@ class WebEpigenome:
             return [self.H3K27ac]
         if "DNase" == self.assays:
             return [self.DNase]
-        if "Both" == self.assays:
+        if "BothDNaseAndH3K27ac" == self.assays:
             return [self.DNase, self.H3K27ac]
         raise Exception("unknown assay type " + self.assays)
 
     def predictionFnp(self):
-        return self.epi.predictionFnp(self.assays, self.DNase, self.H3K27ac)
+        return self.epi.enhancerLikeFnp(self.assays, self.DNase, self.H3K27ac)
 
     def predictionFnpExists(self):
-        fnp = self.epi.predictionFnp(self.assays, self.DNase, self.H3K27ac)
+        fnp = self.predictionFnp()
         ret = os.path.exists(fnp)
         if not ret:
             print "missing", self.epi.assembly, os.path.basename(fnp)

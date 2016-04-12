@@ -9,8 +9,8 @@ from db_utils import getcursor
 
 def setupDB(cur):
     cur.execute("""
-DROP TABLE IF EXISTS search;
-CREATE TABLE search
+DROP TABLE IF EXISTS promoters_search;
+CREATE TABLE promoters_search
 (id serial PRIMARY KEY,
 assembly text,
 assays text,
@@ -42,12 +42,12 @@ AND startend && int4range(%(start)s, %(end)s)
     def insertOrUpdate(self, assembly, assays, tissues, loci, uid):
         with getcursor(self.DBCONN, "insertOrUpdate") as curs:
             curs.execute("""
-SELECT id FROM search
+SELECT id FROM promoters_search
 WHERE uid = %(uid)s
 """, {"uid" : uid})
             if (curs.rowcount > 0):
                 curs.execute("""
-UPDATE search
+UPDATE promoters_search
 SET
 assembly = %(assembly)s,
 assays = %(assays)s,
@@ -65,7 +65,7 @@ RETURNING hubNum;
                 hubNum = curs.fetchone()[0]
             else:
                 curs.execute("""
-INSERT INTO search
+INSERT INTO promoters_search
 (assembly, assays, tissues, loci, uid, hubNum)
 VALUES (
 %(assembly)s,
@@ -89,7 +89,7 @@ VALUES (
         with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
 SELECT assembly, assays, tissues, loci, hubNum
-FROM search
+FROM promoters_search
 WHERE uid = %(uid)s
 """, {"uid" : uid})
             return curs.fetchone()
@@ -174,8 +174,8 @@ def main():
     with getcursor(DBCONN, "main") as cur:
         setupDB(cur)
 
-        ue = UrlStatusDB(DBCONN)
-        ue.setupDB()
+        #ue = UrlStatusDB(DBCONN)
+        #ue.setupDB()
 
 if __name__ == '__main__':
     main()

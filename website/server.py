@@ -62,6 +62,8 @@ def main():
         }
     cherrypy.tree.mount(EnhancersSite(DBCONN, args), '/enhancers',
                         config=root_config)
+    cherrypy.tree.mount(PromotersSite(DBCONN, args), '/promoters',
+                        config=root_config)
 
     if args.dev:
         cherrypy.config.update({'server.environment': "development", })

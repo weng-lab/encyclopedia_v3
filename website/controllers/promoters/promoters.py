@@ -11,13 +11,13 @@ from trackhub_washu import TrackHubWashu
 from parse_search_box import ParseSearchBox
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from models.enhancers.db import AnnotationDB, UrlStatusDB
-from models.enhancers.session import Sessions
-from models.enhancers.web_epigenomes import WebEpigenomesLoader
-from models.enhancers.dbsnps import dbSnps
-from models.enhancers.defaults import Defaults
-from models.enhancers.genes import LookupGenes
-from models.enhancers.epigenome_stats import EpigenomeStats
+from models.promoters.db import AnnotationDB, UrlStatusDB
+from models.promoters.session import Sessions
+from models.promoters.web_epigenomes import WebEpigenomesLoader
+from models.promoters.dbsnps import dbSnps
+from models.promoters.defaults import Defaults
+from models.promoters.genes import LookupGenes
+from models.promoters.epigenome_stats import EpigenomeStats
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
@@ -44,10 +44,11 @@ class PromotersSite(object):
             fnp = os.path.expanduser("~/.ws_host.txt")
             if os.path.exists(fnp):
                 self.host = open(fnp).read().strip()
+        self.host += "promoters"
 
     @cherrypy.expose
     def index(self, *args, **params):
-        return self.templates("index",
+        return self.templates("promoters/promoters",
                               epigenomes = self.wepigenomes,
                               defaults = self.defaults,
                               stats = self.epigenome_stats)
@@ -77,7 +78,7 @@ class PromotersSite(object):
 
         if self.args.debug:
             return {"inner-url" : url,
-                    "html" : self.templates("enhancers/ucsc",
+                    "html" : self.templates("promoters/ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
@@ -104,7 +105,7 @@ class PromotersSite(object):
 
         if self.args.debug:
             return {"inner-url" : url,
-                    "html" : self.templates("enhancers/ucsc",
+                    "html" : self.templates("promoters/ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
@@ -180,14 +181,14 @@ class PromotersSite(object):
     @cherrypy.expose
     def missing(self, *args, **params):
         if not args:
-            return self.templates("enhancers/missing_list")
+            return self.templates("promoters/missing_list")
         row = [args[0], args[1], "[]", "loci", "hubNum"]
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
-        return self.templates("enhancers/missing",
+        return self.templates("promoters/missing",
                               missing = missing)
 
     @cherrypy.expose
     def methods(self, *args, **params):
-        return self.templates("enhancers/methods",
+        return self.templates("promoters/methods",
                               stats = self.epigenome_stats)

@@ -15,7 +15,7 @@ function updateTissues(){
 
     var assays = "H3K27ac";
     if($("#assaysBoth").is(":checked")){
-        assays = "Both";
+        assays = "BothDNaseAndH3K27ac";
     } else if($("#assaysDNase").is(":checked")){
         assays = "DNase";
     }
@@ -108,7 +108,7 @@ function selectIntersect(){
             }
 
             var assembly = activeAssembly()
-            $.each(["Both", "H3K27ac", "DNase"], function(idx, assays) {
+            $.each(["BothDNaseAndH3K27ac", "H3K27ac", "DNase"], function(idx, assays) {
                 var section = $("#content" + assembly + assays);
                 section.find(":checkbox").prop('checked', false);
 
@@ -209,7 +209,7 @@ $(document).ready(function(){
         // mm10 at
         var fd = {"assembly":"mm10",
                   "loci":"chr19:26839562-26851786",
-                  "assays":"Both",
+                  "assays":"BothDNaseAndH3K27ac",
                   "mm10Both":["neural_tube_embryonic_11_5_day"]
                  };
         processFormSubmitRet(event, "washu", fd);
@@ -219,7 +219,7 @@ $(document).ready(function(){
         // hg19 at
         var fd = {"assembly":"hg19",
                   "loci":"rs11742570",
-                  "assays":"Both",
+                  "assays":"BothDNaseAndH3K27ac",
                   "hg19Both": ["primary_natural_killer_cells_from_peripheral_blood_select",
                                "primary_t_cells_from_peripheral_blood_select",
                                "fetal_thymus_select"]
@@ -231,7 +231,7 @@ $(document).ready(function(){
         // mm10 at
         var fd = {"assembly":"mm10",
                   "loci":"rs27106747",
-                  "assays":"Both",
+                  "assays":"BothDNaseAndH3K27ac",
                   "mm10Both":["hindbrain_embryonic_11_5_day",
                               "midbrain_embryonic_11_5_day",
                               "neural_tube_embryonic_11_5_day",

@@ -2,15 +2,15 @@
 
 import os, sys, json, psycopg2, argparse
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils/'))
 from utils import Utils
 from dbs import DBS
 from db_utils import getcursor
 
 def setupDB(cur):
     cur.execute("""
-DROP TABLE IF EXISTS sessions;
-CREATE TABLE sessions
+DROP TABLE IF EXISTS promoters_sessions;
+CREATE TABLE promoters_sessions
 (id serial PRIMARY KEY,
 uid text,
 session_id text
@@ -23,7 +23,7 @@ class Sessions:
     def insert(self, session_id, uid):
         with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
-INSERT INTO sessions
+INSERT INTO promoters_sessions
 (session_id, uid)
 VALUES (
 %(session_id)s,
@@ -35,12 +35,12 @@ VALUES (
     def insertOrUpdate(self, session_id, uid):
         with getcursor(self.DBCONN, "insertOrUpdate") as curs:
             curs.execute("""
-SELECT id FROM sessions
+SELECT id FROM promoters_sessions
 WHERE session_id = %(session_id)s
 """, {"session_id" : session_id})
             if (curs.rowcount > 0):
                 curs.execute("""
-UPDATE sessions
+UPDATE promoters_sessions
 SET
 uid = %(uid)s
 WHERE session_id = %(session_id)s
@@ -49,7 +49,7 @@ WHERE session_id = %(session_id)s
 })
             else:
                 curs.execute("""
-INSERT INTO sessions
+INSERT INTO promoters_sessions
 (session_id, uid)
 VALUES (
 %(session_id)s,
@@ -62,7 +62,7 @@ VALUES (
         with getcursor(self.DBCONN, "insertOrUpdate") as curs:
             curs.execute("""
 SELECT uid
-FROM sessions
+FROM promoters_sessions
 WHERE session_id = %(session_id)s
 """, {"session_id" : session_id})
             uid = curs.fetchone()

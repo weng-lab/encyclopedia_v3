@@ -2,15 +2,15 @@ class EpigenomeStats:
     def __init__(self, wepigenomes):
         self.wepigenomes = wepigenomes
 
-        mm9b = self.wepigenomes.GetByAssemblyAndAssays("mm9", "Both")
+        mm9b = self.wepigenomes.GetByAssemblyAndAssays("mm9", "BothDNaseAndH3K4me3")
         mm9d = self.wepigenomes.GetByAssemblyAndAssays("mm9", "DNase")
-        mm9h = self.wepigenomes.GetByAssemblyAndAssays("mm9", "H3K27ac")
-        mm10b = self.wepigenomes.GetByAssemblyAndAssays("mm10", "Both")
+        mm9h = self.wepigenomes.GetByAssemblyAndAssays("mm9", "H3K4me3")
+        mm10b = self.wepigenomes.GetByAssemblyAndAssays("mm10", "BothDNaseAndH3K4me3")
         mm10d = self.wepigenomes.GetByAssemblyAndAssays("mm10", "DNase")
-        mm10h = self.wepigenomes.GetByAssemblyAndAssays("mm10", "H3K27ac")
-        hg19b = self.wepigenomes.GetByAssemblyAndAssays("hg19", "Both")
+        mm10h = self.wepigenomes.GetByAssemblyAndAssays("mm10", "H3K4me3")
+        hg19b = self.wepigenomes.GetByAssemblyAndAssays("hg19", "BothDNaseAndH3K4me3")
         hg19d = self.wepigenomes.GetByAssemblyAndAssays("hg19", "DNase")
-        hg19h = self.wepigenomes.GetByAssemblyAndAssays("hg19", "H3K27ac")
+        hg19h = self.wepigenomes.GetByAssemblyAndAssays("hg19", "H3K4me3")
 
         self.mouse_both = len(mm9b) + len(mm10b)
         self.human_both = len(hg19b)
