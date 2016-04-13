@@ -48,7 +48,7 @@ class EnhancersSite(object):
 
     @cherrypy.expose
     def index(self, *args, **params):
-        return self.templates("enhancers/enhancers",
+        return self.templates("enhancers/index",
                               epigenomes = self.wepigenomes,
                               defaults = self.defaults,
                               stats = self.epigenome_stats)

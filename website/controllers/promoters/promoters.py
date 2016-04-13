@@ -48,7 +48,7 @@ class PromotersSite(object):
 
     @cherrypy.expose
     def index(self, *args, **params):
-        return self.templates("promoters/promoters",
+        return self.templates("promoters/index",
                               epigenomes = self.wepigenomes,
                               defaults = self.defaults,
                               stats = self.epigenome_stats)
