@@ -10,6 +10,7 @@ from controllers.promoters.promoters import PromotersSite
 sys.path.append(os.path.join(os.path.dirname(__file__), '../metadata/utils'))
 from dbs import DBS
 from templates import Templates
+from utils import Utils
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -57,6 +58,8 @@ def main():
     DBCONN = dbconn(args)
     cacheDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
                                              "cache"))
+    Utils.mkdir_p(cacheDir)
+
     root_config = {
         '/': {
             'tools.sessions.on' : True,
