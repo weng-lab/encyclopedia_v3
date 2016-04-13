@@ -1,6 +1,15 @@
 {% import '_helpers.html' as hh -%}
 {% include '_header.html' -%}
 
-{% include 'enhancers/_enhancers.html' -%}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#tab_enhancers" data-toggle="tab">Enhancer-like regions</a></li>
+  <li><a href="../promoters/">Promoter-like regions</a></li>
+</ul>
+
+<div id="content" class="tab-content">
+  <div class="tab-pane active" id="tab_enhancers">
+    {% include 'enhancers/_enhancers.html' -%}
+  </div>
+</div>
 
 {% include '_footer.html' -%}
