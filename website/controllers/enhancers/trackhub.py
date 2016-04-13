@@ -84,7 +84,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         lines += [self.genes()]
 
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
-            if "Both" == self.assays:
+            if "BothDNaseAndH3K27ac" == self.assays:
                 lines += [self.predictionTrackHub(wepi)]
                 lines += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
@@ -158,7 +158,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
                               wepi.epi.biosample_term_name)
 
         url = os.path.join(BIB5,
-                           Dirs.enhancerPromoterTracksBase,
+                           Dirs.enhancerTracksBase,
                            os.path.basename(fnp))
 
         track = PredictionTrack(desc, self.priority, url).track()
@@ -300,7 +300,7 @@ html examplePage
             dnaseExp = None
             h3k27acExp = None
             exps = wepi.exps()
-            if "Both" == self.assays:
+            if "BothDNaseAndH3K27ac" == self.assays:
                 dnaseExp, h3k27acExp = exps
             if "H3K27ac" == self.assays:
                 h3k27acExp = exps[0]

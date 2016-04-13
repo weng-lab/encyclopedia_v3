@@ -33,8 +33,7 @@ def job(args):
 
     print("wrote", inFnp, outFnp)
 
-def main():
-    d = Dirs.enhancerPromoterTracks
+def runDir(d):
     outD = os.path.join(d, "washu")
     Utils.mkdir_p(outD)
 
@@ -48,6 +47,10 @@ def main():
 
     ret = Parallel(n_jobs = 4)(delayed(job)(j)
                                for idx, j in enumerate(jobs))
+
+def main():
+    runDir(Dirs.promoterTracks)
+    runDir(Dirs.enhancerTracks)
 
 
 if __name__ == '__main__':
