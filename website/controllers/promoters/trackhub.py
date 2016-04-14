@@ -62,7 +62,7 @@ class TrackHub:
         t = ""
         if self.args.debug:
             t += "debug "
-        t += "ENCODE Encyclopedia Annotations " + self.assembly
+        t += "ENCODE Promoter-like regions" + self.assembly
         for r in [["hub", t],
                   ["shortLabel", t],
                   ["longLabel", t],
@@ -84,7 +84,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         lines += [self.genes()]
 
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
-            if "Both" == self.assays:
+            if "BothDNaseAndH3K4me3" == self.assays:
                 lines += [self.predictionTrackHub(wepi)]
                 lines += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
@@ -300,7 +300,7 @@ html examplePage
             dnaseExp = None
             h3k27acExp = None
             exps = wepi.exps()
-            if "Both" == self.assays:
+            if "BothDNaseAndH3K4me3" == self.assays:
                 dnaseExp, h3k27acExp = exps
             if "H3K4me3" == self.assays:
                 h3k27acExp = exps[0]

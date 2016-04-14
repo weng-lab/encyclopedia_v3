@@ -62,7 +62,7 @@ class TrackHub:
         t = ""
         if self.args.debug:
             t += "debug "
-        t += "ENCODE Encyclopedia Annotations " + self.assembly
+        t += "ENCODE Enhancer-like regions " + self.assembly
         for r in [["hub", t],
                   ["shortLabel", t],
                   ["longLabel", t],

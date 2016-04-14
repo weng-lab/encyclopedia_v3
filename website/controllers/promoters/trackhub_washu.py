@@ -47,7 +47,7 @@ class TrackHubWashu:
         #ret += [self.genes()]
 
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
-            if "Both" == self.assays:
+            if "BothDNaseAndH3K4me3" == self.assays:
                 ret += [self.predictionTrackHub(wepi)]
                 #ret += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
