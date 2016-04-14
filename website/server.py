@@ -39,7 +39,7 @@ class MainApp():
 
     @cherrypy.expose
     def index(self):
-        return self.templates("index")
+        raise cherrypy.HTTPRedirect("/enhancers")
 
 def dbconn(args):
     if args.local:
