@@ -109,7 +109,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
     def enableVistaTrack(self):
         if "mm10" == self.assembly:
             for t in self.tissue_ids:
-                if "11.5" in t:
+                if "11_5" in t:
                     return True
         return False
 
@@ -146,7 +146,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         return track
 
     def vista(self):
-        return officialVistaTrack(self.assembly)
+        return officialVistaTrack(self.assembly) + "\n"
 
     def predictionTrackHub(self, wepi):
         fnp = wepi.predictionFnp()
