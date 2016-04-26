@@ -6,6 +6,7 @@ import psycopg2, psycopg2.pool
 
 from controllers.enhancers.enhancers import EnhancersSite
 from controllers.promoters.promoters import PromotersSite
+from controllers.hic.hic import HiCSite
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../metadata/utils'))
 from dbs import DBS
@@ -71,6 +72,8 @@ def main():
     cherrypy.tree.mount(EnhancersSite(DBCONN, args), '/enhancers',
                         config=root_config)
     cherrypy.tree.mount(PromotersSite(DBCONN, args), '/promoters',
+                        config=root_config)
+    cherrypy.tree.mount(HiCSite(DBCONN, args), '/hic',
                         config=root_config)
 
     if args.dev:
