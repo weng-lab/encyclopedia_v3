@@ -67,14 +67,13 @@ class WebEpigenomesLoader:
 
         m = MetadataWS(Datasets.all_mouse)
         dekker = DekkerMetadata().epigenomes
-
         combined = Epigenomes("ROADMAP + ENCODE", "hg19")
         combined.epis = dekker.epis
         byAssembly["hg19"] = combined
 
         self.byAssemblyAssays = defaultdict(lambda : defaultdict(None))
         for assembly in ["hg19"]:
-            for assays in ["TADs"]:
+            for assays in ["TAD"]:
                 epis = byAssembly[assembly].GetByAssays(assays)
                 if epis:
                     epis = [WebEpigenome(self.args, epi, assays, self.ontology) for epi in epis]
@@ -92,7 +91,7 @@ class WebEpigenomesLoader:
     def SelectorNames(self):
         ret = []
         for assembly in ["hg19"]:
-            for assays in ["TADs"]:
+            for assays in ["TAD"]:
                 epis = self.GetByAssemblyAndAssays(assembly, assays)
                 for epi in epis.epis:
                     ret.append(epi.SelectorName())
@@ -101,7 +100,7 @@ class WebEpigenomesLoader:
     def getWebIDsFromExpIDs(self, assembly, expIDs):
         ret = {}
         total = 0
-        for assays in ["TADs"]:
+        for assays in ["TAD"]:
             epis = self.GetByAssemblyAndAssays(assembly, assays)
             ret[assays] = epis.getWebIDsFromExpIDs(expIDs)
             total += len(ret[assays])
@@ -115,17 +114,14 @@ class WebEpigenome:
         self.assays = assays
         self.ontology = ontology
 
-        self.DNase = None
-        self.H3K4me3 = None
-
-        if len(self.epi.TADs()) > 1:
+        if len(self.epi.TAD()) > 1:
             print self.epi
-            for e in self.epi.TADs():
+            for e in self.epi.TAD():
                 print "\t", e
-            raise Exception("multiple TADs experiments found")
+            raise Exception("multiple TAD experiments found")
 
-        if "TADs" == self.assays:
-            self.TADs = epi.TADs()[0]
+        if "TAD" == self.assays:
+            self.TAD = epi.TAD()[0]
         else:
             raise Exception("unknown assay type " + self.assays)
 
@@ -213,15 +209,15 @@ class WebEpigenome:
                                  "fetal_thymus_select"]
 
     def exps(self):
-        if "TADs" == self.assays:
-            return [self.TADs]
+        if "TAD" == self.assays:
+            return [self.TAD]
         raise Exception("unknown assay type " + self.assays)
 
-    def predictionFnp(self):
-        return self.epi.promoterLikeFnp(self.assays, self.DNase, self.H3K4me3)
+    def tadFnp(self):
+        return self.epi.tadFnp(self.assays)
 
-    def predictionFnpExists(self):
-        fnp = self.predictionFnp()
+    def tadFnpExists(self):
+        fnp = self.tadFnp()
         ret = os.path.exists(fnp)
         if not ret:
             print "missing", self.epi.assembly, os.path.basename(fnp)
@@ -230,7 +226,7 @@ class WebEpigenome:
 
     def webName(self):
         if self.args.debug:
-            if self.predictionFnpExists():
+            if self.tadFnpExists():
                 return "*"
         return ""
 
@@ -316,6 +312,8 @@ class WebEpigenomes:
         epis = self.epis
         keyfunc = lambda x: x.epi.biosample_term_name
 	epis.sort(key=keyfunc)
+
+        print "\n\n*************************************MJP" + len(epis)
 
         for biosample_term_name, wepis in groupby(epis, keyfunc):
             rows.add(biosample_term_name)

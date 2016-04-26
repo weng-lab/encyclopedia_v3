@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, sys
+import os, sys, json
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from epigenome import Epigenomes
@@ -10,17 +10,17 @@ from files_and_paths import Dirs
 UrlBase = "http://bib5.umassmed.edu/~purcarom/hic-Dekker/tads/"
 
 TADS = { "SK-N-DZ" : "ENCODE3-SKNDZ-HindIII__hg19__ucsc/ENCODE3-SKNDZ-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "SKMEL5" : "ENCODE3-SKMEL5-HindIII__hg19__ucsc/ENCODE3-SKMEL5-HindIII__hg19__genome__C-40000-iced.tads.bed",
+         "SK-MEL-5" : "ENCODE3-SKMEL5-HindIII__hg19__ucsc/ENCODE3-SKMEL5-HindIII__hg19__genome__C-40000-iced.tads.bed",
          "A549" : "ENCODE3-A549-HindIII__hg19__ucsc/ENCODE3-A549-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "LNCaP" : "ENCODE3-LNCaP-HindIII__hg19__ucsc/ENCODE3-LNCaP-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "PANC1" : "ENCODE3-PANC1-HindIII__hg19__ucsc/ENCODE3-PANC1-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "NCIH460" : "ENCODE3-NCIH460-HindIII__hg19__ucsc/ENCODE3-NCIH460-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "SKNMC" : "ENCODE3-SKNMC-HindIII__hg19__ucsc/ENCODE3-SKNMC-HindIII__hg19__genome__C-40000-iced.tads.bed",
+         "LNCaP clone FGC" : "ENCODE3-LNCaP-HindIII__hg19__ucsc/ENCODE3-LNCaP-HindIII__hg19__genome__C-40000-iced.tads.bed",
+         "Panc1" : "ENCODE3-PANC1-HindIII__hg19__ucsc/ENCODE3-PANC1-HindIII__hg19__genome__C-40000-iced.tads.bed",
+         "NCI-H460" : "ENCODE3-NCIH460-HindIII__hg19__ucsc/ENCODE3-NCIH460-HindIII__hg19__genome__C-40000-iced.tads.bed",
+         "SK-N-MC" : "ENCODE3-SKNMC-HindIII__hg19__ucsc/ENCODE3-SKNMC-HindIII__hg19__genome__C-40000-iced.tads.bed",
          "G401" : "ENCODE3-G401-HindIII__hg19__ucsc/ENCODE3-G401-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "CAKI2" : "ENCODE3-CAKI2-HindIII__hg19__ucsc/ENCODE3-CAKI2-HindIII__hg19__genome__C-40000-iced.tads.bed",
+         "Caki2" : "ENCODE3-CAKI2-HindIII__hg19__ucsc/ENCODE3-CAKI2-HindIII__hg19__genome__C-40000-iced.tads.bed",
          "SJCRH30" : "ENCODE3-SJCRH30-HindIII__hg19__ucsc/ENCODE3-SJCRH30-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "T470" : "ENCODE3-T470-HindIII__hg19__ucsc/ENCODE3-T470-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "RPMI7951" : "ENCODE3-RPMI7951-HindIII__hg19__ucsc/ENCODE3-RPMI7951-HindIII__hg19__genome__C-40000-iced.tads.bed"}
+         "T47D" : "ENCODE3-T470-HindIII__hg19__ucsc/ENCODE3-T470-HindIII__hg19__genome__C-40000-iced.tads.bed",
+         "RPMI-7951" : "ENCODE3-RPMI7951-HindIII__hg19__ucsc/ENCODE3-RPMI7951-HindIII__hg19__genome__C-40000-iced.tads.bed"}
 
 class DekkerExp:
     def __init__(self, biosample_term_name, info):
@@ -56,13 +56,13 @@ class DekkerEpigenome:
         self.age_display = None
         self.eid = info["accession"]
 
-        self.TAD = tad
+        self.tad = tad
 
     def hasTAD(self):
-        return self.TAD
+        return True
 
     def TAD(self):
-        return self.TAD
+        return [self.tad]
 
     def tadFnp(self, assays):
         path = Dirs.promoterTracks
@@ -78,10 +78,10 @@ class DekkerMetadata:
 
         self.epigenomes = Epigenomes("Dekker", "hg19")
 
-        for biosample_term_name, info in data.iteriterms():
+        for biosample_term_name, info in data.iteritems():
             accession = info["accession"]
-            TADs = DekkerExp(biosample_term_name, info)
-            epi = RoadmapEpigenome(info["accession"], TADs)
+            TAD = DekkerExp(biosample_term_name, info)
+            epi = DekkerEpigenome(biosample_term_name, info, TAD)
             self.epigenomes.addEpigenome(epi)
 
         print "found", len(self.epigenomes), "epigenomes for Dekker hg19"

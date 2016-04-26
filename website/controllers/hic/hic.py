@@ -11,13 +11,13 @@ from trackhub_washu import TrackHubWashu
 from parse_search_box import ParseSearchBox
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from models.promoters.db import AnnotationDB, UrlStatusDB
-from models.promoters.session import Sessions
-from models.promoters.web_epigenomes import WebEpigenomesLoader
-from models.promoters.dbsnps import dbSnps
-from models.promoters.defaults import Defaults
-from models.promoters.genes import LookupGenes
-from models.promoters.epigenome_stats import EpigenomeStats
+from models.hic.db import AnnotationDB, UrlStatusDB
+from models.hic.session import Sessions
+from models.hic.web_epigenomes import WebEpigenomesLoader
+from models.hic.dbsnps import dbSnps
+from models.hic.defaults import Defaults
+from models.hic.genes import LookupGenes
+from models.hic.epigenome_stats import EpigenomeStats
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils

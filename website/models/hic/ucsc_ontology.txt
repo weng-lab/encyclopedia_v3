@@ -1,0 +1,337 @@
+8988T	liver
+Adult_CD4_naive	blood
+Adult_CD4_Th0	blood
+Adult_CD4_Th1	blood
+AG04449	skin
+AG04450	lung
+AG09309	skin
+AG09319	gingival
+AG10803	skin
+AoAF	blood vessel
+AoSMC	blood vessel
+BC_Adipose_UHN00001	adipose tissue
+BC_Adrenal_Gland_H12803N	adrenal gland
+BC_Bladder_01-11002	urinary bladder
+BC_Brain_H11058N	brain
+BC_Breast_02-03015	breast
+BC_Colon_01-11002	colon
+BC_Colon_H12817N	colon
+BC_Esophagus_01-11002	esophagus
+BC_Esophagus_H12817N	esophagus
+BC_Jejunum_H12817N	jejunum
+BC_Kidney_01-11002	kidney
+BC_Kidney_H12817N	kidney
+BC_Left_Ventricle_N41	left ventricle
+BC_Leukocyte_UHN00204	blood
+BC_Liver_01-11002	liver
+BC_Lung_01-11002	lung
+BC_Lung_H12817N	lung
+BC_Pancreas_H12817N	pancreas
+BC_Penis_H12817N	penis
+BC_Pericardium_H12529N	pericardium
+BC_Placenta_UHN00189	placenta
+BC_Prostate_Gland_H12817N	prostate gland
+BC_Rectum_N29	rectum
+BC_Skeletal_Muscle_01-11002	skeletal muscle
+BC_Skeletal_Muscle_H12817N	skeletal muscle
+BC_Skin_01-11002	skin
+BC_Small_Intestine_01-11002	small intestine
+BC_Spleen_H12817N	spleen
+BC_Stomach_01-11002	stomach
+BC_Stomach_H12817N	stomach
+BC_Testis_N30	testis
+BC_Uterus_BN0765	uterus
+BE2_C	brain
+BG02ES	embryonic stem cell
+BG02ES-EBD	embryonic stem cell
+BJ	skin
+bone_marrow_HS27a	bone marrow
+bone_marrow_HS5	bone marrow
+bone_marrow_MSC	bone marrow
+Breast_OC	breast
+Caco-2	colon
+CD34+_Mobilized	blood
+CD4+_Naive_Wb11970640	blood
+CD4+_Naive_Wb78495824	blood
+Cerebellum_OC	cerebellum
+Cerebrum_frontal_OC	frontal cerebrum
+Chorion	fetal membrane
+CLL	blood
+CMK	blood
+Colo829	skin
+Colon_BC	colon
+Colon_OC	colon
+Cord_CD4_naive	blood
+Cord_CD4_Th0	blood
+Cord_CD4_Th1	blood
+Decidua	cervix
+Dnd41	blood
+ECC-1	luminal epithelium
+Endometrium_OC	endometrium
+Esophagus_BC	esophagus
+Fibrobl	skin
+Fibrobl_GM03348	skin
+FibroP	skin
+FibroP_AG08395	skin fibroblast
+FibroP_AG08396	lung fibroblast
+FibroP_AG20443	skin fibroblast
+Frontal_cortex_OC	frontal cortex
+GC_B_cell	tonsil
+Gliobla	brain
+GM04503	skin
+GM04504	skin
+GM06990	blood
+GM08714	blood
+GM10248	blood
+GM10266	blood
+GM10847	blood
+GM12801	blood
+GM12812	blood
+GM12813	blood
+GM12864	blood
+GM12865	blood
+GM12866	blood
+GM12867	blood
+GM12868	blood
+GM12869	blood
+GM12870	blood
+GM12871	blood
+GM12872	blood
+GM12873	blood
+GM12874	blood
+GM12875	blood
+GM12878-XiMat	blood
+GM12891	blood
+GM12892	blood
+GM13976	blood
+GM13977	blood
+GM15510	blood
+GM18505	blood
+GM18507	blood
+GM18526	blood
+GM18951	blood
+GM19099	blood
+GM19193	blood
+GM19238	blood
+GM19239	blood
+GM19240	blood
+GM20000	blood
+H0287	blood
+H9ES	embryonic stem cell
+H9ES-AFP+	embryonic stem cell
+H9ES-AFP-	embryonic stem cell
+H9ES-CM	embryonic stem cell
+H9ES-E	embryonic stem cell
+H9ES-EB	embryonic stem cell
+H9ES-EBD	embryonic stem cell
+HA-h	brain hippocampus
+HA-sp	spinal cord
+HAc	cerebellar
+HAEpiC	epithelium
+HAL	liver
+HAoAF	blood vessel
+HAoAF_6090101.11	blood vessel
+HAoAF_6111301.9	blood vessel
+HAoEC	blood vessel
+HAoEC_7071706.1	blood vessel
+HAoEC_8061102.1	blood vessel
+HBMEC	blood vessel
+HBVP	blood vessel
+HBVSMC	blood vessel
+HCF	heart
+HCFaa	heart
+HCH	cartilage
+HCH_0011308.2P	cartilage
+HCH_8100808.2	cartilage
+HCM	heart
+HConF	eye
+HCPEpiC	epithelium
+HCT-116	colon
+Heart_OC	heart
+Heart_STL003	heart
+HEEpiC	epithelium
+HEK293	kidney
+HEK293-T-REx	kidney
+HEK293T	kidney
+Hepatocytes	liver
+HFDPC	skin
+HFDPC_0100503.2	skin
+HFDPC_0102703.3	skin
+HFF	foreskin
+HFF-Myc	foreskin
+HFL11W	liver
+HFL24W	liver
+HGF	gingiva
+HHSEC	liver
+HIPEpiC	epithelium
+HL-60	blood
+HMEC	breast
+HMEpC	mammary gland
+HMEpC_6022801.3	mammary gland
+HMF	mammary
+hMNC-CB	blood
+hMNC-CB_8072802.6	blood
+hMNC-CB_9111701.6	blood
+hMNC-PB	blood
+hMNC-PB_0022330.9	blood
+hMNC-PB_0082430.9	blood
+hMSC-AT	adipose
+hMSC-AT_0102604.12	adipose
+hMSC-AT_9061601.12	subcutaneous adipose tissue
+hMSC-BM	bone marrow
+hMSC-BM_0050602.11	bone marrow
+hMSC-BM_0051105.11	bone marrow
+hMSC-UC	umbilical cord
+hMSC-UC_0052501.7	umbilical cord
+hMSC-UC_0081101.7	umbilical cord
+HMVEC-dAd	blood vessel
+HMVEC-dBl-Ad	blood vessel
+HMVEC-dBl-Neo	blood vessel
+HMVEC-dLy-Ad	blood vessel
+HMVEC-dLy-Neo	blood vessel
+HMVEC-dNeo	blood vessel
+HMVEC-LBl	blood vessel
+HMVEC-LLy	blood vessel
+HNPCEpiC	epithelium
+HOB	cancellous bone
+HOB_0090202.1	cancellous bone
+HOB_0091301	cancellous bone
+HPAEC	blood vessel
+HPAEpiC	epithelium
+HPAF	blood vessel
+HPC-PL	placenta
+HPC-PL_0032601.13	placenta
+HPC-PL_0101504.13	placenta
+HPDE6-E6E7	pancreatic duct
+HPdLF	epithelium
+HPF	lung
+HPIEpC	placenta
+HPIEpC_9012801.2	placenta
+HPIEpC_9041503.2	placenta
+HRCEpiC	epithelium
+HRE	epithelium
+HRGEC	kidney
+HRPEpiC	epithelium
+HSaVEC	blood vessel
+HSaVEC_0022202.16	blood vessel
+HSaVEC_9100101.15	blood vessel
+HSMM	muscle
+HSMM_emb	muscle
+HSMM_FSHD	muscle
+HSMMtube	muscle
+HSMMtube_emb	muscle
+HSMMtube_FSHD	muscle
+HT-1080	epithelium
+HTR8svn	blastula
+Huh-7	liver
+Huh-7.5	liver
+HVMF	connective
+HVMF_6091203.3	placenta
+HVMF_6100401.3	placenta
+HWP	adipose
+HWP_0092205	subcutaneous adipose tissue
+HWP_8120201.5	subcutaneous adipose tissue
+iPS	induced pluripotent stem cell
+iPS_CWRU1	induced pluripotent cell (iPS)
+iPS_hFib2_iPS4	induced pluripotent cell (iPS)
+iPS_hFib2_iPS5	induced pluripotent cell (iPS)
+iPS_NIHi11	induced pluripotent cell (iPS)
+iPS_NIHi7	induced pluripotent cell (iPS)
+Ishikawa	uterus
+Jurkat	blood
+Kidney_BC	kidney
+Kidney_OC	kidney
+LHSR	epithelium
+Liver_OC	liver
+Liver_STL004	liver
+Liver_STL011	liver
+LNCaP	prostate
+Loucy	blood
+Lung_BC	lung
+Lung_OC	Lung
+Lymphoblastoid_cell_line	blood
+M059J	brain
+MCF10A-Er-Src	breast
+MDA-MB-231	breast
+Medullo	brain
+Medullo_D341	brain
+Mel_2183	Melanoma cell line derived from melanoma metastasis
+Melano	skin
+MRT_A204	muscle
+MRT_G401	kidney
+MRT_TTC549	liver
+Myometr	myometrium
+Naive_B_cell	tonsil
+NB4	blood
+NH-A	brain
+NHBE	epithelium
+NHBE_RA	bronchial epithelium
+NHDF	skin
+NHDF-Ad	skin
+NHDF-neo	skin
+NHDF_0060801.3	skin
+NHDF_7071701.2	skin
+NHEK	skin
+NHEM.f_M2	skin
+NHEM.f_M2_5071302.2	skin
+NHEM.f_M2_6022001	skin
+NHEM_M2	skin
+NHEM_M2_7011001.2	skin
+NHEM_M2_7012303	skin
+NHLF	lung
+NT2-D1	testis
+Olf_neurosphere	Nasal biopsy
+Osteobl	bone
+ovcar-3	ovary
+PANC-1	pancreas
+Pancreas_OC	pancreas
+PanIsletD	pancreas
+PanIslets	pancreas
+PBDE	blood
+PBDEFetal	liver
+PBMC	blood
+PFSK-1	brain
+pHTE	epithelium
+Pons_OC	pons mid-brain
+PrEC	prostate
+ProgFib	skin
+prostate	prostate
+Prostate_OC	prostate
+Psoas_muscle_OC	psoas muscle
+Raji	blood
+RCC_7860	kidney
+RPMI-7951	skin
+RPTEC	epithelium
+RWPE1	prostate
+SAEC	epithelium
+SH-SY5Y	brain
+SK-N-MC	brain
+SK-N-SH_RA	brain
+Skeletal_Muscle_BC	skeletal muscle
+SkMC	muscle
+SKMC	muscle
+SkMC_8121902.17	striated muscle
+SkMC_9011302	striated muscle
+Small_intestine_OC	small intestine
+Spleen_OC	spleen
+Stellate	liver
+Stomach_BC	stomach
+T-47D	breast
+T98G	brain
+T_cells_CD4+	blood
+TBEC	epithelium
+Th1	blood
+Th17	blood
+Th1_Wb33676984	blood
+Th1_Wb54553204	blood
+Th2	blood
+Th2_Wb33676984	blood
+Th2_Wb54553204	blood
+Treg_Wb78495824	blood
+Treg_Wb83319432	blood
+U2OS	bone
+U87	brain
+UCH-1	chordoma
+Urothelia	urothelium
+WERI-Rb-1	eye
+WI-38	embryonic lung
