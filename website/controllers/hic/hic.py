@@ -18,6 +18,7 @@ from models.hic.dbsnps import dbSnps
 from models.hic.defaults import Defaults
 from models.hic.genes import LookupGenes
 from models.hic.epigenome_stats import EpigenomeStats
+from models.hic.hic_im import HiCInteractionMatrix
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
@@ -192,3 +193,14 @@ class HiCSite(object):
     def methods(self, *args, **params):
         return self.templates("hic/methods",
                               stats = self.epigenome_stats)
+
+    @cherrypy.expose
+    def im(self, *args, **params):
+        # ?accession=ENCSR444WCZ&chrom=chr1&start=40000&bins=2002&resolution=40000
+        try:
+            im = HiCInteractionMatrix()
+            ret = makeImg(params["accession"], params["chrom"], params["start"], params["bins"], params["resolution"])
+            return self.template("hic/hic_im",
+                                 img = ret)
+        except:
+            return "error"
