@@ -15,22 +15,26 @@ def makeImg(fnp, chrom, start, numBins, res):
     #print f.keys()
     chrs = dict((c, i) for i, c in enumerate(f["chrs"]))
     chromIdx = chrs[chrom]
-
     chr_bin_range = f["chr_bin_range"][chromIdx]
+    print chr_bin_range
+
     binIdx = start / res
     idx = chr_bin_range[0] + binIdx
+    print chr_bin_range, idx, numBins
 
     im = f["interactions"]
+    m = im[idx : idx + numBins, idx : idx + numBins]
+    print m.shape
 
     pngFnp = fnp + ".png"
-    saveMatrix(pngFnp, im[idx : idx + numBins, idx : idx + numBins])
+    saveMatrix(pngFnp, np.matrix(m))
     rotate(pngFnp)
 
 def saveMatrix(fnp, im):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    m = np.matrix(im).clip(0, 1)
+    m = im.clip(0, 1)
     m = np.triu(m)
     m[m == 0.0] = np.nan
 
@@ -56,6 +60,7 @@ def rotate(fnp):
     # save your work (converting back to mode='1' or whatever..)
     out.convert(s.mode).save(fnp)
 
+    # trim
     cmds = ["convert",
             fnp,
             "-trim +repage",
@@ -63,4 +68,4 @@ def rotate(fnp):
     Utils.runCmds(cmds)
 
 
-makeImg("", "chr1", 40000, 2000, 40000)
+makeImg("", "chr1", 40000, 2001, 40000)
