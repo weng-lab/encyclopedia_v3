@@ -29,12 +29,12 @@ class MainApp():
         viewDir = os.path.join(os.path.dirname(__file__), "views")
         self.templates = Templates(viewDir)
 
-        staticDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
-                                                  "views/static"))
+        self.staticDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
+                                                       "views/static"))
         self.config = {
             '/static': {
                 'tools.staticdir.on': True,
-                'tools.staticdir.dir': staticDir
+                'tools.staticdir.dir': self.staticDir
                 }
             }
 
@@ -69,7 +69,7 @@ def main():
             'tools.sessions.storage_path' : cacheDir
             }
         }
-    cherrypy.tree.mount(HiCSite(DBCONN, args), '/hic',
+    cherrypy.tree.mount(HiCSite(DBCONN, args, mainIndex.staticDir), '/hic',
                         config=root_config)
     cherrypy.tree.mount(EnhancersSite(DBCONN, args), '/enhancers',
                         config=root_config)

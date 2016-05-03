@@ -25,7 +25,7 @@ from utils import Utils
 from templates import Templates
 
 class HiCSite(object):
-    def __init__(self, DBCONN, args):
+    def __init__(self, DBCONN, args, globalStaticDir):
         self.args = args
 
         self.db = AnnotationDB(DBCONN)
@@ -46,6 +46,8 @@ class HiCSite(object):
             if os.path.exists(fnp):
                 self.host = open(fnp).read().strip()
         self.host += "hic"
+
+        self.staticDir = os.path.join(globalStaticDir, "hic")
 
     @cherrypy.expose
     def index(self, *args, **params):
@@ -198,9 +200,13 @@ class HiCSite(object):
     def im(self, *args, **params):
         # ?accession=ENCSR444WCZ&chrom=chr1&start=40000&bins=2002&resolution=40000
         try:
-            im = HiCInteractionMatrix()
-            ret = makeImg(params["accession"], params["chrom"], params["start"], params["bins"], params["resolution"])
-            return self.template("hic/hic_im",
-                                 img = ret)
+            im = HiCInteractionMatrix(self.staticDir)
+            ret = im.makeImg(params["accession"], params["chrom"],
+                             int(params["start"]),
+                             int(params["bins"]),
+                             int(params["resolution"]))
+            return self.templates("hic/hic_im",
+                                  img = os.path.join("../../static/hic", ret))
         except:
+            raise
             return "error"

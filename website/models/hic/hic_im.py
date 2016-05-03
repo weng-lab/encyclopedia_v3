@@ -4,14 +4,16 @@ import sys, os
 import h5py
 import numpy as np
 
+import uuid
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
 
 class HiCInteractionMatrix:
-    def __init__(self):
-        self.params = []
+    def __init__(self, staticDir):
+        self.staticDir = staticDir
 
-    def makeImg(fnp, chrom, start, numBins, res):
+    def makeImg(self, fnp, chrom, start, numBins, res):
         fnp = "/home/mjp/hic-Dekker/hdf5/a549/ENCODE3-A549-HindIII__hg19__hdf/C-40000/iced/ENCODE3-A549-HindIII__hg19__genome__C-40000-iced.hdf5"
 
         f = h5py.File(fnp, "r")
@@ -30,11 +32,14 @@ class HiCInteractionMatrix:
         m = im[idx : idx + numBins, idx : idx + numBins]
         print m.shape
 
-        pngFnp = fnp + ".png"
-        saveMatrix(pngFnp, np.matrix(m))
-        rotate(pngFnp)
+        pngFn = str(uuid.uuid4()) + ".png"
+        pngFnp = os.path.join(self.staticDir, pngFn)
+        self.saveMatrix(pngFnp, np.matrix(m))
+        self.rotate(pngFnp)
 
-    def saveMatrix(fnp, im):
+        return pngFn
+
+    def saveMatrix(self, fnp, im):
         import matplotlib
         matplotlib.use('Agg')
         import matplotlib.pyplot as plt
@@ -47,7 +52,7 @@ class HiCInteractionMatrix:
         plt.axis('off')
         plt.savefig(fnp)
 
-    def rotate(fnp):
+    def rotate(self, fnp):
         from PIL import Image
 
         s = Image.open(fnp)
