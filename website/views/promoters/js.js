@@ -208,11 +208,11 @@ $(document).ready(function(){
     $("#firstGalleryPane").click(function(event){
         // mm10 at
         var fd = {"assembly":"mm10",
-                  "loci":"chr19:26839562-26851786",
+                  "loci":"chr19:12830000-12860000",
                   "assays":"BothDNaseAndH3K4me3",
                   "mm10Both":["neural_tube_embryonic_11_5_day"]
                  };
-        processFormSubmitRet(event, "washu", fd);
+        processFormSubmitRet(event, "ucsc", fd);
     });
 
     $("#secondGalleryPane").click(function(event){
@@ -241,4 +241,3 @@ $(document).ready(function(){
     });
 
 })
-

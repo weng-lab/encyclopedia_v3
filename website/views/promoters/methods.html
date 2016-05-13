@@ -21,7 +21,7 @@
 <p>DNase hypersensitivity and the histone modification H3K4me3 are well-known indicators of promoters. We have developed an unsupervised method that combines DNase and H3K4me3 signals in the same cell type to predict promoter-like regions across all ENCODE cell and tissue types.
 To evaluate methods, we used ENCODE RNA-seq data on mouse limb, hindbrain, midbrain and neural tube at embryonic day 11.5. For each tissue, we ranked all TSS-proximal (less than 2 kb) DNase peaks using the combined expression of all proximal transcripts. Using linear regression models, we sought to find a ranking scheme that best predicted this ranked expression. We tested ranking by H3K4me3, DNase or H3K27ac signals as well as various combinations of these signals.
 
-<div style="float: right; clear: left;"><IMG src="http://bib5.umassmed.edu/~purcarom/encode_annotations_page/2016-05-12/Promoter-Prediction.png"></div>
+<div style="float: right; clear: left;"><IMG src="http://bib5.umassmed.edu/~purcarom/encode_annotations_page/2016-05-12/Promoter-Prediction.png" style="width: 500px;"></div>
 
   <p>We found that the best single feature was ranking by the H3K4me3 signal (average R<sup>2</sup> of 0.64). DNase on its own performed less well (R<sup>2</sup> = 0.37), followed by H3K27ac (R<sup>2</sup> = 0.31). Although we found that combining DNase and H3K27ac is highly accurate in predicting enhancer-like regions and identifying some promoters, this approach is not as predictive of gene expression as the combination of H3K4me3 and DNase.  We determined that the best model combined H3K4me3 and DNase rankings in the ratio of 1 to 0.28.
 
