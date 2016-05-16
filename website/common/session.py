@@ -91,7 +91,7 @@ def main():
     DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
     with getcursor(DBCONN, "main") as cur:
-        s = Sessions(DbTables.tableName)
+        s = Sessions(DbTables.sessions_promoters)
         s.setupDB(cur)
 
 if __name__ == '__main__':
