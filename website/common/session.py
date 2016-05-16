@@ -12,14 +12,14 @@ class Sessions:
         self.DBCONN = DBCONN
         self.table = tableName
 
-def setupDB(cur):
-    cur.execute("""
-DROP TABLE IF EXISTS {table};
-CREATE TABLE {table}
-(id serial PRIMARY KEY,
-uid text,
-session_id text
-    ) """.format(table = self.table))
+    def setupDB(self, cur):
+        cur.execute("""
+    DROP TABLE IF EXISTS {table};
+    CREATE TABLE {table}
+    (id serial PRIMARY KEY,
+    uid text,
+    session_id text
+        ) """.format(table = self.table))
 
     def insert(self, session_id, uid):
         with getcursor(self.DBCONN, "get") as curs:
