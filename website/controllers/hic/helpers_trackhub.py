@@ -145,19 +145,7 @@ class BigGenePredTrack(Track):
         self.visibility = "pack"
 
 def officialVistaTrack(assembly):
-    byAssembly = {"mm9": """
-track VISTAenhancers
-bigDataUrl http://portal.nersc.gov/dna/RD/ChIP-Seq/VISTA_enhancer_e/mm9_ext_latest.bb
-shortLabel VISTA Enhancers
-longLabel Potential Enhancer Sequences Assayed in Mouse
-type bigBed 9 +
-itemRgb on
-url http://enhancer.lbl.gov/cgi-bin/imagedb3.pl?form=presentation&show=1&experiment_id=$P&organism_id=$p
-urlLabel Vista Enhancer Browser (elementID:organismID(1 for human, 2 for mouse))
-bedNameLabel VISTA Enhancers
-html http://portal.nersc.gov/dna/RD/ChIP-Seq/VISTA_enhancer_e/VistaEnhancerTrackHub/enhancerAssay.html
-visibility full""",
-                  "mm10" : """
+    byAssembly = {"mm10" : """
 track VISTAenhancers
 bigDataUrl http://portal.nersc.gov/dna/RD/ChIP-Seq/VISTA_enhancer_e/mm10_ext_latest.bb
 shortLabel VISTA Enhancers

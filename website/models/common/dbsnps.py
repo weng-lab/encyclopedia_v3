@@ -2,7 +2,7 @@
 
 import os, sys, json, psycopg2, argparse
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
 from utils import Utils
 from dbs import DBS
 from files_and_paths import Dirs
@@ -12,8 +12,7 @@ from db_utils import getcursor
 class dbSnps:
     def __init__(self, DBCONN):
         self.DBCONN = DBCONN
-        self.tableNames = {"mm9" : "dbsnps_mm9",
-                           "mm10" : "dbsnps_mm10",
+        self.tableNames = {"mm10" : "dbsnps_mm10",
                            "hg19" : "dbsnps_hg19"}
 
     def lookup(self, assembly, rs):
@@ -53,8 +52,6 @@ CREATE INDEX {table}_idx01 ON {table}(name);
 
 def setupAll(cur):
     d = Dirs.dbsnps
-    setupAndCopy(cur, os.path.join(d, "snps128common.mm9.csv"),
-                 "dbsnps_mm9")
     setupAndCopy(cur, os.path.join(d, "snps142common.mm10.csv"),
                  "dbsnps_mm10")
     setupAndCopy(cur, os.path.join(d, "snps144common.hg19.csv"),

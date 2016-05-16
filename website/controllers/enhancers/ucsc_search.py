@@ -46,7 +46,7 @@ class UcscSearch:
             # snp or gene
             if self.psb.assembly in ["hg19", "hg38"]:
                 org = "Human"
-            elif self.psb.assembly in ["mm9", "mm10"]:
+            elif self.psb.assembly in ["mm10"]:
                 org = "Mouse"
             else:
                 raise Exception("unknown assembly")

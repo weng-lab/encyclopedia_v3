@@ -1,8 +1,6 @@
 function activeAssembly(){
     var assembly = "hg19";
-    if($("#assembly_mm9").is(":checked")){
-        assembly = "mm9";
-    } else if($("#assembly_mm10").is(":checked")){
+    if($("#assembly_mm10").is(":checked")){
         assembly = "mm10";
     }
     return assembly;
@@ -184,9 +182,6 @@ $(document).ready(function(){
     });
     $("#mm10SNP").click(function(){
         $("#lociSearchBox").val(annotationDefaults["mm10"]["snp"]);
-    });
-    $("#mm9SNP").click(function(){
-        $("#lociSearchBox").val(annotationDefaults["mm9"]["snp"]);
     });
 
     $('.tablesorter').each(function(i, obj) {

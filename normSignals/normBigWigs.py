@@ -50,7 +50,7 @@ def build(args):
     jr = JobRunner(cpus = args.j)
 
     epigenomes = WebEpigenomesLoader(args)
-    for assembly in ["hg19", "mm10", "mm9"]:
+    for assembly in ["hg19", "mm10"]:
         for assays in ["H3K27ac", "DNase"]:
             epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
             for epi in epis.epis:

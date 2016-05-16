@@ -2,7 +2,7 @@
 
 import os, sys, json, psycopg2, argparse, StringIO
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
 from utils import Utils
 from dbs import DBS
 from files_and_paths import Dirs
@@ -13,8 +13,7 @@ from get_tss import Genes
 class LookupGenes:
     def __init__(self, DBCONN):
         self.DBCONN = DBCONN
-        self.tableNames = {"mm9" : "genes_mm9",
-                           "mm10" : "genes_mm10",
+        self.tableNames = {"mm10" : "genes_mm10",
                            "hg19" : "genes_hg19"}
 
     def lookup(self, assembly, gene):
@@ -71,8 +70,6 @@ CREATE INDEX {table}_idx01 ON {table}(gene);
 def setupAll(cur):
     setupAndCopy(cur, Dirs.GenomeFnp("gencode.m4/gencode.vM4.annotation.gtf.gz"),
                  "gtf", "genes_mm10")
-    setupAndCopy(cur, Dirs.GenomeFnp("gencode.m1/gencode.vM1.annotation.gtf.gz"),
-                 "gtf", "genes_mm9")
     setupAndCopy(cur, Dirs.GenomeFnp("gencode.v19/gencode.v19.annotation.gff3.gz"),
                  "gff", "genes_hg19")
 

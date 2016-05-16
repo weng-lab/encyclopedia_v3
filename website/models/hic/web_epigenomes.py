@@ -140,7 +140,7 @@ class WebEpigenome:
         if self.epi.age_display:
             s = self.epi.life_stage + " " + self.epi.age_display
         if "13.5 week" == self.epi.age_display:
-            s = "e13.5" # exception for d embryonic fibroblast 13.5 week mm9
+            s = "e13.5" # exception for d embryonic fibroblast 13.5 week
         if "embryonic" in s:
             s = s.replace("embryonic ", "e").replace(" day", "")
         elif "postnatal" in s:

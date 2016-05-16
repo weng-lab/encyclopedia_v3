@@ -66,7 +66,6 @@ class WebEpigenomesLoader:
         byAssembly = {}
 
         m = MetadataWS(Datasets.all_mouse)
-        byAssembly["mm9"] = m.chipseq_tf_annotations_mm9()
         byAssembly["mm10"] = m.chipseq_tf_annotations_mm10()
 
         roadmap = RoadmapMetadata().epigenomes
@@ -81,7 +80,7 @@ class WebEpigenomesLoader:
         byAssembly["hg19"] = combined
 
         self.byAssemblyAssays = defaultdict(lambda : defaultdict(None))
-        for assembly in ["mm9", "mm10", "hg19"]:
+        for assembly in ["mm10", "hg19"]:
             for assays in ["BothDNaseAndH3K4me3", "H3K4me3", "DNase"]:
                 epis = byAssembly[assembly].GetByAssays(assays)
                 if epis:
@@ -99,7 +98,7 @@ class WebEpigenomesLoader:
 
     def SelectorNames(self):
         ret = []
-        for assembly in ["mm9", "mm10", "hg19"]:
+        for assembly in ["mm10", "hg19"]:
             for assays in ["BothDNaseAndH3K4me3", "H3K4me3", "DNase"]:
                 epis = self.GetByAssemblyAndAssays(assembly, assays)
                 for epi in epis.epis:
@@ -162,7 +161,7 @@ class WebEpigenome:
         if self.epi.age_display:
             s = self.epi.life_stage + " " + self.epi.age_display
         if "13.5 week" == self.epi.age_display:
-            s = "e13.5" # exception for d embryonic fibroblast 13.5 week mm9
+            s = "e13.5" # exception for d embryonic fibroblast 13.5 week
         if "embryonic" in s:
             s = s.replace("embryonic ", "e").replace(" day", "")
         elif "postnatal" in s:

@@ -25,7 +25,7 @@ class AnnotationDB:
         self.DBCONN = DBCONN
 
     def findBedOverlap(self, assembly, chrom, start, end):
-        if assembly not in ["hg19", "mm10", "mm9"]:
+        if assembly not in ["hg19", "mm10"]:
             return []
         with getcursor(self.DBCONN, "findBedOverlap") as curs:
             curs.execute("""

@@ -11,7 +11,7 @@ from metadataws import MetadataWS
 from files_and_paths import Datasets
 
 def setupDB(cur):
-    for assembly in ["hg19", "mm9", "mm10"]:
+    for assembly in ["hg19", "mm10"]:
         cur.execute("""
 DROP TABLE IF EXISTS bedRanges{assembly};
 CREATE TABLE bedRanges{assembly}
@@ -48,7 +48,7 @@ def build(args, conn, cur):
     setupDB(cur)
 
     epigenomes = WebEpigenomesLoader(args)
-    for assembly in ["hg19", "mm10", "mm9"]:
+    for assembly in ["hg19", "mm10"]:
         for assays in ["H3K27ac", "DNase"]:
             epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
             for epi in epis.epis:
@@ -65,7 +65,7 @@ def build(args, conn, cur):
                         print "bad exp:", exp
                 conn.commit()
 
-    for assembly in ["mm9", "mm10", "hg19"]:
+    for assembly in ["mm10", "hg19"]:
         print "indexing", assembly, "chrom"
         cur.execute("""
 CREATE INDEX chromIdx{assembly} ON bedRanges{assembly}(chrom);

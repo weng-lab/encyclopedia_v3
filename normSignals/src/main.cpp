@@ -221,7 +221,6 @@ public:
 
         std::map<std::string, bfs::path> chrLenFnps{
             {"hg19", genomeFnp / "hg19.chromInfo"},
-            {"mm9", genomeFnp / "mm9.chromInfo"},
             {"mm10", genomeFnp / "mm10.chromInfo"}};
         if(0 == chrLenFnps.count(assembly)){
             throw std::runtime_error("assembly not found: '" + assembly + "'");
@@ -233,7 +232,6 @@ public:
 
         std::map<std::string, bfs::path> blacklistFnps{
                 {"hg19", genomeFnp / "blacklist" / "hg19" / "wgEncodeDacMapabilityConsensusExcludable.bed"},
-                {"mm9",  genomeFnp / "blacklist" / "mm9"  / "mm9-blacklist.bed"},
                 {"mm10", genomeFnp / "blacklist" / "mm10" / "mm10-blacklist.bed"}};
         if(0 == blacklistFnps.count(assembly)){
                 throw std::runtime_error("assembly not found: '" + assembly + "'");

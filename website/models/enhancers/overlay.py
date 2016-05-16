@@ -49,7 +49,7 @@ def main():
 
     we = WebEpigenomesLoader(args)
 
-    for assembly in ["mm9", "mm10", "hg19"]:
+    for assembly in ["mm10", "hg19"]:
         for assays in ["H3K27ac", "DNase"]:
             wepis = we.GetByAssemblyAndAssays(assembly, assays)
             for epi in wepis.epis:
@@ -58,4 +58,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-

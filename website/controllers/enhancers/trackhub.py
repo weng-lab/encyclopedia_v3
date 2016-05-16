@@ -50,7 +50,7 @@ class TrackHub:
         if 2 != len(path):
             raise Exception("path too long")
 
-        if path[0] in ["hg19", "hg38", "mm9", "mm10"]:
+        if path[0] in ["hg19", "hg38", "mm10"]:
             if path[0] == self.assembly:
                 if path[1].startswith("trackDb_") and path[1].endswith(".txt"):
                     return self.makeTrackDb()
@@ -114,8 +114,6 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         return False
 
     def phastcons(self):
-        if "mm9" == self.assembly:
-            url = os.path.join(BIB5, "conservation", "mm9.phastCons30way.bigWig")
         if "mm10" == self.assembly:
             url =  "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/phastCons60way/mm10.60way.phastCons.bw"
         if "hg19" == self.assembly:
@@ -131,13 +129,11 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         if "hg19" == self.assembly:
             return None
 
-        byAssembly = {"mm9" : "Comprehensive M1",
-                      "mm10" : "Comprehensive M8",
+        byAssembly = {"mm10" : "Comprehensive M8",
                       "hg19" : "Comprehensive 24"}
         desc = "GENCODE Genes " + byAssembly[self.assembly]
 
-        byAssemblyURl = {"mm9" : os.path.join(BIB5, "genes", "gencode.vM1.annotation.bb"),
-                         "mm10" : os.path.join(BIB5, "genes", "gencode.vM8.annotation.bb"),
+        byAssemblyURl = {"mm10" : os.path.join(BIB5, "genes", "gencode.vM8.annotation.bb"),
                          "hg19" : os.path.join(BIB5, "genes", "gencode.v24.annotation.bb")}
         url = byAssemblyURl[self.assembly]
 
@@ -194,7 +190,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
                                bigWig.fileID + ".bigWig")
 
         if norm:
-            if "mm9" == self.assembly or "mm10" == self.assembly:
+            if "mm10" == self.assembly:
                 url = os.path.join(BIB5, "encode_norm", bigWig.expID, bigWig.fileID + ".norm.bigWig")
             else:
                 if bigWig.expID.startswith("EN"):
@@ -312,4 +308,3 @@ html examplePage
             h3k27acUrl, h3k27acUrlNorm = checkExp(h3k27acExp)
             yield(desc, dnaseUrl, dnaseUrlNorm,
                   h3k27acUrl, h3k27acUrlNorm)
-
