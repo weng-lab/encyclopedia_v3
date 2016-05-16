@@ -51,7 +51,8 @@ class EnhancersSite(object):
         return self.templates("enhancers/index",
                               epigenomes = self.wepigenomes,
                               defaults = self.defaults,
-                              stats = self.epigenome_stats)
+                              stats = self.epigenome_stats,
+                              site = "enhancers")
 
     def makeUid(self):
         return str(uuid.uuid4())

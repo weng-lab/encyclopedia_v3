@@ -6,6 +6,12 @@
 </div>
 {% endmacro -%}
 
+{%- macro navLinnkActive(when, cur) -%}
+{%- if when == cur -%}
+active
+{%- endif -%}
+{%- endmacro -%}
+
 {% macro makeTissueActive(e) -%}
 {% if e.isActive() -%}
 checked="checked"

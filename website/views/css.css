@@ -156,13 +156,6 @@ input[type=checkbox]{
     -webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
 }
 
-#linkToEncode {
-    box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
-    -moz-box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
-    -webkit-box-shadow: 0 0 16px rgba(0, 0, 0, 0.3);
-}
-
-
 #formTable {
     width: 100%;
     table-layout: fixed;
