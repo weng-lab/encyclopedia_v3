@@ -11,12 +11,13 @@ from trackhub_washu import TrackHubWashu
 from parse_search_box import ParseSearchBox
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
+from common.dbsnps import dbSnps
+from common.genes import LookupGenes
+
 from models.promoters.db import AnnotationDB, UrlStatusDB
 from models.promoters.session import Sessions
 from models.promoters.web_epigenomes import WebEpigenomesLoader
-from models.promoters.dbsnps import dbSnps
 from models.promoters.defaults import Defaults
-from models.promoters.genes import LookupGenes
 from models.promoters.epigenome_stats import EpigenomeStats
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))

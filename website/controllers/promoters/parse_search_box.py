@@ -3,7 +3,7 @@
 import os, sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from models.promoters.coord import Coord
+from common.coord import Coord
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from files_and_paths import Dirs
@@ -122,4 +122,3 @@ class ParseSearchBox:
         c = Coord(toks[0], toks[1], toks[2])
         c.resize(self.halfWindow)
         return c
-
