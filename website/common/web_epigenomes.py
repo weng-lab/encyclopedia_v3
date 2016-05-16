@@ -59,16 +59,17 @@ class WalkRow:
                         yield c.web_id(), c.web_title(), c
 
 class WebEpigenomesLoader:
-    def __init__(self, args):
+    def __init__(self, args, histMark):
         self.args = args
         self.ontology = Ontology()
+        self.histMark = histMark
 
         byAssembly = {}
 
         m = MetadataWS(Datasets.all_mouse)
         byAssembly["mm10"] = m.chipseq_tf_annotations_mm10()
 
-        roadmap = RoadmapMetadata().epigenomes
+        roadmap = RoadmapMetadata(histMark).epigenomes
 
         combined = Epigenomes("ROADMAP + ENCODE", "hg19")
         if 1:
@@ -81,11 +82,14 @@ class WebEpigenomesLoader:
 
         self.byAssemblyAssays = defaultdict(lambda : defaultdict(None))
         for assembly in ["mm10", "hg19"]:
-            for assays in ["BothDNaseAndH3K27ac", "H3K27ac", "DNase"]:
+            for assays in ["BothDNaseAnd" + self.histMark, self.histMark, "DNase"]:
                 epis = byAssembly[assembly].GetByAssays(assays)
                 if epis:
-                    epis = [WebEpigenome(self.args, epi, assays, self.ontology) for epi in epis]
-                    self.byAssemblyAssays[assembly][assays] = WebEpigenomes(self.args, assembly, assays, epis)
+                    epis = [WebEpigenome(self.args, epi, assays,
+                                         self.ontology, self.histMark)
+                            for epi in epis]
+                    self.byAssemblyAssays[assembly][assays] = WebEpigenomes(
+                        self.args, assembly, assays, epis)
 
     def GetByAssemblyAndAssays(self, assembly, assays):
         return self.byAssemblyAssays[assembly][assays]
@@ -99,7 +103,7 @@ class WebEpigenomesLoader:
     def SelectorNames(self):
         ret = []
         for assembly in ["mm10", "hg19"]:
-            for assays in ["BothDNaseAndH3K27ac", "H3K27ac", "DNase"]:
+            for assays in ["BothDNaseAnd" + self.histMark, self.histMark, "DNase"]:
                 epis = self.GetByAssemblyAndAssays(assembly, assays)
                 for epi in epis.epis:
                     ret.append(epi.SelectorName())
@@ -108,7 +112,7 @@ class WebEpigenomesLoader:
     def getWebIDsFromExpIDs(self, assembly, expIDs):
         ret = {}
         total = 0
-        for assays in ["BothDNaseAndH3K27ac", "H3K27ac", "DNase"]:
+        for assays in ["BothDNaseAnd" + self.histMark, self.histMark, "DNase"]:
             epis = self.GetByAssemblyAndAssays(assembly, assays)
             ret[assays] = epis.getWebIDsFromExpIDs(expIDs)
             total += len(ret[assays])
@@ -116,31 +120,32 @@ class WebEpigenomesLoader:
         return ret
 
 class WebEpigenome:
-    def __init__(self, args, epi, assays, ontology):
+    def __init__(self, args, epi, assays, ontology, histMark):
         self.args = args
         self.epi = epi
         self.assays = assays
         self.ontology = ontology
+        self.histMark = histMark
 
         self.DNase = None
-        self.H3K27ac = None
+        self.histones = None
 
         if len(self.epi.DNase()) > 1:
             print self.epi
             for e in self.epi.DNase():
                 print "\t", e
             raise Exception("multiple DNase experiments found")
-        if len(self.epi.H3K27ac()) > 1:
+        if len(self.epi.Histone(self.histMark)) > 1:
             print self.epi
-            for e in self.epi.H3K27ac():
+            for e in self.epi.Histone(self.histMark):
                 print "\t", e
-            raise Exception("multiple H3K27ac experiments found")
+            raise Exception("multiple " + self.histMark + " experiments found")
 
-        if "BothDNaseAndH3K27ac" == self.assays:
+        if "BothDNaseAnd" + self.histMark == self.assays:
             self.DNase = epi.DNase()[0]
-            self.H3K27ac = epi.H3K27ac()[0]
-        elif "H3K27ac" == self.assays:
-            self.H3K27ac = epi.H3K27ac()[0]
+            self.histones = epi.Histone(self.histMark)[0]
+        elif self.histMark == self.assays:
+            self.histones = epi.Histone(self.histMark)[0]
         elif "DNase" == self.assays:
             self.DNase = epi.DNase()[0]
         else:
@@ -230,16 +235,16 @@ class WebEpigenome:
                                  "fetal_thymus_select"]
 
     def exps(self):
-        if "H3K27ac" == self.assays:
-            return [self.H3K27ac]
+        if self.histMark == self.assays:
+            return [self.histones]
         if "DNase" == self.assays:
             return [self.DNase]
-        if "BothDNaseAndH3K27ac" == self.assays:
-            return [self.DNase, self.H3K27ac]
+        if "BothDNaseAnd" + self.histMark == self.assays:
+            return [self.DNase, self.histones]
         raise Exception("unknown assay type " + self.assays)
 
     def predictionFnp(self):
-        return self.epi.enhancerLikeFnp(self.assays, self.DNase, self.H3K27ac)
+        return self.epi.enhancerLikeFnp(self.assays, self.DNase, self.histones)
 
     def predictionFnpExists(self):
         fnp = self.predictionFnp()

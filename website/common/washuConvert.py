@@ -3,7 +3,7 @@
 import os, sys, shutil
 from joblib import Parallel, delayed
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils'))
 from utils import Utils, printWroteNumLines
 from files_and_paths import Dirs
 

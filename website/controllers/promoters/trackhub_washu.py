@@ -5,9 +5,6 @@ import StringIO
 
 from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from models.promoters.web_epigenomes import WebEpigenome
-
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
 from files_and_paths import Dirs

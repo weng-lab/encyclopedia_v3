@@ -16,10 +16,10 @@ from common.dbsnps import dbSnps
 from common.tables import DbTables
 from common.session import Sessions
 from common.db import AnnotationDB, UrlStatusDB
+from common.epigenome_stats import EpigenomeStats
+from common.web_epigenomes import WebEpigenomesLoader
 
-from models.enhancers.web_epigenomes import WebEpigenomesLoader
 from models.enhancers.defaults import Defaults
-from models.enhancers.epigenome_stats import EpigenomeStats
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
@@ -30,14 +30,15 @@ class EnhancersSite(object):
         self.args = args
 
         self.site = "enhancers"
+        self.histMark = "H3K27ac"
         self.db = AnnotationDB(DBCONN, DbTables.search_enhancers)
         self.sessions = Sessions(DBCONN, DbTables.sessions_enhancers)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args)
+        self.wepigenomes = WebEpigenomesLoader(self.args, self.histMark)
         self.defaults = Defaults()
-        self.epigenome_stats = EpigenomeStats(self.wepigenomes)
+        self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.histMark)
 
         viewDir = os.path.join(os.path.dirname(__file__), "../../views")
         self.templates = Templates(viewDir)

@@ -16,10 +16,10 @@ from common.genes import LookupGenes
 from common.tables import DbTables
 from common.session import Sessions
 from common.db import AnnotationDB, UrlStatusDB
+from common.web_epigenomes import WebEpigenomesLoader
+from common.epigenome_stats import EpigenomeStats
 
-from models.promoters.web_epigenomes import WebEpigenomesLoader
 from models.promoters.defaults import Defaults
-from models.promoters.epigenome_stats import EpigenomeStats
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
@@ -30,14 +30,15 @@ class PromotersSite(object):
         self.args = args
 
         self.site = "promoters"
+        self.histMark = "H3K4me3"
         self.db = AnnotationDB(DBCONN, DbTables.search_promoters)
         self.sessions = Sessions(DBCONN, DbTables.sessions_promoters)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args)
+        self.wepigenomes = WebEpigenomesLoader(self.args, self.histMark)
         self.defaults = Defaults()
-        self.epigenome_stats = EpigenomeStats(self.wepigenomes)
+        self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.histMark)
 
         viewDir = os.path.join(os.path.dirname(__file__), "../../views")
         self.templates = Templates(viewDir)
