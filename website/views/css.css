@@ -210,9 +210,8 @@ input[type=checkbox]{
 }
 
 .methodFigureBox {
-    float: right;
-    clear: left;
     padding: 10px;
     border-style: solid;
     margin-left: 10px;
+    width: 420px;
 }

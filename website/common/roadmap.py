@@ -125,20 +125,16 @@ class RoadmapEpigenome:
         path = Dirs.enhancerTracks
         if "H3K27ac" == assays:
             fn = "{eid}_H3K27ac_predictions.bigBed".format(eid = self.eid)
-        if "DNase" == assays:
-            fn = "{eid}_DNase_predictions.bigBed".format(eid = self.eid)
-        if "BothDNaseAndH3K27ac" == assays:
-            fn = "{eid}_predictions.bigBed".format(eid = self.eid)
-        return os.path.join(path, fn)
-
-    def promoterLikeFnp(self, assays, DNase, H3K4me3):
-        path = Dirs.promoterTracks
-        if "H3K4me3" == assays:
+        elif "H3K4me3" == assays:
             fn = "{eid}_H3K4me3_predictions.bigBed".format(eid = self.eid)
-        if "DNase" == assays:
+        elif "DNase" == assays:
             fn = "{eid}_DNase_predictions.bigBed".format(eid = self.eid)
-        if "BothDNaseAndH3K4me3" == assays:
+        elif "BothDNaseAndH3K27ac" == assays:
             fn = "{eid}_predictions.bigBed".format(eid = self.eid)
+        elif "BothDNaseAndH3K4me3" == assays:
+            fn = "{eid}_predictions.bigBed".format(eid = self.eid)
+        else:
+            raise Exception("fell through")
         return os.path.join(path, fn)
 
 class RoadmapMetadata:
