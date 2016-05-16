@@ -7,54 +7,55 @@ from utils import Utils
 from dbs import DBS
 from db_utils import getcursor
 
+class Sessions:
+    def __init__(self, DBCONN, tableName):
+        self.DBCONN = DBCONN
+        self.table = tableName
+
 def setupDB(cur):
     cur.execute("""
-DROP TABLE IF EXISTS sessions;
-CREATE TABLE sessions
+DROP TABLE IF EXISTS {table};
+CREATE TABLE {table}
 (id serial PRIMARY KEY,
 uid text,
 session_id text
-) """)
-
-class Sessions:
-    def __init__(self, DBCONN):
-        self.DBCONN = DBCONN
+    ) """.format(table = self.table))
 
     def insert(self, session_id, uid):
         with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
-INSERT INTO sessions
+INSERT INTO {table}
 (session_id, uid)
 VALUES (
 %(session_id)s,
 %(uid)s
-)""", {"session_id" : session_id,
+)""".format(table = self.table), {"session_id" : session_id,
        "uid" : uid
 })
 
     def insertOrUpdate(self, session_id, uid):
         with getcursor(self.DBCONN, "insertOrUpdate") as curs:
             curs.execute("""
-SELECT id FROM sessions
+SELECT id FROM {table}
 WHERE session_id = %(session_id)s
-""", {"session_id" : session_id})
+""".format(table = self.table), {"session_id" : session_id})
             if (curs.rowcount > 0):
                 curs.execute("""
-UPDATE sessions
+UPDATE {table}
 SET
 uid = %(uid)s
 WHERE session_id = %(session_id)s
-""", {"session_id" : session_id,
+""".format(table = self.table), {"session_id" : session_id,
       "uid" : uid
 })
             else:
                 curs.execute("""
-INSERT INTO sessions
+INSERT INTO {table}
 (session_id, uid)
 VALUES (
 %(session_id)s,
 %(uid)s
-)""", {"session_id" : session_id,
+)""".format(table = self.table), {"session_id" : session_id,
        "uid" : uid
 })
 
@@ -62,9 +63,9 @@ VALUES (
         with getcursor(self.DBCONN, "insertOrUpdate") as curs:
             curs.execute("""
 SELECT uid
-FROM sessions
+FROM {table}
 WHERE session_id = %(session_id)s
-""", {"session_id" : session_id})
+""".format(table = self.table), {"session_id" : session_id})
             uid = curs.fetchone()
             if uid:
                 return uid[0]
@@ -90,7 +91,8 @@ def main():
     DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
     with getcursor(DBCONN, "main") as cur:
-        setupDB(cur)
+        s = Sessions(DbTables.tableName)
+        s.setupDB(cur)
 
 if __name__ == '__main__':
     main()

@@ -13,9 +13,10 @@ from parse_search_box import ParseSearchBox
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.dbsnps import dbSnps
 from common.genes import LookupGenes
+from common.tables import DbTables
+from common.session import Sessions
 
 from models.promoters.db import AnnotationDB, UrlStatusDB
-from models.promoters.session import Sessions
 from models.promoters.web_epigenomes import WebEpigenomesLoader
 from models.promoters.defaults import Defaults
 from models.promoters.epigenome_stats import EpigenomeStats
@@ -30,7 +31,7 @@ class PromotersSite(object):
 
         self.site = "promoters"
         self.db = AnnotationDB(DBCONN)
-        self.sessions = Sessions(DBCONN)
+        self.sessions = Sessions(DBCONN, DbTables.sessions_promoters)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)

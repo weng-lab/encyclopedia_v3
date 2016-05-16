@@ -13,8 +13,9 @@ from parse_search_box import ParseSearchBox
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.genes import LookupGenes
 from common.dbsnps import dbSnps
+from common.tables import DbTables
+from common.session import Sessions
 
-from models.enhancers.session import Sessions
 from models.enhancers.web_epigenomes import WebEpigenomesLoader
 from models.enhancers.db import AnnotationDB, UrlStatusDB
 from models.enhancers.defaults import Defaults
@@ -30,7 +31,7 @@ class EnhancersSite(object):
 
         self.site = "enhancers"
         self.db = AnnotationDB(DBCONN)
-        self.sessions = Sessions(DBCONN)
+        self.sessions = Sessions(DBCONN, DbTables.sessions_enhancers)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
