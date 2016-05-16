@@ -10,12 +10,12 @@ import numpy as np
 from natsort import natsorted
 
 from models.promoters.roadmap import RoadmapMetadata
+from common.ontology.ontology import Ontology
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from metadataws import MetadataWS
 from files_and_paths import Datasets
 from epigenome import Epigenomes
-from ontology import Ontology
 
 class ColWrap:
     def __init__(self, pretty_age, ageDays, selectorName):
