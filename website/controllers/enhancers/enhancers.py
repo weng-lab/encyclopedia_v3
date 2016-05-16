@@ -27,6 +27,7 @@ class EnhancersSite(object):
     def __init__(self, DBCONN, args):
         self.args = args
 
+        self.site = "enhancers"
         self.db = AnnotationDB(DBCONN)
         self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
@@ -44,15 +45,15 @@ class EnhancersSite(object):
             fnp = os.path.expanduser("~/.ws_host.txt")
             if os.path.exists(fnp):
                 self.host = open(fnp).read().strip()
-        self.host += "enhancers/"
+        self.host += self.site + "/"
 
     @cherrypy.expose
     def index(self, *args, **params):
-        return self.templates("enhancers/index",
+        return self.templates(self.site + "/index",
                               epigenomes = self.wepigenomes,
                               defaults = self.defaults,
                               stats = self.epigenome_stats,
-                              site = "enhancers")
+                              site = self.site)
 
     def makeUid(self):
         return str(uuid.uuid4())
@@ -79,7 +80,7 @@ class EnhancersSite(object):
 
         if self.args.debug:
             return {"inner-url" : url,
-                    "html" : self.templates("enhancers/ucsc",
+                    "html" : self.templates(self.site + "/ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
@@ -106,7 +107,7 @@ class EnhancersSite(object):
 
         if self.args.debug:
             return {"inner-url" : url,
-                    "html" : self.templates("enhancers/ucsc",
+                    "html" : self.templates(self.site + "/ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
@@ -182,14 +183,15 @@ class EnhancersSite(object):
     @cherrypy.expose
     def missing(self, *args, **params):
         if not args:
-            return self.templates("enhancers/missing_list")
+            return self.templates(self.site + "/missing_list")
         row = [args[0], args[1], "[]", "loci", "hubNum"]
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
-        return self.templates("enhancers/missing",
+        return self.templates(self.site + "/missing",
                               missing = missing)
 
     @cherrypy.expose
     def methods(self, *args, **params):
-        return self.templates("enhancers/methods",
-                              stats = self.epigenome_stats)
+        return self.templates(self.site + "/methods",
+                              stats = self.epigenome_stats,
+                              site = self.site)
