@@ -7,22 +7,23 @@ from utils import Utils
 from dbs import DBS
 from db_utils import getcursor
 
-def setupDB(cur):
-    cur.execute("""
-DROP TABLE IF EXISTS search;
-CREATE TABLE search
-(id serial PRIMARY KEY,
-assembly text,
-assays text,
-tissues text,
-loci text,
-uid text UNIQUE NOT NULL,
-hubNum integer
-) """)
-
 class AnnotationDB:
-    def __init__(self, DBCONN):
+    def __init__(self, DBCONN, tableSearch):
         self.DBCONN = DBCONN
+        self.tableSearch = tableSearch
+
+    def setupDB(self, cur):
+        cur.execute("""
+    DROP TABLE IF EXISTS {search};
+    CREATE TABLE {search}
+    (id serial PRIMARY KEY,
+    assembly text,
+    assays text,
+    tissues text,
+    loci text,
+    uid text UNIQUE NOT NULL,
+    hubNum integer
+        ) """.format(search = self.tableSearch))
 
     def findBedOverlap(self, assembly, chrom, start, end):
         if assembly not in ["hg19", "mm10"]:
@@ -42,12 +43,12 @@ AND startend && int4range(%(start)s, %(end)s)
     def insertOrUpdate(self, assembly, assays, tissues, loci, uid):
         with getcursor(self.DBCONN, "insertOrUpdate") as curs:
             curs.execute("""
-SELECT id FROM search
+SELECT id FROM {search}
 WHERE uid = %(uid)s
-""", {"uid" : uid})
+""".format(search = self.tableSearch), {"uid" : uid})
             if (curs.rowcount > 0):
                 curs.execute("""
-UPDATE search
+UPDATE {search}
 SET
 assembly = %(assembly)s,
 assays = %(assays)s,
@@ -56,7 +57,7 @@ loci = %(loci)s,
 hubNum = hubNum + 1
 WHERE uid = %(uid)s
 RETURNING hubNum;
-""", {"assembly" : assembly,
+""".format(search = self.tableSearch), {"assembly" : assembly,
       "assays" : assays,
       "tissues" : json.dumps(tissues),
       "loci" : loci,
@@ -65,7 +66,7 @@ RETURNING hubNum;
                 hubNum = curs.fetchone()[0]
             else:
                 curs.execute("""
-INSERT INTO search
+INSERT INTO {search}
 (assembly, assays, tissues, loci, uid, hubNum)
 VALUES (
 %(assembly)s,
@@ -75,7 +76,7 @@ VALUES (
 %(uid)s,
 %(hubNum)s
 ) RETURNING hubNum;
-""", {"assembly" : assembly,
+""".format(search = self.tableSearch), {"assembly" : assembly,
        "assays" : assays,
        "tissues" : json.dumps(tissues),
        "loci" : loci,
@@ -89,9 +90,9 @@ VALUES (
         with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
 SELECT assembly, assays, tissues, loci, hubNum
-FROM search
+FROM {search}
 WHERE uid = %(uid)s
-""", {"uid" : uid})
+""".format(search = self.tableSearch), {"uid" : uid})
             return curs.fetchone()
 
 class UrlStatusDB:
@@ -174,8 +175,8 @@ def main():
     with getcursor(DBCONN, "main") as cur:
         setupDB(cur)
 
-        ue = UrlStatusDB(DBCONN)
-        ue.setupDB()
+        #ue = UrlStatusDB(DBCONN)
+        #ue.setupDB()
 
 if __name__ == '__main__':
     main()

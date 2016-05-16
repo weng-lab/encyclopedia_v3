@@ -15,9 +15,9 @@ from common.genes import LookupGenes
 from common.dbsnps import dbSnps
 from common.tables import DbTables
 from common.session import Sessions
+from common.db import AnnotationDB, UrlStatusDB
 
 from models.enhancers.web_epigenomes import WebEpigenomesLoader
-from models.enhancers.db import AnnotationDB, UrlStatusDB
 from models.enhancers.defaults import Defaults
 from models.enhancers.epigenome_stats import EpigenomeStats
 
@@ -30,7 +30,7 @@ class EnhancersSite(object):
         self.args = args
 
         self.site = "enhancers"
-        self.db = AnnotationDB(DBCONN)
+        self.db = AnnotationDB(DBCONN, DbTables.search_enhancers)
         self.sessions = Sessions(DBCONN, DbTables.sessions_enhancers)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)

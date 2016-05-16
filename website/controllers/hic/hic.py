@@ -15,8 +15,8 @@ from common.dbsnps import dbSnps
 from common.genes import LookupGenes
 from common.tables import DbTables
 from common.session import Sessions
+from common.db import AnnotationDB, UrlStatusDB
 
-from models.hic.db import AnnotationDB, UrlStatusDB
 from models.hic.web_epigenomes import WebEpigenomesLoader
 from models.hic.defaults import Defaults
 from models.hic.epigenome_stats import EpigenomeStats
@@ -30,7 +30,7 @@ class HiCSite(object):
     def __init__(self, DBCONN, args, globalStaticDir):
         self.args = args
 
-        self.db = AnnotationDB(DBCONN)
+        self.db = AnnotationDB(DBCONN, DbTables.search_hic)
         self.sessions = Sessions(DBCONN, DbTables.sessions_hic)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
