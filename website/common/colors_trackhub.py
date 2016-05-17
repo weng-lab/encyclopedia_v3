@@ -1,4 +1,3 @@
-
 class TrackhubColor:
     def __init__(self, rgbc, hexc):
         self.rgb = rgbc

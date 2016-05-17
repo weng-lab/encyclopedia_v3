@@ -1,3 +1,6 @@
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
+from color_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
+
 BIB5 = "http://bib5.umassmed.edu/~purcarom/annotations_demo/"
 
 class TempWrap:
@@ -119,7 +122,7 @@ class Track(object):
 class PredictionTrack(Track):
     def __init__(self, desc, priority, url):
         super(PredictionTrack, self).__init__(desc, priority, url)
-        self.color = "6,218,147"
+        self.color = None
         self.type = "bigBed 8"
 
 class VistaTrack(Track):
@@ -140,7 +143,7 @@ class BigWigTrack(Track):
 class BigGenePredTrack(Track):
     def __init__(self, desc, priority, url):
         super(BigGenePredTrack, self).__init__(desc, priority, url)
-        self.color = "6,218,147"
+        self.color = OtherTrackhubColors.Genes.rgb
         self.type = "bigBed 12 + 8"
         self.visibility = "pack"
 
