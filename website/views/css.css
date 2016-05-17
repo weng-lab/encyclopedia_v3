@@ -109,6 +109,10 @@ input[type=checkbox]{
     font-size: 22px;
 }
 
+#linkToEncode {
+    padding-left: 0px;
+}
+
 #navbar-main {
     background-color: #337ab7;
     margin-bottom: 5px;
@@ -132,6 +136,10 @@ input[type=checkbox]{
     left: 0;
     text-align: center;
     margin: auto;
+}
+
+#main-navbar-collapse {
+    padding-left: 0px;
 }
 
 .btn.nohover:hover,
