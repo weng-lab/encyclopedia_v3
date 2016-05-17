@@ -82,7 +82,8 @@ class TrackHubWashu:
 
         desc = "phastCons"
 
-        track = BigWigTrack(desc, self.priority, url, "0,255,0").track_washu()
+        color = OtherTrackhubColors.Conservation.rgb
+        track = BigWigTrack(desc, self.priority, url, color).track_washu()
         self.priority += 1
         return track
 

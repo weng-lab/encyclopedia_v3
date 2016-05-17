@@ -122,7 +122,8 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
 
         desc = "phastCons"
 
-        track = BigWigTrack(desc, self.priority, url, "0,255,0").track()
+        color = OtherTrackhubColors.Conservation.rgb
+        track = BigWigTrack(desc, self.priority, url, color).track()
         self.priority += 1
         return track
 

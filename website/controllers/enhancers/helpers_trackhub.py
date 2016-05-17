@@ -125,7 +125,7 @@ class PredictionTrack(Track):
     def __init__(self, desc, priority, url):
         super(PredictionTrack, self).__init__(desc, priority, url)
         self.color = None
-        self.type = "bigBed 8"
+        self.type = "bigBed 9"
 
 class VistaTrack(Track):
     def __init__(self, desc, priority, url):
