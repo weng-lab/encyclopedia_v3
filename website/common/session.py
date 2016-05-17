@@ -6,14 +6,16 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils
 from utils import Utils
 from dbs import DBS
 from db_utils import getcursor
+from tables import DbTables
 
 class Sessions:
     def __init__(self, DBCONN, tableName):
         self.DBCONN = DBCONN
         self.table = tableName
 
-    def setupDB(self, cur):
-        cur.execute("""
+    def setupDB(self):
+        with getcursor(self.DBCONN, "get") as curs:
+            curs.execute("""
     DROP TABLE IF EXISTS {table};
     CREATE TABLE {table}
     (id serial PRIMARY KEY,
@@ -91,8 +93,8 @@ def main():
     DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
     with getcursor(DBCONN, "main") as cur:
-        s = Sessions(DbTables.sessions_promoters)
-        s.setupDB(cur)
+        s = Sessions(DBCONN, DbTables.sessions_promoters)
+        s.setupDB()
 
 if __name__ == '__main__':
     main()
