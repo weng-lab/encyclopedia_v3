@@ -85,7 +85,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         lines += [self.genes()]
 
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
-            if "BothDNaseAndH3K27ac" == self.assays:
+            if self.assays.startswith("BothDNaseAnd"):
                 lines += [self.predictionTrackHub(wepi)]
                 lines += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
@@ -179,6 +179,8 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         assay = "DNase"
         if exp.isH3K27ac():
             assay = "H3K27ac"
+        elif exp.isH3K4me3():
+            assay = " H3K4me3"
 
         bigWigs = bigWigFilters(self.assembly, exp.files)
 
@@ -205,6 +207,9 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         if exp.isH3K27ac():
             name = "H3K27ac Signal"
             color = EncodeTrackhubColors.H3K27ac_Signal.rgb
+        elif exp.isH3K4me3():
+            name = "H3K4me3 Signal"
+            color = EncodeTrackhubColors.H3K4me3_Signal.rgb
         elif exp.isDNaseSeq():
             name = "DNase Signal"
             color = EncodeTrackhubColors.DNase_Signal.rgb
@@ -214,8 +219,8 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         return url, name, color
 
     def compositeTrack(self, wepi):
-        dnaseExp, h3k27acExp = wepi.exps()
-        h3k27acUrl, h3k27acName, h3k27acColor = self._getUrl(h3k27acExp, True)
+        dnaseExp, histoneExp = wepi.exps()
+        histoneUrl, histoneName, histoneColor = self._getUrl(histoneExp, True)
         dnaseUrl, dnaseName, dnaseColor = self._getUrl(dnaseExp, True)
 
         desc = wepi.web_title()
@@ -234,13 +239,13 @@ visibility full
 priority {priority}
 html examplePage
 
-                track composite{priority}H3K27ac
-                bigDataUrl {h3k27acUrl}
-                shortLabel H3K27ac
-                longLabel H3K27ac
+                track composite{priority}Histone
+                bigDataUrl {histoneUrl}
+                shortLabel {histone}
+                longLabel {histone}
                 parent composite{priority}
                 type bigWig
-                color {h3k27acColor}
+                color {histoneColor}
 
                 track composite{priority}DNase
                 bigDataUrl {dnaseUrl}
@@ -252,10 +257,11 @@ html examplePage
 """.format(priority = self.priority,
            descShort = descShort,
            desc = desc,
-           h3k27acUrl = h3k27acUrl,
-           h3k27acColor = h3k27acColor,
+           histoneUrl = histoneUrl,
+           histoneColor = histoneColor,
            dnaseUrl = dnaseUrl,
-           dnaseColor = dnaseColor)
+           dnaseColor = dnaseColor,
+           histone = self.histMark)
 
         self.priority += 1
         return track
@@ -296,17 +302,19 @@ html examplePage
 
         for wepi in wepis.epis:
             dnaseExp = None
-            h3k27acExp = None
+            histoneExp = None
             exps = wepi.exps()
-            if "BothDNaseAndH3K27ac" == self.assays:
-                dnaseExp, h3k27acExp = exps
-            if "H3K27ac" == self.assays:
-                h3k27acExp = exps[0]
-            if "DNase" == self.assays:
+            if self.assays.startswith("BothDNaseAnd"):
+                dnaseExp, histoneExp = exps
+            elif self.assays in ["H3K27ac", "H3K4me3"]:
+                histoneExp = exps[0]
+            elif "DNase" == self.assays:
                 dnaseExp = exps[0]
+            else:
+                raise Exception("unknown assay type")
 
             desc = wepi.web_title()
             dnaseUrl, dnaseUrlNorm = checkExp(dnaseExp)
-            h3k27acUrl, h3k27acUrlNorm = checkExp(h3k27acExp)
+            histoneUrl, histoneUrlNorm = checkExp(histoneExp)
             yield(desc, dnaseUrl, dnaseUrlNorm,
-                  h3k27acUrl, h3k27acUrlNorm)
+                  histoneUrl, histoneUrlNorm)
