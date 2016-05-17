@@ -71,7 +71,7 @@ class WebEpigenomesLoader:
         m = MetadataWS(Datasets.all_mouse)
         byAssembly["mm10"] = m.chipseq_tf_annotations_mm10()
 
-        roadmap = RoadmapMetadata(histMark).epigenomes
+        roadmap = RoadmapMetadata(histMark, assayType).epigenomes
 
         combined = Epigenomes("ROADMAP + ENCODE", "hg19")
         if 1:

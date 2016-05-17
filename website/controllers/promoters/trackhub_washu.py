@@ -176,8 +176,8 @@ class TrackHubWashu:
         return url, name, color
 
     def compositeTrack(self, wepi):
-        dnaseExp, h3k27acExp = wepi.exps()
-        h3k27acUrl, h3k27acName, h3k27acColor = self._getUrl(h3k27acExp, True)
+        dnaseExp, histoneExp = wepi.exps()
+        histoneUrl, histoneName, histoneColor = self._getUrl(histoneExp, True)
         dnaseUrl, dnaseName, dnaseColor = self._getUrl(dnaseExp, True)
 
         desc = wepi.web_title()
@@ -197,12 +197,12 @@ priority {priority}
 html examplePage
 
                 track composite{priority}H3K4me3
-                bigDataUrl {h3k27acUrl}
+                bigDataUrl {histoneUrl}
                 shortLabel H3K4me3
                 longLabel H3K4me3
                 parent composite{priority}
                 type bigWig
-                color {h3k27acColor}
+                color {histoneColor}
 
                 track composite{priority}DNase
                 bigDataUrl {dnaseUrl}
@@ -214,8 +214,8 @@ html examplePage
 """.format(priority = self.priority,
            descShort = descShort,
            desc = desc,
-           h3k27acUrl = h3k27acUrl,
-           h3k27acColor = h3k27acColor,
+           histoneUrl = histoneUrl,
+           histoneColor = histoneColor,
            dnaseUrl = dnaseUrl,
            dnaseColor = dnaseColor)
 

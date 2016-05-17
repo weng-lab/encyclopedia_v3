@@ -61,7 +61,7 @@ class RoadmapExp:
 
 class RoadmapEpigenome:
     def __init__(self, eid, biosample_term_name, tissue, biosample_type,
-                 DNase, histone, histMark):
+                 DNase, histone, histMark, assayType):
         self.assembly = "hg19"
         self.biosample_term_name = biosample_term_name
         self.biosample_term_id = ""
@@ -71,6 +71,7 @@ class RoadmapEpigenome:
         self.age_display = None
         self.eid = eid
         self.histMark = histMark
+        self.assayType = assayType
 
         self.DNaseExp = None
         if DNase.files:
@@ -155,7 +156,7 @@ class RoadmapEpigenome:
         return os.path.join(path, fn)
 
 class RoadmapMetadata:
-    def __init__(self, histMark):
+    def __init__(self, histMark, assayType):
         self.histMark = histMark
 
         fnp = os.path.realpath(os.path.join(os.path.dirname(__file__), "roadmap.tsv"))
@@ -184,7 +185,7 @@ class RoadmapMetadata:
                 break
             DNase = RoadmapExp(r[1], "DNase-seq", r[14], r[16], r[17], r[35], histMark)
             histone = RoadmapExp(r[1], self.histMark, r[14], r[16], r[17], r[33], histMark)
-            epi = RoadmapEpigenome(r[1], r[14], r[16], r[17], DNase, histone, histMark)
+            epi = RoadmapEpigenome(r[1], r[14], r[16], r[17], DNase, histone, histMark, assayType)
             self.epigenomes.addEpigenome(epi)
 
         print "found", len(self.epigenomes), "epigenomes for ROADMAP hg19"

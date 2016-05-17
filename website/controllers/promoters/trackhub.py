@@ -204,7 +204,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
 
         if exp.isH3K4me3():
             name = "H3K4me3 Signal"
-            color = EncodeTrackhubColors.H3K27ac_Signal.rgb
+            color = EncodeTrackhubColors.H3K4me3_Signal.rgb
         elif exp.isDNaseSeq():
             name = "DNase Signal"
             color = EncodeTrackhubColors.DNase_Signal.rgb
@@ -214,8 +214,8 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         return url, name, color
 
     def compositeTrack(self, wepi):
-        dnaseExp, h3k27acExp = wepi.exps()
-        h3k27acUrl, h3k27acName, h3k27acColor = self._getUrl(h3k27acExp, True)
+        dnaseExp, histoneExp = wepi.exps()
+        histoneUrl, histoneName, histoneColor = self._getUrl(histoneExp, True)
         dnaseUrl, dnaseName, dnaseColor = self._getUrl(dnaseExp, True)
 
         desc = wepi.web_title()
@@ -235,12 +235,12 @@ priority {priority}
 html examplePage
 
                 track composite{priority}H3K4me3
-                bigDataUrl {h3k27acUrl}
+                bigDataUrl {histoneUrl}
                 shortLabel H3K4me3
                 longLabel H3K4me3
                 parent composite{priority}
                 type bigWig
-                color {h3k27acColor}
+                color {histoneColor}
 
                 track composite{priority}DNase
                 bigDataUrl {dnaseUrl}
@@ -252,8 +252,8 @@ html examplePage
 """.format(priority = self.priority,
            descShort = descShort,
            desc = desc,
-           h3k27acUrl = h3k27acUrl,
-           h3k27acColor = h3k27acColor,
+           histoneUrl = histoneUrl,
+           histoneColor = histoneColor,
            dnaseUrl = dnaseUrl,
            dnaseColor = dnaseColor)
 
@@ -296,17 +296,17 @@ html examplePage
 
         for wepi in wepis.epis:
             dnaseExp = None
-            h3k27acExp = None
+            histoneExp = None
             exps = wepi.exps()
             if "BothDNaseAndH3K4me3" == self.assays:
-                dnaseExp, h3k27acExp = exps
+                dnaseExp, histoneExp = exps
             if "H3K4me3" == self.assays:
-                h3k27acExp = exps[0]
+                histoneExp = exps[0]
             if "DNase" == self.assays:
                 dnaseExp = exps[0]
 
             desc = wepi.web_title()
             dnaseUrl, dnaseUrlNorm = checkExp(dnaseExp)
-            h3k27acUrl, h3k27acUrlNorm = checkExp(h3k27acExp)
+            histoneUrl, histoneUrlNorm = checkExp(histoneExp)
             yield(desc, dnaseUrl, dnaseUrlNorm,
-                  h3k27acUrl, h3k27acUrlNorm)
+                  histoneUrl, histoneUrlNorm)
