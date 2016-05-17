@@ -50,6 +50,26 @@ def dbconn(args):
     dbs["application_name"] = os.path.realpath(__file__)
     return psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
+def getRootConfig(siteName):
+    cacheDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
+                                             "cache", siteName))
+    Utils.mkdir_p(cacheDir)
+
+    logDir = os.path.join(cacheDir, "logs")
+    Utils.mkdir_p(logDir)
+
+    return {
+        '/': {
+            'tools.sessions.on' : True,
+            'tools.sessions.timeout' : 60000,
+            'tools.sessions.storage_type' : "file",
+            'tools.sessions.storage_path' : cacheDir,
+            'log.access_file' : os.path.join(logDir, "access.log"),
+            'log.error_file' : os.path.join(logDir, "error.log"),
+            'log.screen' : False,
+        }
+    }
+
 def main():
     args = parse_args()
 
@@ -57,24 +77,13 @@ def main():
     cherrypy.tree.mount(mainIndex, '/', config = mainIndex.config)
 
     DBCONN = dbconn(args)
-    cacheDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
-                                             "cache"))
-    Utils.mkdir_p(cacheDir)
 
-    root_config = {
-        '/': {
-            'tools.sessions.on' : True,
-            'tools.sessions.timeout' : 60000,
-            'tools.sessions.storage_type' : "file",
-            'tools.sessions.storage_path' : cacheDir
-            }
-        }
     cherrypy.tree.mount(HiCSite(DBCONN, args, mainIndex.staticDir), '/hic',
-                        config=root_config)
+                        config=getRootConfig("hic"))
     cherrypy.tree.mount(EnhancersSite(DBCONN, args), '/enhancers',
-                        config=root_config)
+                        config=getRootConfig("enhancers"))
     cherrypy.tree.mount(PromotersSite(DBCONN, args), '/promoters',
-                        config=root_config)
+                        config=getRootConfig("promoters"))
 
     if args.dev:
         cherrypy.config.update({'server.environment': "development", })
