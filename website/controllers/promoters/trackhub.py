@@ -7,7 +7,7 @@ from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTra
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.web_epigenomes import WebEpigenome
-from color_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
+from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils

@@ -1,5 +1,7 @@
+import sys, os
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from color_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
+from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
 
 BIB5 = "http://bib5.umassmed.edu/~purcarom/annotations_demo/"
 

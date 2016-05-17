@@ -5,6 +5,9 @@ import StringIO
 
 from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
 
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
+from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from utils import Utils
 from files_and_paths import Dirs
@@ -162,10 +165,10 @@ class TrackHubWashu:
 
         if exp.isH3K27ac():
             name = "H3K27ac Signal"
-            color = "18,98,235"
+            color = EncodeTrackhubColors.H3K27ac_Signal.rgb
         elif exp.isDNaseSeq():
             name = "DNase Signal"
-            color = "255,121,3"
+            color = EncodeTrackhubColors.DNase_Signal.rgb
         else:
             raise Exception("unexpected exp")
 

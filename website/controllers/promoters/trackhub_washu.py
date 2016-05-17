@@ -6,7 +6,7 @@ import StringIO
 from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from color_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
+from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
