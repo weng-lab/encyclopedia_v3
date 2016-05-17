@@ -34,9 +34,7 @@ class UcscSearch:
                                                  self.psb.loci,
                                                  self.uid)
         except:
-            if self.args.debug:
-                raise
-            pass
+            raise
 
     def ucscParams(self):
         if self.coord:
