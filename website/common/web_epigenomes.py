@@ -11,18 +11,12 @@ from natsort import natsorted
 
 from roadmap import RoadmapMetadata
 from common.ontology.ontology import Ontology
+from enums import AssayType
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from metadataws import MetadataWS
 from files_and_paths import Datasets
 from epigenome import Epigenomes
-
-from enum import Enum
-
-class AssayType(Enum):
-    Enhancer = 1
-    Promoter = 2
-    HiC = 3
 
 class ColWrap:
     def __init__(self, pretty_age, ageDays, selectorName):
@@ -274,11 +268,18 @@ class WebEpigenome:
             print fnp
         return ret
 
+    def predictionFnp(self):
+        if self.assayType == AssayType.Enhancer:
+            return self.enhancerLikePredictionFnp()
+        if self.assayType == AssayType.Promoter:
+            return self.promoterLikePredictionFnp()
+        raise Exception("unknown assay type")
+
     def predictionFnpExists(self):
         if self.assayType == AssayType.Enhancer:
             return self.enhancerLikePredictionFnpExists()
         if self.assayType == AssayType.Promoter:
-            return self.promoterLikePredictionFnpExists
+            return self.promoterLikePredictionFnpExists()
         raise Exception("unknown assay type")
 
     def webName(self):

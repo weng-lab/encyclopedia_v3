@@ -17,7 +17,8 @@ from common.tables import DbTables
 from common.session import Sessions
 from common.db import AnnotationDB, UrlStatusDB
 from common.epigenome_stats import EpigenomeStats
-from common.web_epigenomes import WebEpigenomesLoader, AssayType
+from common.web_epigenomes import WebEpigenomesLoader
+from common.enums import AssayType
 
 from models.enhancers.defaults import Defaults
 

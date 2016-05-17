@@ -2,6 +2,8 @@
 
 import os, sys
 
+from enums import AssayType
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from epigenome import Epigenomes
 from helpers_metadata import ExpFile
@@ -121,16 +123,31 @@ class RoadmapEpigenome:
             return self.hasDNase() and self.hasH3K4me3()
         raise Exception("no H3K4me3")
 
+    def predictionFnp(self):
+        if self.assayType == AssayType.Enhancer:
+            return self.enhancerLikeFnp()
+        if self.assayType == AssayType.Promoter:
+            return self.promoterLikeFnp()
+        raise Exception("unknown assay type")
+
     def enhancerLikeFnp(self, assays, DNase, H3K27ac):
         path = Dirs.enhancerTracks
         if "H3K27ac" == assays:
             fn = "{eid}_H3K27ac_predictions.bigBed".format(eid = self.eid)
-        elif "H3K4me3" == assays:
-            fn = "{eid}_H3K4me3_predictions.bigBed".format(eid = self.eid)
         elif "DNase" == assays:
             fn = "{eid}_DNase_predictions.bigBed".format(eid = self.eid)
         elif "BothDNaseAndH3K27ac" == assays:
             fn = "{eid}_predictions.bigBed".format(eid = self.eid)
+        else:
+            raise Exception("fell through")
+        return os.path.join(path, fn)
+
+    def promoterLikeFnp(self, assays, DNase, H3K27ac):
+        path = Dirs.enhancerTracks
+        if "H3K4me3" == assays:
+            fn = "{eid}_H3K4me3_predictions.bigBed".format(eid = self.eid)
+        elif "DNase" == assays:
+            fn = "{eid}_DNase_predictions.bigBed".format(eid = self.eid)
         elif "BothDNaseAndH3K4me3" == assays:
             fn = "{eid}_predictions.bigBed".format(eid = self.eid)
         else:
