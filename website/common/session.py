@@ -82,7 +82,6 @@ def parse_args():
 def main():
     args = parse_args()
 
-
     if args.local:
         dbs = DBS.localAnnotations()
     else:
@@ -92,9 +91,8 @@ def main():
     import psycopg2.pool
     DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
-    with getcursor(DBCONN, "main") as cur:
-        s = Sessions(DBCONN, DbTables.sessions_promoters)
-        s.setupDB()
+    s = Sessions(DBCONN, DbTables.sessions_promoters)
+    s.setupDB()
 
 if __name__ == '__main__':
     main()

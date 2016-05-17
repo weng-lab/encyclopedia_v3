@@ -2,18 +2,20 @@
 
 import os, sys, json, psycopg2, argparse
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils/'))
 from utils import Utils
 from dbs import DBS
 from db_utils import getcursor
+from tables import DbTables
 
 class AnnotationDB:
     def __init__(self, DBCONN, tableSearch):
         self.DBCONN = DBCONN
         self.tableSearch = tableSearch
 
-    def setupDB(self, cur):
-        cur.execute("""
+    def setupDB(self):
+        with getcursor(self.DBCONN, "setupDB") as curs:
+            curs.execute("""
     DROP TABLE IF EXISTS {search};
     CREATE TABLE {search}
     (id serial PRIMARY KEY,
@@ -172,11 +174,8 @@ def main():
     import psycopg2.pool
     DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
-    with getcursor(DBCONN, "main") as cur:
-        setupDB(cur)
-
-        #ue = UrlStatusDB(DBCONN)
-        #ue.setupDB()
+    adb = AnnotationDB(DBCONN, DbTables.search_promoters)
+    adb.setupDB()
 
 if __name__ == '__main__':
     main()
