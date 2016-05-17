@@ -16,7 +16,7 @@ from common.genes import LookupGenes
 from common.tables import DbTables
 from common.session import Sessions
 from common.db import AnnotationDB, UrlStatusDB
-from common.web_epigenomes import WebEpigenomesLoader
+from common.web_epigenomes import WebEpigenomesLoader, AssayType
 from common.epigenome_stats import EpigenomeStats
 
 from models.promoters.defaults import Defaults
@@ -36,7 +36,7 @@ class PromotersSite(object):
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args, self.histMark)
+        self.wepigenomes = WebEpigenomesLoader(self.args, self.histMark, AssayType.Promoter)
         self.defaults = Defaults()
         self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.histMark)
 

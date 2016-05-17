@@ -17,6 +17,13 @@ from metadataws import MetadataWS
 from files_and_paths import Datasets
 from epigenome import Epigenomes
 
+from enum import Enum
+
+class AssayType(Enum):
+    Enhancer = 1
+    Promoter = 2
+    HiC = 3
+
 class ColWrap:
     def __init__(self, pretty_age, ageDays, selectorName):
         self.pretty_age = pretty_age
@@ -59,10 +66,11 @@ class WalkRow:
                         yield c.web_id(), c.web_title(), c
 
 class WebEpigenomesLoader:
-    def __init__(self, args, histMark):
+    def __init__(self, args, histMark, assayType):
         self.args = args
         self.ontology = Ontology()
         self.histMark = histMark
+        self.assayType = assayType
 
         byAssembly = {}
 
@@ -86,7 +94,7 @@ class WebEpigenomesLoader:
                 epis = byAssembly[assembly].GetByAssays(assays)
                 if epis:
                     epis = [WebEpigenome(self.args, epi, assays,
-                                         self.ontology, self.histMark)
+                                         self.ontology, self.histMark, self.assayType)
                             for epi in epis]
                     self.byAssemblyAssays[assembly][assays] = WebEpigenomes(
                         self.args, assembly, assays, epis)
@@ -120,12 +128,13 @@ class WebEpigenomesLoader:
         return ret
 
 class WebEpigenome:
-    def __init__(self, args, epi, assays, ontology, histMark):
+    def __init__(self, args, epi, assays, ontology, histMark, assayType):
         self.args = args
         self.epi = epi
         self.assays = assays
         self.ontology = ontology
         self.histMark = histMark
+        self.assayType = assayType
 
         self.DNase = None
         self.histones = None
@@ -243,16 +252,34 @@ class WebEpigenome:
             return [self.DNase, self.histones]
         raise Exception("unknown assay type " + self.assays)
 
-    def predictionFnp(self):
+    def enhancerLikePredictionFnp(self):
         return self.epi.enhancerLikeFnp(self.assays, self.DNase, self.histones)
 
-    def predictionFnpExists(self):
-        fnp = self.predictionFnp()
+    def enhancerLikePredictionFnpExists(self):
+        fnp = self.enhancerLikePredictionFnp()
         ret = os.path.exists(fnp)
         if not ret:
             print "missing", self.epi.assembly, os.path.basename(fnp)
             print fnp
         return ret
+
+    def promoterLikePredictionFnp(self):
+        return self.epi.promoterLikeFnp(self.assays, self.DNase, self.histones)
+
+    def promoterLikePredictionFnpExists(self):
+        fnp = self.promoterLikePredictionFnp()
+        ret = os.path.exists(fnp)
+        if not ret:
+            print "missing", self.epi.assembly, os.path.basename(fnp)
+            print fnp
+        return ret
+
+    def predictionFnpExists(self):
+        if self.assayType == AssayType.Enhancer:
+            return self.enhancerLikePredictionFnpExists()
+        if self.assayType == AssayType.Promoter:
+            return self.promoterLikePredictionFnpExists
+        raise Exception("unknown assay type")
 
     def webName(self):
         if self.args.debug:
