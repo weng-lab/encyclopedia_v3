@@ -33,7 +33,7 @@ class EnhancersSite(object):
         self.site = "enhancers"
         self.histMark = "H3K27ac"
         self.db = AnnotationDB(DBCONN, DbTables.search_enhancers)
-        self.sessions = Sessions(DBCONN, DbTables.sessions_enhancers)
+        self.sessions = Sessions(DBCONN, AssayType.Enhancer)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
@@ -70,7 +70,7 @@ class EnhancersSite(object):
         if not uid:
             uid = self.makeUid()
             cherrypy.session["uid"] = uid
-            self.sessions.insertOrUpdate(cherrypy.session.id, uid)
+            self.sessions.insert(cherrypy.session.id, uid)
 
         input_json = cherrypy.request.json
 
@@ -97,7 +97,7 @@ class EnhancersSite(object):
         if not uid:
             uid = self.makeUid()
             cherrypy.session["uid"] = uid
-            self.sessions.insertOrUpdate(cherrypy.session.id, uid)
+            self.sessions.insert(cherrypy.session.id, uid)
 
         input_json = cherrypy.request.json
 

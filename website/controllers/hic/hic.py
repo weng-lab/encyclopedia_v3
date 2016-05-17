@@ -16,6 +16,7 @@ from common.genes import LookupGenes
 from common.tables import DbTables
 from common.session import Sessions
 from common.db import AnnotationDB, UrlStatusDB
+from common.enums import AssayType
 
 from models.hic.web_epigenomes import WebEpigenomesLoader
 from models.hic.defaults import Defaults
@@ -31,7 +32,7 @@ class HiCSite(object):
         self.args = args
 
         self.db = AnnotationDB(DBCONN, DbTables.search_hic)
-        self.sessions = Sessions(DBCONN, DbTables.sessions_hic)
+        self.sessions = Sessions(DBCONN, AssayType.HiC)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
@@ -69,7 +70,7 @@ class HiCSite(object):
         if not uid:
             uid = self.makeUid()
             cherrypy.session["uid"] = uid
-            self.sessions.insertOrUpdate(cherrypy.session.id, uid)
+            self.sessions.insert(cherrypy.session.id, uid)
 
         input_json = cherrypy.request.json
 
@@ -96,7 +97,7 @@ class HiCSite(object):
         if not uid:
             uid = self.makeUid()
             cherrypy.session["uid"] = uid
-            self.sessions.insertOrUpdate(cherrypy.session.id, uid)
+            self.sessions.insert(cherrypy.session.id, uid)
 
         input_json = cherrypy.request.json
 

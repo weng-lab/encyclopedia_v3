@@ -2,6 +2,8 @@
 
 import os, sys, json, psycopg2, argparse
 
+from enums import AssayType
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils/'))
 from utils import Utils
 from dbs import DBS
@@ -9,65 +11,59 @@ from db_utils import getcursor
 from tables import DbTables
 
 class Sessions:
-    def __init__(self, DBCONN, tableName):
+    def __init__(self, DBCONN, assayType):
         self.DBCONN = DBCONN
-        self.table = tableName
+        self.table = DbTables.sessions
+        self.assayType = assayType
 
     def setupDB(self):
         with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
-    DROP TABLE IF EXISTS {table};
-    CREATE TABLE {table}
-    (id serial PRIMARY KEY,
-    uid text,
-    session_id text
-        ) """.format(table = self.table))
+DROP TABLE IF EXISTS {table};
+CREATE TABLE {table}
+(id serial PRIMARY KEY,
+uid text,
+session_id text,
+assayType integer
+) """.format(table = self.table))
 
     def insert(self, session_id, uid):
         with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
 INSERT INTO {table}
-(session_id, uid)
+(session_id, uid, assayType)
 VALUES (
 %(session_id)s,
-%(uid)s
+%(uid)s,
+%(assayType)s
 )""".format(table = self.table), {"session_id" : session_id,
-       "uid" : uid
-})
+                                  "uid" : uid,
+                                  "assayType" : self.assayType
+                                  })
 
-    def insertOrUpdate(self, session_id, uid):
-        with getcursor(self.DBCONN, "insertOrUpdate") as curs:
+    def insert(self, session_id, uid):
+        with getcursor(self.DBCONN, "insert") as curs:
             curs.execute("""
-SELECT id FROM {table}
-WHERE session_id = %(session_id)s
-""".format(table = self.table), {"session_id" : session_id})
-            if (curs.rowcount > 0):
-                curs.execute("""
-UPDATE {table}
-SET
-uid = %(uid)s
-WHERE session_id = %(session_id)s
-""".format(table = self.table), {"session_id" : session_id,
-      "uid" : uid
-})
-            else:
-                curs.execute("""
 INSERT INTO {table}
-(session_id, uid)
+(session_id, uid, assayType)
 VALUES (
 %(session_id)s,
-%(uid)s
+%(uid)s,
+%(assayType)s
 )""".format(table = self.table), {"session_id" : session_id,
-       "uid" : uid
-})
+                                  "uid" : uid,
+                                  "assayType" : self.assayType
+                                  })
 
     def get(self, session_id):
-        with getcursor(self.DBCONN, "insertOrUpdate") as curs:
+        with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
 SELECT uid
 FROM {table}
-WHERE session_id = %(session_id)s
-""".format(table = self.table), {"session_id" : session_id})
+WHERE session_id = %(session_id)s AND
+assayType = %(assayType)s
+""".format(table = self.table), {"session_id" : session_id,
+                                 "assayType" : self.assayType})
             uid = curs.fetchone()
             if uid:
                 return uid[0]
@@ -91,7 +87,7 @@ def main():
     import psycopg2.pool
     DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
-    s = Sessions(DBCONN, DbTables.sessions_promoters)
+    s = Sessions(DBCONN, AssayType.Enhancer)
     s.setupDB()
 
 if __name__ == '__main__':
