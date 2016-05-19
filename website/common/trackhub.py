@@ -117,7 +117,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
     def phastcons(self):
         if "mm10" == self.assembly:
             url =  "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/phastCons60way/mm10.60way.phastCons.bw"
-        if "hg19" == self.assembly:
+        elif "hg19" == self.assembly:
             url = "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/phastCons100way/hg19.100way.phastCons.bw"
 
         desc = "phastCons"
