@@ -214,7 +214,7 @@ $(document).ready(function(){
 
     $("#fourthGalleryPane").click(function(event){
         var fd = {"assembly":"hg19",
-                  "loci":"chr12:57330000-57338000",
+                  "loci":"chr4:57330000-57338000",
                   "assays":"BothDNaseAndH3K4me3",
                   "hg19BothDNaseAndH3K4me3":["gm12878_select"]
                  };
