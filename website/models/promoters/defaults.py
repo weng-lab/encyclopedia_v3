@@ -6,7 +6,7 @@ class Defaults:
         self.defaults["hg19"] = {}
         self.defaults["mm10"] = {}
 
-        self.defaults["hg19"]["pos"] = "chr19:12845000-12850000"
+        self.defaults["hg19"]["pos"] = "chr19:12840000-12853000"
         self.defaults["mm10"]["pos"] = "chr1:134054000-134071000"
 
         self.defaults["hg19"]["snp"] = "rs11742570"
