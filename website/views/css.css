@@ -189,7 +189,7 @@ input[type=checkbox]{
 
 /* carousel */
 #myCarousel {
-    display: none;
+    /*display: none;*/
 }
 
 .carousel-control.left, .carousel-control.right {

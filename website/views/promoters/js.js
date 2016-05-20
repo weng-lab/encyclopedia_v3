@@ -130,21 +130,6 @@ function selectIntersect(){
 }
 
 function fixGallery(){
-    var blurb = $("#jumboTD");
-    var height = blurb.height();
-
-    var gal = $("#myCarousel");
-    gal.height(height);
-    gal.show();
-
-    $(".galleryImg").each(function(i, e){
-        $(this).css("height", height);
-    });
-
-    var maxWidth = Math.max.apply(Math, $('.galleryImg').map(function(){
-        return $(this).width(); }).get());
-
-    gal.width(maxWidth);
 }
 
 $(document).ready(function(){
@@ -201,38 +186,39 @@ $(document).ready(function(){
     });
 
     $("#firstGalleryPane").click(function(event){
-        // mm10 at
-        var fd = {"assembly":"mm10",
-                  "loci":"chr19:12830000-12860000",
+        var fd = {"assembly":"hg19",
+                  "loci":"chr19:12840000-12853000",
                   "assays":"BothDNaseAndH3K4me3",
-                  "mm10Both":["neural_tube_embryonic_11_5_day"]
+                  "hg19BothDNaseAndH3K4me3":["gm12878_select"]
                  };
         processFormSubmitRet(event, "ucsc", fd);
     });
 
     $("#secondGalleryPane").click(function(event){
-        // hg19 at
         var fd = {"assembly":"hg19",
-                  "loci":"rs11742570",
+                  "loci":"chr5:52090000-52110000",
                   "assays":"BothDNaseAndH3K4me3",
-                  "hg19Both": ["primary_natural_killer_cells_from_peripheral_blood_select",
-                               "primary_t_cells_from_peripheral_blood_select",
-                               "fetal_thymus_select"]
+                  "hg19BothDNaseAndH3K4me3":["gm12878_select"]
                  };
         processFormSubmitRet(event, "ucsc", fd);
     });
 
     $("#thirdGalleryPane").click(function(event){
-        // mm10 at
-        var fd = {"assembly":"mm10",
-                  "loci":"rs27106747",
+        var fd = {"assembly":"hg19",
+                  "loci":"chr12:19580000-19620000",
                   "assays":"BothDNaseAndH3K4me3",
-                  "mm10Both":["hindbrain_embryonic_11_5_day",
-                              "midbrain_embryonic_11_5_day",
-                              "neural_tube_embryonic_11_5_day",
-                              "limb_embryonic_11_5_day"]
+                  "hg19BothDNaseAndH3K4me3":["gm12878_select"]
                  };
-        processFormSubmitRet(event, "washu", fd);
+        processFormSubmitRet(event, "ucsc", fd);
+    });
+
+    $("#fourthGalleryPane").click(function(event){
+        var fd = {"assembly":"hg19",
+                  "loci":"chr12:57330000-57338000",
+                  "assays":"BothDNaseAndH3K4me3",
+                  "hg19BothDNaseAndH3K4me3":["gm12878_select"]
+                 };
+        processFormSubmitRet(event, "ucsc", fd);
     });
 
 })
