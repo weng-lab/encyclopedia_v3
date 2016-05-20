@@ -83,12 +83,14 @@ class Track(object):
         desc = " ".join(desc)
         return desc
 
-    def track(self):
+    def track(self, shortLabel = None):
         if not self.type:
             raise Exception("unknown type")
+        if not shortLabel:
+            shortLabel = self.desc
         track = ["track " + self.desc.replace(" ", "_"),
                  "type " + self.type,
-                 "shortLabel " + self.desc,
+                 "shortLabel " + shortLabel,
                  "longLabel " + self.desc,
                  "itemRgb on",
                  "visibility " + self.visibility,

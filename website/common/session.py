@@ -1,62 +1,74 @@
 #!/usr/bin/env python
 
-from __future__ import print_function
 import os, sys, json, psycopg2, argparse
-
-from enums import AssayType
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils/'))
 from utils import Utils
-from db_utils import getcursor, Databases
+from dbs import DBS
+from db_utils import getcursor
 from tables import DbTables
 
 class Sessions:
-    def __init__(self, DBCONN, assay_type):
+    def __init__(self, DBCONN, tableName):
         self.DBCONN = DBCONN
-        self.assay_type = assay_type
+        self.table = tableName
 
-    @staticmethod
-    def setupDB(DBCONN):
-        with getcursor(DBCONN, "get") as curs:
+    def setupDB(self):
+        with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
 DROP TABLE IF EXISTS {table};
 CREATE TABLE {table}
 (id serial PRIMARY KEY,
 uid text,
-session_id text,
-assay_type integer,
-hub_num integer
-) """.format(table = DbTables.sessions))
-            print("recreated", DbTables.sessions, "table")
+session_id text
+) """.format(table = self.table))
 
-    def insert(self, session_id, uid, hub_num):
+    def insert(self, session_id, uid):
         with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
 INSERT INTO {table}
-(session_id, uid, assay_type)
+(session_id, uid)
 VALUES (
 %(session_id)s,
-%(uid)s,
-%(assay_type)s,
-%(hun_num)s
-)""".format(table = DbTables.sessions), {"session_id" : session_id,
-                                         "uid" : uid,
-                                         "assay_type" : self.assay_type,
-                                         "hub_num" : hub_num
+%(uid)s
+)""".format(table = self.table), {"session_id" : session_id,
+       "uid" : uid
 })
 
-    def get(self, session_id, hub_num):
+    def insertOrUpdate(self, session_id, uid):
+        with getcursor(self.DBCONN, "insertOrUpdate") as curs:
+            curs.execute("""
+SELECT id FROM {table}
+WHERE session_id = %(session_id)s
+""".format(table = self.table), {"session_id" : session_id})
+            if (curs.rowcount > 0):
+                curs.execute("""
+UPDATE {table}
+SET
+uid = %(uid)s
+WHERE session_id = %(session_id)s
+""".format(table = self.table), {"session_id" : session_id,
+      "uid" : uid
+})
+            else:
+                curs.execute("""
+INSERT INTO {table}
+(session_id, uid)
+VALUES (
+%(session_id)s,
+%(uid)s
+)""".format(table = self.table), {"session_id" : session_id,
+       "uid" : uid
+})
+
+    def get(self, session_id):
+        print(self.table)
         with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
 SELECT uid
 FROM {table}
 WHERE session_id = %(session_id)s
-AND assay_type = %(assay_type)s
-AND hub_num = %(hub_num)s
-""".format(table = DbTables.sessions), {"session_id" : session_id,
-                                        "assay_type" : self.assay_type,
-                                        "hub_num" : hub_num
-})
+""".format(table = self.table), {"session_id" : session_id})
             uid = curs.fetchone()
             if uid:
                 return uid[0]
@@ -71,9 +83,18 @@ def parse_args():
 def main():
     args = parse_args()
 
-    DBCONN = Databases.getAnnotationsDBCONN(args)
+    if args.local:
+        dbs = DBS.localAnnotations()
+    else:
+        dbs = DBS.pgdsn("Annotations")
+    dbs["application_name"] = os.path.realpath(__file__)
 
-    Sessions.setupDB(DBCONN)
+    import psycopg2.pool
+    DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
+
+    for t in [DbTables.sessions, DbTables.sessions_promoters]:
+        s = Sessions(DBCONN, t)
+        s.setupDB()
 
 if __name__ == '__main__':
     main()

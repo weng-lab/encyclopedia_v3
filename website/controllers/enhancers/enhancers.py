@@ -6,11 +6,11 @@ import uuid
 import StringIO
 
 from ucsc_search import UcscSearch
-from trackhub import TrackHub
-from trackhub_washu import TrackHubWashu
 from parse_search_box import ParseSearchBox
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
+from common.trackhub import TrackHub
+from common.trackhub_washu import TrackHubWashu
 from common.genes import LookupGenes
 from common.dbsnps import dbSnps
 from common.tables import DbTables
@@ -31,13 +31,14 @@ class EnhancersSite(object):
         self.args = args
 
         self.site = "enhancers"
+        self.assay_type = AssayType.Enhancer
         self.histMark = "H3K27ac"
         self.db = AnnotationDB(DBCONN, DbTables.search_enhancers)
-        self.sessions = Sessions(DBCONN, AssayType.Enhancer)
+        self.sessions = Sessions(DBCONN, DbTables.sessions)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args, self.histMark, AssayType.Enhancer)
+        self.wepigenomes = WebEpigenomesLoader(self.args, self.histMark, self.assay_type)
         self.defaults = Defaults()
         self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.histMark)
 
@@ -125,7 +126,8 @@ class EnhancersSite(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
+        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row,
+                      self.histMark, self.assay_type)
         return th.Custom()
 
     @cherrypy.expose
@@ -137,7 +139,8 @@ class EnhancersSite(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
+        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row,
+                      self.histMark, self.assay_type)
 
         path = args[1:]
         return th.ParsePath(path)
@@ -151,7 +154,8 @@ class EnhancersSite(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHubWashu(self.args, self.wepigenomes, self.urlStatus, row)
+        th = TrackHubWashu(self.args, self.wepigenomes, self.urlStatus, row,
+                           self.histMark, self.assay_type)
 
         path = args[1:]
         return th.ParsePath(path)

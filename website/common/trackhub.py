@@ -4,6 +4,7 @@ import os, sys, json
 import StringIO
 
 from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
+from enums import AssayType
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.web_epigenomes import WebEpigenome
@@ -14,7 +15,7 @@ from utils import Utils
 from files_and_paths import Dirs
 
 class TrackHub:
-    def __init__(self, args, epigenomes, urlStatus, row):
+    def __init__(self, args, epigenomes, urlStatus, row, histMark, assay_type):
         self.args = args
         self.epigenomes = epigenomes
         self.urlStatus = urlStatus
@@ -23,6 +24,8 @@ class TrackHub:
         self.tissue_ids = json.loads(row[2])
         self.loci = row[3]
         self.hubNum = row[4]
+        self.histMark = histMark
+        self.assay_type = assay_type
 
         self.priority = 1
 
@@ -63,7 +66,11 @@ class TrackHub:
         t = ""
         if self.args.debug:
             t += "debug "
-        t += "ENCODE Enhancer-like regions " + self.assembly
+        if AssayType.Enhancer == self.assay_type:
+            t += "ENCODE Enhancer-like regions " + self.assembly
+        elif AssayType.Promoter == self.assay_type:
+            t += "ENCODE Promoter-like regions " + self.assembly
+
         for r in [["hub", t],
                   ["shortLabel", t],
                   ["longLabel", t],
@@ -87,7 +94,8 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
             if self.assays.startswith("BothDNaseAnd"):
                 lines += [self.predictionTrackHub(wepi)]
-                lines += [self.compositeTrack(wepi)]
+                if AssayType.Enhancer == self.assay_type:
+                    lines += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
                 try:
                     lines += [self.trackhubExp(exp)]
@@ -151,15 +159,22 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         if not os.path.exists(fnp):
             return None
 
-        desc = Track.MakeDesc("candidate enhancers",
+        if AssayType.Enhancer == self.assay_type:
+            descBase = "enhancer-like"
+            url = os.path.join(BIB5,
+                               Dirs.enhancerTracksBase,
+                               os.path.basename(fnp))
+        elif AssayType.Promoter == self.assay_type:
+            descBase = "promoter-like"
+            url = os.path.join(BIB5,
+                               Dirs.promoterTracksBase,
+                               os.path.basename(fnp))
+
+        desc = Track.MakeDesc(descBase,
                               wepi.epi.age_display,
                               wepi.epi.biosample_term_name)
 
-        url = os.path.join(BIB5,
-                           Dirs.enhancerTracksBase,
-                           os.path.basename(fnp))
-
-        track = PredictionTrack(desc, self.priority, url).track()
+        track = PredictionTrack(desc, self.priority, url).track(descBase)
         self.priority += 1
         return track
 

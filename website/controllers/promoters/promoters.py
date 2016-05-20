@@ -6,8 +6,6 @@ import uuid
 import StringIO
 
 from ucsc_search import UcscSearch
-from trackhub import TrackHub
-from trackhub_washu import TrackHubWashu
 from parse_search_box import ParseSearchBox
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
@@ -19,6 +17,8 @@ from common.db import AnnotationDB, UrlStatusDB
 from common.web_epigenomes import WebEpigenomesLoader
 from common.enums import AssayType
 from common.epigenome_stats import EpigenomeStats
+from common.trackhub import TrackHub
+from common.trackhub_washu import TrackHubWashu
 
 from models.promoters.defaults import Defaults
 
@@ -31,13 +31,14 @@ class PromotersSite(object):
         self.args = args
 
         self.site = "promoters"
+        self.assay_type = AssayType.Promoter
         self.histMark = "H3K4me3"
         self.db = AnnotationDB(DBCONN, DbTables.search_promoters)
-        self.sessions = Sessions(DBCONN, AssayType.Promoter)
+        self.sessions = Sessions(DBCONN, DbTables.sessions_promoters)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args, self.histMark, AssayType.Promoter)
+        self.wepigenomes = WebEpigenomesLoader(self.args, self.histMark, self.assay_type)
         self.defaults = Defaults()
         self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.histMark)
 
@@ -125,7 +126,8 @@ class PromotersSite(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
+        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row,
+                      self.histMark, self.assay_type)
         return th.Custom()
 
     @cherrypy.expose
@@ -137,7 +139,8 @@ class PromotersSite(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
+        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row,
+                      self.histMark, self.assay_type)
 
         path = args[1:]
         return th.ParsePath(path)
@@ -151,7 +154,8 @@ class PromotersSite(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHubWashu(self.args, self.wepigenomes, self.urlStatus, row)
+        th = TrackHubWashu(self.args, self.wepigenomes, self.urlStatus, row,
+                           self.histMark, self.assay_type)
 
         path = args[1:]
         return th.ParsePath(path)
@@ -189,7 +193,8 @@ class PromotersSite(object):
         if not args:
             return self.templates(self.site + "/missing_list")
         row = [args[0], args[1], "[]", "loci", "hubNum"]
-        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
+        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row,
+                      self.histMark, self.assay_type)
         missing = th.showMissing()
         return self.templates(self.site + "/missing",
                               missing = missing)
