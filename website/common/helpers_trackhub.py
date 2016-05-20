@@ -110,7 +110,7 @@ class Track(object):
             raise Exception("unknown type")
         url = self.url
         typee = self.type
-        if "bigBed 8" == typee:
+        if typee in ["bigBed 8", "bigBed 9"]:
             typee = "hammock"
         track = {"name" : self.desc,
                  "type" : typee,

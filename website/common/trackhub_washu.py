@@ -4,6 +4,7 @@ import os, sys, json
 import StringIO
 
 from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
+from enums import AssayType
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
@@ -13,7 +14,7 @@ from utils import Utils
 from files_and_paths import Dirs
 
 class TrackHubWashu:
-    def __init__(self, args, epigenomes, urlStatus, row):
+    def __init__(self, args, epigenomes, urlStatus, row, histMark, assay_type):
         self.args = args
         self.epigenomes = epigenomes
         self.urlStatus = urlStatus
@@ -22,6 +23,8 @@ class TrackHubWashu:
         self.tissue_ids = json.loads(row[2])
         self.loci = row[3]
         self.hubNum = row[4]
+        self.histMark = histMark
+        self.assay_type = assay_type
 
         self.priority = 1
 
@@ -111,15 +114,24 @@ class TrackHubWashu:
         if not os.path.exists(fnp):
             return None
 
-        desc = Track.MakeDesc("candidate enhancers",
+        if AssayType.Enhancer == self.assay_type:
+            descBase = "enhancer-like"
+            url = os.path.join(BIB5,
+                               Dirs.enhancerTracksBase,
+                               "washu",
+                               os.path.basename(fnp).replace(".bigBed",
+                                                         ".bed.gz"))
+        elif AssayType.Promoter == self.assay_type:
+            descBase = "promoter-like"
+            url = os.path.join(BIB5,
+                               Dirs.promoterTracksBase,
+                               "washu",
+                               os.path.basename(fnp).replace(".bigBed",
+                                                         ".bed.gz"))
+
+        desc = Track.MakeDesc(descBase,
                               wepi.epi.age_display,
                               wepi.epi.biosample_term_name)
-
-        url = os.path.join(BIB5,
-                           Dirs.enhancerPromoterTracksBase,
-                           "washu",
-                           os.path.basename(fnp).replace(".bigBed",
-                                                         ".bed.gz"))
 
         track = PredictionTrack(desc, self.priority, url).track_washu()
         self.priority += 1
@@ -141,7 +153,7 @@ class TrackHubWashu:
         assay = "DNase"
         if exp.isH3K27ac():
             assay = "H3K27ac"
-        elif epi.isH3K4me3():
+        elif exp.isH3K4me3():
             assay = "H3K4me3"
 
         bigWigs = bigWigFilters(self.assembly, exp.files)
