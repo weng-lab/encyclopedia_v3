@@ -130,21 +130,6 @@ function selectIntersect(){
 }
 
 function fixGallery(){
-    var blurb = $("#jumboTD");
-    var height = blurb.height();
-
-    var gal = $("#myCarousel");
-    gal.height(height);
-    gal.show();
-
-    $(".galleryImg").each(function(i, e){
-        $(this).css("height", height);
-    });
-
-    var maxWidth = Math.max.apply(Math, $('.galleryImg').map(function(){
-        return $(this).width(); }).get());
-
-    gal.width(maxWidth);
 }
 
 $(document).ready(function(){
@@ -201,9 +186,8 @@ $(document).ready(function(){
     });
 
     $("#firstGalleryPane").click(function(event){
-        // mm10 at
         var fd = {"assembly":"mm10",
-                  "loci":"chr19:26839562-26851786",
+                  "loci":"chr19:26844000-26848000",
                   "assays":"BothDNaseAndH3K27ac",
                   "mm10BothDNaseAndH3K27ac":["neural_tube_embryonic_11_5_day"]
                  };
@@ -211,28 +195,34 @@ $(document).ready(function(){
     });
 
     $("#secondGalleryPane").click(function(event){
-        // hg19 at
         var fd = {"assembly":"hg19",
-                  "loci":"rs11742570",
+                  "loci":"chr17:40767000-40775000",
                   "assays":"BothDNaseAndH3K27ac",
                   "hg19BothDNaseAndH3K27ac": ["primary_natural_killer_cells_from_peripheral_blood_select",
-                               "primary_t_cells_from_peripheral_blood_select",
-                               "fetal_thymus_select"]
+                                              "primary_t_cells_from_peripheral_blood_select",
+                                              "fetal_thymus_select"]
                  };
         processFormSubmitRet(event, "ucsc", fd);
     });
 
     $("#thirdGalleryPane").click(function(event){
-        // mm10 at
-        var fd = {"assembly":"mm10",
-                  "loci":"rs27106747",
+        var fd = {"assembly":"hg19",
+                  "loci":"chr6:42370000-42380000",
                   "assays":"BothDNaseAndH3K27ac",
-                  "mm10BothDNaseAndH3K27ac":["hindbrain_embryonic_11_5_day",
-                              "midbrain_embryonic_11_5_day",
-                              "neural_tube_embryonic_11_5_day",
-                              "limb_embryonic_11_5_day"]
+                  "hg19BothDNaseAndH3K27ac": ["primary_natural_killer_cells_from_peripheral_blood_select",
+                                              "primary_t_cells_from_peripheral_blood_select",
+                                              "fetal_thymus_select"]
                  };
-        processFormSubmitRet(event, "washu", fd);
+        processFormSubmitRet(event, "ucsc", fd);
+    });
+
+    $("#fourthGalleryPane").click(function(event){
+        var fd = {"assembly":"mm10",
+                  "loci":"chr6:72214000-72220000",
+                  "assays":"BothDNaseAndH3K27ac",
+                  "mm10BothDNaseAndH3K27ac":["neural_tube_embryonic_11_5_day"]
+                 };
+        processFormSubmitRet(event, "ucsc", fd);
     });
 
 })
