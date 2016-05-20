@@ -198,9 +198,7 @@ $(document).ready(function(){
         var fd = {"assembly":"hg19",
                   "loci":"chr17:40767000-40775000",
                   "assays":"BothDNaseAndH3K27ac",
-                  "hg19BothDNaseAndH3K27ac": ["primary_natural_killer_cells_from_peripheral_blood_select",
-                                              "primary_t_cells_from_peripheral_blood_select",
-                                              "fetal_thymus_select"]
+                  "hg19BothDNaseAndH3K27ac": ["gm12878_select"]
                  };
         processFormSubmitRet(event, "ucsc", fd);
     });
@@ -209,9 +207,7 @@ $(document).ready(function(){
         var fd = {"assembly":"hg19",
                   "loci":"chr6:42370000-42380000",
                   "assays":"BothDNaseAndH3K27ac",
-                  "hg19BothDNaseAndH3K27ac": ["primary_natural_killer_cells_from_peripheral_blood_select",
-                                              "primary_t_cells_from_peripheral_blood_select",
-                                              "fetal_thymus_select"]
+                  "hg19BothDNaseAndH3K27ac": ["hela-s3_adult_31_year"]
                  };
         processFormSubmitRet(event, "ucsc", fd);
     });
@@ -220,7 +216,7 @@ $(document).ready(function(){
         var fd = {"assembly":"mm10",
                   "loci":"chr6:72214000-72220000",
                   "assays":"BothDNaseAndH3K27ac",
-                  "mm10BothDNaseAndH3K27ac":["neural_tube_embryonic_11_5_day"]
+                  "mm10BothDNaseAndH3K27ac":["limb_embryonic_11_5_day"]
                  };
         processFormSubmitRet(event, "ucsc", fd);
     });
