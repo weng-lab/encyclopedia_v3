@@ -4,7 +4,7 @@ import os, sys
 
 from enums import AssayType
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils'))
 from epigenome import Epigenomes
 from helpers_metadata import ExpFile
 from files_and_paths import Dirs

@@ -5,9 +5,6 @@ import numpy as np
 import uuid
 import StringIO
 
-from ucsc_search import UcscSearch
-from parse_search_box import ParseSearchBox
-
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.trackhub import TrackHub
 from common.trackhub_washu import TrackHubWashu
@@ -19,6 +16,7 @@ from common.db import AnnotationDB, UrlStatusDB
 from common.epigenome_stats import EpigenomeStats
 from common.web_epigenomes import WebEpigenomesLoader
 from common.enums import AssayType
+from common.ucsc_search import UcscSearch
 
 from models.enhancers.defaults import Defaults
 
