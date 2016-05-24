@@ -24,18 +24,18 @@ assays text,
 tissues text,
 loci text,
 uid text NOT NULL,
-site text NOT NULL,
+assayType integer NOT NULL,
 hubNum integer NOT NULL
         ) """.format(search = self.tableSearch))
 
-    def insert(self, site, assembly, assays, tissues, loci, uid):
+    def insert(self, assayType, assembly, assays, tissues, loci, uid):
         with getcursor(self.DBCONN, "insertOrUpdate") as curs:
             curs.execute("""
 SELECT MAX(hubNum) FROM {search}
 WHERE uid = %(uid)s
-AND site = %(site)s
+AND assayType = %(assayType)s
 """.format(search = self.tableSearch), {"uid" : uid,
-                                        "site" : site})
+                                        "assayType" : assayType})
             hubNum = curs.fetchone()[0]
             if not hubNum:
                 hubNum = 0
@@ -44,14 +44,14 @@ AND site = %(site)s
 
             curs.execute("""
 INSERT INTO {search}
-(assembly, assays, tissues, loci, uid, site, hubNum)
+(assembly, assays, tissues, loci, uid, assayType, hubNum)
 VALUES (
 %(assembly)s,
 %(assays)s,
 %(tissues)s,
 %(loci)s,
 %(uid)s,
-%(site)s,
+%(assayType)s,
 %(hubNum)s
 );
 """.format(search = self.tableSearch), {"assembly" : assembly,
@@ -59,7 +59,7 @@ VALUES (
                                         "tissues" : json.dumps(tissues),
                                         "loci" : loci,
                                         "uid" : uid,
-                                        "site" : site,
+                                        "assayType" : assayType,
                                         "hubNum" : hubNum
                                         })
         return hubNum
@@ -67,7 +67,7 @@ VALUES (
     def get(self, uid, hubNum):
         with getcursor(self.DBCONN, "get") as curs:
             curs.execute("""
-SELECT assembly, assays, tissues, loci, hubNum, site
+SELECT assembly, assays, tissues, loci, hubNum, assayType
 FROM {search}
 WHERE uid = %(uid)s
 AND hubNum = %(hubNum)s

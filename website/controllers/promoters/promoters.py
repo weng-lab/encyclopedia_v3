@@ -36,8 +36,8 @@ class PromotersSite(object):
         self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
-        self.urlStatus = UrlStatusDB(DBCONN)
         self.wepigenomes = wepigenomes
+        self.urlStatus = UrlStatusDB(DBCONN)
         self.defaults = Defaults()
         self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.siteInfo)
 
@@ -88,79 +88,6 @@ class PromotersSite(object):
                                             us = us,
                                             url = url)}
         return {"url" : url}
-
-    @cherrypy.expose
-    @cherrypy.tools.json_in()
-    @cherrypy.tools.json_out()
-    def washu(self, *args, **params):
-        uid = self.sessions.get(cherrypy.session.id)
-        if not uid:
-            uid = self.makeUid()
-            cherrypy.session["uid"] = uid
-            self.sessions.insert(cherrypy.session.id, uid)
-
-        input_json = cherrypy.request.json
-
-        us = UcscSearch(self.wepigenomes, self.db, self.dbSnps, self.genes,
-                        self.host, self.args, input_json, uid)
-        us.parse(self.siteInfo.site)
-        url = us.configureWashuHubLink()
-
-        if us.psb.userErrMsg:
-            return { "err" : us.psb.userErrMsg }
-
-        if self.args.debug:
-            return {"inner-url" : url,
-                    "html" : self.templates(self.siteInfo.site + "/ucsc",
-                                            us = us,
-                                            url = url)}
-        return {"url" : url}
-
-    @cherrypy.expose
-    def trackhubCustom(self, *args, **params):
-        cherrypy.response.headers['Content-Type'] = 'text/plain'
-
-        uid = args[0]
-        hubNum = args[1]
-        row = self.db.get(uid, hubNum)
-        if not row:
-            raise Exception("uuid not found")
-
-        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row,
-                      self.siteInfo.histMark, self.siteInfo.assayType)
-        return th.Custom()
-
-    @cherrypy.expose
-    def trackhub(self, *args, **params):
-        cherrypy.response.headers['Content-Type'] = 'text/plain'
-
-        uid = args[0]
-        hubNum = args[1]
-        row = self.db.get(uid, hubNum)
-        if not row:
-            raise Exception("uuid not found")
-
-        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row,
-                      self.siteInfo.histMark, self.siteInfo.assayType)
-
-        path = args[1:]
-        return th.ParsePath(path)
-
-    @cherrypy.expose
-    def trackhub_washu(self, *args, **params):
-        cherrypy.response.headers['Content-Type'] = 'text/plain'
-
-        uid = args[0]
-        hubNum = args[1]
-        row = self.db.get(uid, hubNum)
-        if not row:
-            raise Exception("uuid not found")
-
-        th = TrackHubWashu(self.args, self.wepigenomes, self.urlStatus, row,
-                           self.siteInfo.histMark, self.siteInfo.assayType)
-
-        path = args[1:]
-        return th.ParsePath(path)
 
     @cherrypy.expose
     @cherrypy.tools.json_in()

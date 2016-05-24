@@ -10,6 +10,7 @@ from common.site_info import EnhancersSiteInfo, PromotersSiteInfo
 from controllers.enhancers.enhancers import EnhancersSite
 from controllers.promoters.promoters import PromotersSite
 from controllers.hic.hic import HiCSite
+from controllers.trackhub.trackhub import TrackhubSite
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../metadata/utils'))
 from dbs import DBS
@@ -98,6 +99,9 @@ def main():
     cherrypy.tree.mount(PromotersSite(DBCONN, args, wepigenomes[PromotersSiteInfo.site]),
                         '/promoters',
                         config=getRootConfig("promoters"))
+    cherrypy.tree.mount(TrackhubSite(DBCONN, args, wepigenomes),
+                        '/trackhub',
+                        config=getRootConfig("trackhub"))
 
     if args.dev:
         cherrypy.config.update({'server.environment': "development", })

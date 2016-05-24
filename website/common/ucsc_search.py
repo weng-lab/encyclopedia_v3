@@ -75,14 +75,14 @@ class UcscSearch:
         urlBase = "https://genome.ucsc.edu/cgi-bin/hgTracks?"
 
         self.trackhubUrl = os.path.join(self.host,
-                                        "trackhub",
+                                        "../trackhub/trackhub",
                                         self.uid,
                                         str(self.hubNum),
                                         "hub.txt")
         ucscParams.append("hubClear=" + self.trackhubUrl)
 
         self.trackdbUrl = os.path.join(self.host,
-                                       "trackhub",
+                                       "../trackhub/trackhub",
                                        self.uid,
                                        str(self.hubNum),
                                        self.psb.assembly,
@@ -93,7 +93,7 @@ class UcscSearch:
 
     def configureWashuHubLink(self):
         self.trackdbUrl = os.path.join(self.host,
-                                       "trackhub_washu",
+                                       "../trackhub/trackhub_washu",
                                        self.uid,
                                        str(self.hubNum),
                                        self.psb.assembly,

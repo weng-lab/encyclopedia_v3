@@ -15,7 +15,7 @@ from utils import Utils
 from files_and_paths import Dirs
 
 class TrackHub:
-    def __init__(self, args, epigenomes, urlStatus, row, histMark, assay_type):
+    def __init__(self, args, epigenomes, urlStatus, row):
         self.args = args
         self.epigenomes = epigenomes
         self.urlStatus = urlStatus
@@ -24,8 +24,8 @@ class TrackHub:
         self.tissue_ids = json.loads(row[2])
         self.loci = row[3]
         self.hubNum = row[4]
-        self.histMark = histMark
-        self.assay_type = assay_type
+        self.histMark = row[5]
+        self.assayType = row[6]
 
         self.priority = 1
 
@@ -71,9 +71,9 @@ class TrackHub:
         t = ""
         if self.args.debug:
             t += "debug "
-        if AssayType.Enhancer == self.assay_type:
+        if AssayType.Enhancer == self.assayType:
             t += "ENCODE Enhancer-like regions " + self.assembly
-        elif AssayType.Promoter == self.assay_type:
+        elif AssayType.Promoter == self.assayType:
             t += "ENCODE Promoter-like regions " + self.assembly
 
         for r in [["hub", t],
@@ -98,7 +98,7 @@ trackDb\t{assembly}/trackDb.txt""".format(assembly = self.assembly)
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
             if self.assays.startswith("BothDNaseAnd"):
                 lines += [self.predictionTrackHub(wepi)]
-                if AssayType.Enhancer == self.assay_type:
+                if AssayType.Enhancer == self.assayType:
                     lines += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
                 try:
@@ -163,12 +163,12 @@ trackDb\t{assembly}/trackDb.txt""".format(assembly = self.assembly)
         if not os.path.exists(fnp):
             return None
 
-        if AssayType.Enhancer == self.assay_type:
+        if AssayType.Enhancer == self.assayType:
             descBase = "enhancer-like"
             url = os.path.join(BIB5,
                                Dirs.enhancerTracksBase,
                                os.path.basename(fnp))
-        elif AssayType.Promoter == self.assay_type:
+        elif AssayType.Promoter == self.assayType:
             descBase = "promoter-like"
             url = os.path.join(BIB5,
                                Dirs.promoterTracksBase,
