@@ -93,10 +93,14 @@ def main():
 
     cherrypy.tree.mount(HiCSite(DBCONN, args, mainIndex.staticDir), '/hic',
                         config=getRootConfig("hic"))
-    cherrypy.tree.mount(EnhancersSite(DBCONN, args, wepigenomes[EnhancersSiteInfo.assayType]),
+    cherrypy.tree.mount(EnhancersSite(DBCONN, args,
+                                      wepigenomes[EnhancersSiteInfo.assayType],
+                                      mainIndex.staticDir),
                         '/enhancers',
                         config=getRootConfig("enhancers"))
-    cherrypy.tree.mount(PromotersSite(DBCONN, args, wepigenomes[PromotersSiteInfo.assayType]),
+    cherrypy.tree.mount(PromotersSite(DBCONN, args,
+                                      wepigenomes[PromotersSiteInfo.assayType],
+                                      mainIndex.staticDir),
                         '/promoters',
                         config=getRootConfig("promoters"))
     cherrypy.tree.mount(TrackhubSite(DBCONN, args, wepigenomes),

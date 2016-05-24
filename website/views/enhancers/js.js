@@ -78,6 +78,34 @@ function processFormSubmitRet(event, local_url, override_data){
     });
 }
 
+function processDownload(event){
+    event.preventDefault();
+
+    $("#errBox").hide()
+
+    var formData = $("#searchForm").serializeJSON();
+
+    console.log(formData);
+
+    $.ajax({
+        type: "POST",
+        url: "download",
+        data: formData,
+        dataType: "json",
+        contentType : "application/json",
+        async: false, // http://stackoverflow.com/a/20235765
+        success: function(got){
+            if("err" in got){
+                $("#errMsg").text(got["err"]);
+                $("#errBox").show()
+                return true;
+            }
+
+            return window.open(got["url"], '_blank');
+        }
+    });
+}
+
 function selectIntersect(){
     $("#errBox").hide()
     $('#wait').show();
@@ -179,6 +207,10 @@ $(document).ready(function(){
 
     $("#washuSubmit").click(function(event) {
         processFormSubmitRet(event, "washu");
+    });
+
+    $(".table_download_link").click(function(event) {
+        processDownload(event);
     });
 
     $("#selectIntersect").click(function() {
