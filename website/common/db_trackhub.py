@@ -24,56 +24,60 @@ assays text,
 tissues text,
 loci text,
 uid text NOT NULL,
-assayType integer NOT NULL,
-hubNum integer NOT NULL
-        ) """.format(search = self.tableSearch))
+assayType integer NOT NULL
+) """.format(search = self.tableSearch))
 
-    def insert(self, assayType, assembly, assays, tissues, loci, uid):
+    def get(self, uid):
+        with getcursor(self.DBCONN, "get") as curs:
+            curs.execute("""
+SELECT assembly, assays, tissues, loci, assayType
+FROM {search}
+WHERE uid = %(uid)s
+""".format(search = self.tableSearch), {"uid" : uid})
+            return curs.fetchone()
+
+    def insertOrUpdate(self, assayType, assembly, assays, tissues, loci, uid):
         with getcursor(self.DBCONN, "insertOrUpdate") as curs:
             curs.execute("""
-SELECT MAX(hubNum) FROM {search}
+SELECT id FROM search
 WHERE uid = %(uid)s
-AND assayType = %(assayType)s
-""".format(search = self.tableSearch), {"uid" : uid,
-                                        "assayType" : assayType})
-            hubNum = curs.fetchone()[0]
-            if not hubNum:
-                hubNum = 0
+""", {"uid" : uid})
+            if (curs.rowcount > 0):
+                curs.execute("""
+UPDATE search
+SET
+assembly = %(assembly)s,
+assays = %(assays)s,
+tissues = %(tissues)s,
+loci = %(loci)s,
+assayType = %(assayType)s
+WHERE uid = %(uid)s
+""", {"assembly" : assembly,
+      "assays" : assays,
+      "tissues" : json.dumps(tissues),
+      "loci" : loci,
+      "uid" : uid,
+      "assayType" : assayType
+})
             else:
-                hubNum += 1
-
-            curs.execute("""
-INSERT INTO {search}
-(assembly, assays, tissues, loci, uid, assayType, hubNum)
+                curs.execute("""
+INSERT INTO search
+(assembly, assays, tissues, loci, uid, assayType)
 VALUES (
 %(assembly)s,
 %(assays)s,
 %(tissues)s,
 %(loci)s,
 %(uid)s,
-%(assayType)s,
-%(hubNum)s
+%(assayType)s
 );
-""".format(search = self.tableSearch), {"assembly" : assembly,
-                                        "assays" : assays,
-                                        "tissues" : json.dumps(tissues),
-                                        "loci" : loci,
-                                        "uid" : uid,
-                                        "assayType" : assayType,
-                                        "hubNum" : hubNum
-                                        })
-        return hubNum
-
-    def get(self, uid, hubNum):
-        with getcursor(self.DBCONN, "get") as curs:
-            curs.execute("""
-SELECT assembly, assays, tissues, loci, hubNum, assayType
-FROM {search}
-WHERE uid = %(uid)s
-AND hubNum = %(hubNum)s
-""".format(search = self.tableSearch), {"uid" : uid,
-                                        "hubNum" : hubNum})
-            return curs.fetchone()
+""", {"assembly" : assembly,
+      "assays" : assays,
+      "tissues" : json.dumps(tissues),
+      "loci" : loci,
+      "uid" : uid,
+      "assayType" : assayType
+})
 
 def parse_args():
     parser = argparse.ArgumentParser()

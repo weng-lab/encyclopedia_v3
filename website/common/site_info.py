@@ -9,3 +9,7 @@ class PromotersSiteInfo:
     site = "promoters"
     assayType = AssayType.Promoter
     histMark = "H3K4me3"
+
+SiteInfos = {}
+SiteInfos[EnhancersSiteInfo.assayType] = EnhancersSiteInfo
+SiteInfos[PromotersSiteInfo.assayType] = PromotersSiteInfo

@@ -48,7 +48,6 @@ class EnhancersSite(object):
             fnp = os.path.expanduser("~/.ws_host.txt")
             if os.path.exists(fnp):
                 self.host = open(fnp).read().strip()
-        self.host += self.siteInfo.site + "/"
 
     @cherrypy.expose
     def index(self, *args, **params):
@@ -75,7 +74,7 @@ class EnhancersSite(object):
 
         us = UcscSearch(self.wepigenomes, self.db, self.dbSnps, self.genes,
                         self.host, self.args, input_json, uid)
-        us.parse(self.siteInfo.site)
+        us.parse(self.siteInfo)
         url = us.configureUcscHubLink()
 
         if us.psb.userErrMsg:
@@ -120,7 +119,7 @@ class EnhancersSite(object):
     def missing(self, *args, **params):
         if not args:
             return self.templates(self.siteInfo.site + "/missing_list")
-        row = [args[0], args[1], "[]", "loci", "hubNum"]
+        row = [args[0], args[1], "[]", "loci", "assayType"]
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
         return self.templates(self.siteInfo.site + "/missing",

@@ -24,16 +24,16 @@ class UcscSearch:
             return str(self.coord)
         return "None"
 
-    def parse(self, site):
+    def parse(self, siteInfo):
         try:
             self.psb = ParseSearchBox(self.epigenomes, self.dbsnps, self.genes, self.params)
             self.coord = self.psb.search()
-            self.hubNum = self.db.insert(site,
-                                         self.psb.assembly,
-                                         self.psb.assays,
-                                         self.psb.tissue_ids,
-                                         self.psb.loci,
-                                         self.uid)
+            self.db.insertOrUpdate(siteInfo.assayType,
+                                   self.psb.assembly,
+                                   self.psb.assays,
+                                   self.psb.tissue_ids,
+                                   self.psb.loci,
+                                   self.uid)
         except:
             if self.args.debug:
                 raise
@@ -60,10 +60,9 @@ class UcscSearch:
                           "Submit=submit"]
         if 0:
             customUrl = os.path.join(self.host,
+                                     "trackhub/trackhub",
                                      "trackhubCustom",
-                                     self.uid,
-                                     self.hubNum,
-                                     str(self.hubNum))
+                                     self.uid)
             ucscParams.append("hgt.customText=" + customUrl)
         if 0:
             ucscParams = ["udcTimeout=1"] + ucscParams
@@ -75,16 +74,14 @@ class UcscSearch:
         urlBase = "https://genome.ucsc.edu/cgi-bin/hgTracks?"
 
         self.trackhubUrl = os.path.join(self.host,
-                                        "../trackhub/trackhub",
+                                        "trackhub/trackhub",
                                         self.uid,
-                                        str(self.hubNum),
                                         "hub.txt")
         ucscParams.append("hubClear=" + self.trackhubUrl)
 
         self.trackdbUrl = os.path.join(self.host,
-                                       "../trackhub/trackhub",
+                                       "trackhub/trackhub",
                                        self.uid,
-                                       str(self.hubNum),
                                        self.psb.assembly,
                                        "trackDb.txt")
 
@@ -93,9 +90,8 @@ class UcscSearch:
 
     def configureWashuHubLink(self):
         self.trackdbUrl = os.path.join(self.host,
-                                       "../trackhub/trackhub_washu",
+                                       "trackhub/trackhub_washu",
                                        self.uid,
-                                       str(self.hubNum),
                                        self.psb.assembly,
                                        "trackDb.json")
 

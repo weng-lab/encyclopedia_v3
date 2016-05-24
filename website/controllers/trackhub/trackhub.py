@@ -83,8 +83,7 @@ class TrackhubSite(object):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
         uid = args[0]
-        hubNum = args[1]
-        row = self.db.get(uid, hubNum)
+        row = self.db.get(uid)
         if not row:
             raise Exception("uuid not found")
 
@@ -96,8 +95,7 @@ class TrackhubSite(object):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
         uid = args[0]
-        hubNum = args[1]
-        row = self.db.get(uid, hubNum)
+        row = self.db.get(uid)
         if not row:
             raise Exception("uuid not found")
 
@@ -111,8 +109,7 @@ class TrackhubSite(object):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
         uid = args[0]
-        hubNum = args[1]
-        row = self.db.get(uid, hubNum)
+        row = self.db.get(uid)
         if not row:
             raise Exception("uuid not found")
 

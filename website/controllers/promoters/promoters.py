@@ -49,7 +49,6 @@ class PromotersSite(object):
             fnp = os.path.expanduser("~/.ws_host.txt")
             if os.path.exists(fnp):
                 self.host = open(fnp).read().strip()
-        self.host += PromotersSiteInfo.site + "/"
 
     @cherrypy.expose
     def index(self, *args, **params):
@@ -76,7 +75,7 @@ class PromotersSite(object):
 
         us = UcscSearch(self.wepigenomes, self.db, self.dbSnps, self.genes,
                         self.host, self.args, input_json, uid)
-        us.parse(self.siteInfo.site)
+        us.parse(self.siteInfo)
         url = us.configureUcscHubLink()
 
         if us.psb.userErrMsg:

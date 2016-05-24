@@ -9,6 +9,7 @@ from enums import AssayType
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.web_epigenomes import WebEpigenome
 from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
+from common.site_info import SiteInfos
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
@@ -16,16 +17,16 @@ from files_and_paths import Dirs
 
 class TrackHub:
     def __init__(self, args, epigenomes, urlStatus, row):
-        self.args = args
-        self.epigenomes = epigenomes
-        self.urlStatus = urlStatus
         self.assembly = row[0]
         self.assays = row[1]
         self.tissue_ids = json.loads(row[2])
         self.loci = row[3]
-        self.hubNum = row[4]
-        self.histMark = row[5]
-        self.assayType = row[6]
+        self.assayType = row[4]
+
+        self.args = args
+        self.epigenomes = epigenomes[self.assayType]
+        self.urlStatus = urlStatus
+        self.histMark = SiteInfos[self.assayType].histMark
 
         self.priority = 1
 
@@ -44,21 +45,19 @@ class TrackHub:
         if not path:
             raise Exception("no path")
 
-        if 2 == len(path):
-            hubNum = path[0]
-            loc = path[1]
+        if 1 == len(path):
+            loc = path[0]
             if loc == "hub.txt":
                 return self.makeHub()
             if loc == "genomes.txt":
                 return self.makeGenomes()
             return "ERROR"
 
-        if 3 != len(path):
+        if 2 != len(path):
             raise Exception("path too long")
 
-        hubNum = path[0]
-        assembly = path[1]
-        loc = path[2]
+        assembly = path[0]
+        loc = path[1]
         if assembly in ["hg19", "hg38", "mm10"]:
             if assembly == self.assembly:
                 if loc == "trackDb.txt":

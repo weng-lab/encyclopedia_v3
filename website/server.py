@@ -88,15 +88,15 @@ def main():
     DBCONN = dbconn(args)
 
     wepigenomes = {}
-    wepigenomes[EnhancersSiteInfo.site] = WebEpigenomesLoader(args, EnhancersSiteInfo)
-    wepigenomes[PromotersSiteInfo.site] = WebEpigenomesLoader(args, PromotersSiteInfo)
+    wepigenomes[EnhancersSiteInfo.assayType] = WebEpigenomesLoader(args, EnhancersSiteInfo)
+    wepigenomes[PromotersSiteInfo.assayType] = WebEpigenomesLoader(args, PromotersSiteInfo)
 
     cherrypy.tree.mount(HiCSite(DBCONN, args, mainIndex.staticDir), '/hic',
                         config=getRootConfig("hic"))
-    cherrypy.tree.mount(EnhancersSite(DBCONN, args, wepigenomes[EnhancersSiteInfo.site]),
+    cherrypy.tree.mount(EnhancersSite(DBCONN, args, wepigenomes[EnhancersSiteInfo.assayType]),
                         '/enhancers',
                         config=getRootConfig("enhancers"))
-    cherrypy.tree.mount(PromotersSite(DBCONN, args, wepigenomes[PromotersSiteInfo.site]),
+    cherrypy.tree.mount(PromotersSite(DBCONN, args, wepigenomes[PromotersSiteInfo.assayType]),
                         '/promoters',
                         config=getRootConfig("promoters"))
     cherrypy.tree.mount(TrackhubSite(DBCONN, args, wepigenomes),
