@@ -78,8 +78,7 @@ class UcscSearch:
                                         "trackhub",
                                         self.uid,
                                         str(self.hubNum),
-                                        "hub_{hubNum}.txt".format(hubNum =
-                                                                  self.hubNum))
+                                        "hub.txt")
         ucscParams.append("hubClear=" + self.trackhubUrl)
 
         self.trackdbUrl = os.path.join(self.host,
@@ -87,8 +86,7 @@ class UcscSearch:
                                        self.uid,
                                        str(self.hubNum),
                                        self.psb.assembly,
-                                       "trackDb_{hubNum}.txt".format(hubNum =
-                                                                     self.hubNum))
+                                       "trackDb.txt")
 
         url = urlBase + "&".join(ucscParams)
         return url
@@ -99,8 +97,7 @@ class UcscSearch:
                                        self.uid,
                                        str(self.hubNum),
                                        self.psb.assembly,
-                                       "trackDb_{hn}.json".format(hn =
-                                                                  self.hubNum))
+                                       "trackDb.json")
 
         urlBase = "http://epigenomegateway.wustl.edu/browser/"
         assembly = "?genome=" + self.psb.assembly

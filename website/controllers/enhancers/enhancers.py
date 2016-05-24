@@ -13,6 +13,7 @@ from common.dbsnps import dbSnps
 from common.tables import DbTables
 from common.session import Sessions
 from common.db_trackhub import DbTrackhub
+from common.db_bed_overlap import DbBedOverlap
 from common.db_url_status import UrlStatusDB
 from common.epigenome_stats import EpigenomeStats
 from common.web_epigenomes import WebEpigenomesLoader
@@ -36,6 +37,7 @@ class EnhancersSite(object):
 
         self.siteInfo = EnhancersSiteInfo
         self.db = DbTrackhub(DBCONN)
+        self.db_bed_overlap = DbBedOverlap(DBCONN)
         self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
@@ -144,7 +146,7 @@ class EnhancersSite(object):
             raise Exception("uuid not found")
 
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row,
-                      self.histMark, self.assay_type)
+                      self.siteInfo.histMark, self.siteInfo.assayType)
 
         path = args[1:]
         return th.ParsePath(path)
@@ -160,7 +162,7 @@ class EnhancersSite(object):
             raise Exception("uuid not found")
 
         th = TrackHubWashu(self.args, self.wepigenomes, self.urlStatus, row,
-                           self.histMark, self.assay_type)
+                           self.siteInfo.histMark, self.siteInfo.assayType)
 
         path = args[1:]
         return th.ParsePath(path)
@@ -176,10 +178,10 @@ class EnhancersSite(object):
             psb = ParseSearchBox(self.wepigenomes, self.dbSnps, self.genes, input_json)
             coord = psb.search()
             if coord:
-                expIDs = self.db.findBedOverlap(psb.assembly,
-                                                coord.chrom,
-                                                coord.start,
-                                                coord.end)
+                expIDs = self.db_bed_overlap.findBedOverlap(psb.assembly,
+                                                            coord.chrom,
+                                                            coord.start,
+                                                            coord.end)
                 ret = self.wepigenomes.getWebIDsFromExpIDs(psb.assembly,
                                                           expIDs)
             if psb.userErrMsg:
