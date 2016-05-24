@@ -28,12 +28,12 @@ class UcscSearch:
         try:
             self.psb = ParseSearchBox(self.epigenomes, self.dbsnps, self.genes, self.params)
             self.coord = self.psb.search()
-            self.db.insertOrUpdate(siteInfo.assayType,
-                                   self.psb.assembly,
-                                   self.psb.assays,
-                                   self.psb.tissue_ids,
-                                   self.psb.loci,
-                                   self.uid)
+            self.hubNum = self.db.insertOrUpdate(siteInfo.assayType,
+                                                 self.psb.assembly,
+                                                 self.psb.assays,
+                                                 self.psb.tissue_ids,
+                                                 self.psb.loci,
+                                                 self.uid)
         except:
             if self.args.debug:
                 raise
@@ -62,7 +62,8 @@ class UcscSearch:
             customUrl = os.path.join(self.host,
                                      "trackhub/trackhub",
                                      "trackhubCustom",
-                                     self.uid)
+                                     self.uid,
+                                     str(self.hubNum))
             ucscParams.append("hgt.customText=" + customUrl)
         if 0:
             ucscParams = ["udcTimeout=1"] + ucscParams
@@ -76,14 +77,16 @@ class UcscSearch:
         self.trackhubUrl = os.path.join(self.host,
                                         "trackhub/trackhub",
                                         self.uid,
-                                        "hub.txt")
+                                        "hub_{hubNum}.txt".format(hubNum =
+                                                                  self.hubNum))
         ucscParams.append("hubClear=" + self.trackhubUrl)
 
         self.trackdbUrl = os.path.join(self.host,
                                        "trackhub/trackhub",
                                        self.uid,
                                        self.psb.assembly,
-                                       "trackDb.txt")
+                                       "trackDb_{hubNum}.txt".format(hubNum =
+                                                                     self.hubNum))
 
         url = urlBase + "&".join(ucscParams)
         return url
@@ -93,7 +96,8 @@ class UcscSearch:
                                        "trackhub/trackhub_washu",
                                        self.uid,
                                        self.psb.assembly,
-                                       "trackDb.json")
+                                       "trackDb_{hn}.json".format(hn =
+                                                                  self.hubNum))
 
         urlBase = "http://epigenomegateway.wustl.edu/browser/"
         assembly = "?genome=" + self.psb.assembly

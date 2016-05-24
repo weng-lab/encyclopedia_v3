@@ -22,6 +22,7 @@ class TrackHub:
         self.tissue_ids = json.loads(row[2])
         self.loci = row[3]
         self.assayType = row[4]
+        self.hubNum = row[5]
 
         self.args = args
         self.epigenomes = epigenomes[self.assayType]
@@ -47,9 +48,9 @@ class TrackHub:
 
         if 1 == len(path):
             loc = path[0]
-            if loc == "hub.txt":
+            if loc.startswith("hub_") and loc.endswith(".txt"):
                 return self.makeHub()
-            if loc == "genomes.txt":
+            if loc.startswith("genomes_") and loc.endswith(".txt"):
                 return self.makeGenomes()
             return "ERROR"
 
@@ -60,9 +61,8 @@ class TrackHub:
         loc = path[1]
         if assembly in ["hg19", "hg38", "mm10"]:
             if assembly == self.assembly:
-                if loc == "trackDb.txt":
+                if loc.startswith("trackDb_") and loc.endswith(".txt"):
                     return self.makeTrackDb()
-
         raise Exception("invalid path")
 
     def makeHub(self):
@@ -78,14 +78,15 @@ class TrackHub:
         for r in [["hub", t],
                   ["shortLabel", t],
                   ["longLabel", t],
-                  ["genomesFile", "genomes.txt"],
+                  ["genomesFile", "genomes_{hubNum}.txt".format(hubNum=self.hubNum)],
                   ["email", "zhiping.weng@umassmed.edu"]]:
             f.write(" ".join(r) + "\n")
         return f.getvalue()
 
     def makeGenomes(self):
         return """genome\t{assembly}
-trackDb\t{assembly}/trackDb.txt""".format(assembly = self.assembly)
+trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
+                                                   hubNum = self.hubNum)
 
     def makeTrackDb(self):
         epis = self.epigenomes.GetByAssemblyAndAssays(self.assembly, self.assays)
