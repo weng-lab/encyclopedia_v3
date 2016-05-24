@@ -1,7 +1,8 @@
 class EpigenomeStats:
-    def __init__(self, wepigenomes, histMark):
+    def __init__(self, wepigenomes, siteInfo):
         self.wepigenomes = wepigenomes
 
+        histMark = siteInfo.histMark
         mm10b = self.wepigenomes.GetByAssemblyAndAssays("mm10", "BothDNaseAnd" + histMark)
         mm10d = self.wepigenomes.GetByAssemblyAndAssays("mm10", "DNase")
         mm10h = self.wepigenomes.GetByAssemblyAndAssays("mm10", histMark)

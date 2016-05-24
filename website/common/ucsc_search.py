@@ -24,15 +24,16 @@ class UcscSearch:
             return str(self.coord)
         return "None"
 
-    def parse(self):
+    def parse(self, site):
         try:
             self.psb = ParseSearchBox(self.epigenomes, self.dbsnps, self.genes, self.params)
             self.coord = self.psb.search()
-            self.hubNum = self.db.insertOrUpdate(self.psb.assembly,
-                                                 self.psb.assays,
-                                                 self.psb.tissue_ids,
-                                                 self.psb.loci,
-                                                 self.uid)
+            self.hubNum = self.db.insert(site,
+                                         self.psb.assembly,
+                                         self.psb.assays,
+                                         self.psb.tissue_ids,
+                                         self.psb.loci,
+                                         self.uid)
         except:
             if self.args.debug:
                 raise
@@ -61,6 +62,7 @@ class UcscSearch:
             customUrl = os.path.join(self.host,
                                      "trackhubCustom",
                                      self.uid,
+                                     self.hubNum,
                                      str(self.hubNum))
             ucscParams.append("hgt.customText=" + customUrl)
         if 0:
@@ -75,6 +77,7 @@ class UcscSearch:
         self.trackhubUrl = os.path.join(self.host,
                                         "trackhub",
                                         self.uid,
+                                        str(self.hubNum),
                                         "hub_{hubNum}.txt".format(hubNum =
                                                                   self.hubNum))
         ucscParams.append("hubClear=" + self.trackhubUrl)
@@ -82,6 +85,7 @@ class UcscSearch:
         self.trackdbUrl = os.path.join(self.host,
                                        "trackhub",
                                        self.uid,
+                                       str(self.hubNum),
                                        self.psb.assembly,
                                        "trackDb_{hubNum}.txt".format(hubNum =
                                                                      self.hubNum))
@@ -93,6 +97,7 @@ class UcscSearch:
         self.trackdbUrl = os.path.join(self.host,
                                        "trackhub_washu",
                                        self.uid,
+                                       str(self.hubNum),
                                        self.psb.assembly,
                                        "trackDb_{hn}.json".format(hn =
                                                                   self.hubNum))

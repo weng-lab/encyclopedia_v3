@@ -44,19 +44,24 @@ class TrackHub:
         if not path:
             raise Exception("no path")
 
-        if 1 == len(path):
-            if path[0].startswith("hub_") and path[0].endswith(".txt"):
+        if 2 == len(path):
+            hubNum = path[0]
+            loc = path[1]
+            if loc.startswith("hub_") and loc.endswith(".txt"):
                 return self.makeHub()
-            if path[0].startswith("genomes_") and path[0].endswith(".txt"):
+            if loc.startswith("genomes_") and loc.endswith(".txt"):
                 return self.makeGenomes()
             return "ERROR"
 
-        if 2 != len(path):
+        if 3 != len(path):
             raise Exception("path too long")
 
-        if path[0] in ["hg19", "hg38", "mm10"]:
-            if path[0] == self.assembly:
-                if path[1].startswith("trackDb_") and path[1].endswith(".txt"):
+        hubNum = path[0]
+        assembly = path[1]
+        loc = path[2]
+        if assembly in ["hg19", "hg38", "mm10"]:
+            if assembly == self.assembly:
+                if loc.startswith("trackDb_") and loc.endswith(".txt"):
                     return self.makeTrackDb()
 
         raise Exception("invalid path")

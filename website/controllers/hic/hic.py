@@ -15,7 +15,8 @@ from common.dbsnps import dbSnps
 from common.genes import LookupGenes
 from common.tables import DbTables
 from common.session import Sessions
-from common.db import AnnotationDB, UrlStatusDB
+from common.db_trackhub import DbTrackhub
+from common.db_url_status import UrlStatusDB
 from common.enums import AssayType
 
 from models.hic.web_epigenomes import WebEpigenomesLoader
@@ -27,18 +28,23 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/ut
 from utils import Utils
 from templates import Templates
 
+class HiCSiteInfo:
+    site = "hic"
+    assayType = AssayType.HiC
+    histMark = "HiC"
+
 class HiCSite(object):
     def __init__(self, DBCONN, args, globalStaticDir):
         self.args = args
 
-        self.db = AnnotationDB(DBCONN, DbTables.search_hic)
+        self.db = DbTrackhub(DBCONN)
         self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args)
+        self.wepigenomes = WebEpigenomesLoader(self.args)#, HiCSiteInfo)
         self.defaults = Defaults()
-        self.epigenome_stats = EpigenomeStats(self.wepigenomes)
+        self.epigenome_stats = EpigenomeStats(self.wepigenomes)#, HiCSiteInfo)
 
         viewDir = os.path.join(os.path.dirname(__file__), "../../views")
         self.templates = Templates(viewDir)
@@ -48,7 +54,7 @@ class HiCSite(object):
             fnp = os.path.expanduser("~/.ws_host.txt")
             if os.path.exists(fnp):
                 self.host = open(fnp).read().strip()
-        self.host += "hic"
+        self.host += HiCSiteInfo.site + "/"
 
         self.staticDir = os.path.join(globalStaticDir, "hic")
 
@@ -121,7 +127,8 @@ class HiCSite(object):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
         uid = args[0]
-        row = self.db.get(uid)
+        hubNum = args[1]
+        row = self.db.get(uid, hubNum)
         if not row:
             raise Exception("uuid not found")
 
@@ -133,7 +140,8 @@ class HiCSite(object):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
         uid = args[0]
-        row = self.db.get(uid)
+        hubNum = args[1]
+        row = self.db.get(uid, hubNum)
         if not row:
             raise Exception("uuid not found")
 
@@ -147,7 +155,8 @@ class HiCSite(object):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
         uid = args[0]
-        row = self.db.get(uid)
+        hubNum = args[1]
+        row = self.db.get(uid, hubNum)
         if not row:
             raise Exception("uuid not found")
 

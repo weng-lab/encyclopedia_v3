@@ -12,7 +12,8 @@ from common.genes import LookupGenes
 from common.dbsnps import dbSnps
 from common.tables import DbTables
 from common.session import Sessions
-from common.db import AnnotationDB, UrlStatusDB
+from common.db_trackhub import DbTrackhub
+from common.db_url_status import UrlStatusDB
 from common.epigenome_stats import EpigenomeStats
 from common.web_epigenomes import WebEpigenomesLoader
 from common.enums import AssayType
@@ -24,21 +25,24 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/ut
 from utils import Utils
 from templates import Templates
 
+class EnhancersSiteInfo:
+    site = "enhancers"
+    assayType = AssayType.Enhancer
+    histMark = "H3K27ac"
+
 class EnhancersSite(object):
     def __init__(self, DBCONN, args):
         self.args = args
 
-        self.site = "enhancers"
-        self.assay_type = AssayType.Enhancer
-        self.histMark = "H3K27ac"
-        self.db = AnnotationDB(DBCONN, DbTables.search_enhancers)
+        self.siteInfo = EnhancersSiteInfo
+        self.db = DbTrackhub(DBCONN)
         self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args, self.histMark, self.assay_type)
+        self.wepigenomes = WebEpigenomesLoader(self.args, self.siteInfo)
         self.defaults = Defaults()
-        self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.histMark)
+        self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.siteInfo)
 
         viewDir = os.path.join(os.path.dirname(__file__), "../../views")
         self.templates = Templates(viewDir)
@@ -48,15 +52,15 @@ class EnhancersSite(object):
             fnp = os.path.expanduser("~/.ws_host.txt")
             if os.path.exists(fnp):
                 self.host = open(fnp).read().strip()
-        self.host += self.site + "/"
+        self.host += self.siteInfo.site + "/"
 
     @cherrypy.expose
     def index(self, *args, **params):
-        return self.templates(self.site + "/index",
+        return self.templates(self.siteInfo.site + "/index",
                               epigenomes = self.wepigenomes,
                               defaults = self.defaults,
                               stats = self.epigenome_stats,
-                              site = self.site)
+                              site = self.siteInfo.site)
 
     def makeUid(self):
         return str(uuid.uuid4())
@@ -75,7 +79,7 @@ class EnhancersSite(object):
 
         us = UcscSearch(self.wepigenomes, self.db, self.dbSnps, self.genes,
                         self.host, self.args, input_json, uid)
-        us.parse()
+        us.parse(self.siteInfo.site)
         url = us.configureUcscHubLink()
 
         if us.psb.userErrMsg:
@@ -83,7 +87,7 @@ class EnhancersSite(object):
 
         if self.args.debug:
             return {"inner-url" : url,
-                    "html" : self.templates(self.site + "/ucsc",
+                    "html" : self.templates(self.siteInfo.site + "/ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
@@ -102,7 +106,7 @@ class EnhancersSite(object):
 
         us = UcscSearch(self.wepigenomes, self.db, self.dbSnps, self.genes,
                         self.host, self.args, input_json, uid)
-        us.parse()
+        us.parse(self.siteInfo.site)
         url = us.configureWashuHubLink()
 
         if us.psb.userErrMsg:
@@ -110,7 +114,7 @@ class EnhancersSite(object):
 
         if self.args.debug:
             return {"inner-url" : url,
-                    "html" : self.templates(self.site + "/ucsc",
+                    "html" : self.templates(self.siteInfo.site + "/ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
@@ -120,7 +124,8 @@ class EnhancersSite(object):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
         uid = args[0]
-        row = self.db.get(uid)
+        hubNum = args[1]
+        row = self.db.get(uid, hubNum)
         if not row:
             raise Exception("uuid not found")
 
@@ -133,7 +138,8 @@ class EnhancersSite(object):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
         uid = args[0]
-        row = self.db.get(uid)
+        hubNum = args[1]
+        row = self.db.get(uid, hubNum)
         if not row:
             raise Exception("uuid not found")
 
@@ -148,7 +154,8 @@ class EnhancersSite(object):
         cherrypy.response.headers['Content-Type'] = 'text/plain'
 
         uid = args[0]
-        row = self.db.get(uid)
+        hubNum = args[1]
+        row = self.db.get(uid, hubNum)
         if not row:
             raise Exception("uuid not found")
 
@@ -189,15 +196,15 @@ class EnhancersSite(object):
     @cherrypy.expose
     def missing(self, *args, **params):
         if not args:
-            return self.templates(self.site + "/missing_list")
+            return self.templates(self.siteInfo.site + "/missing_list")
         row = [args[0], args[1], "[]", "loci", "hubNum"]
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
-        return self.templates(self.site + "/missing",
+        return self.templates(self.siteInfo.site + "/missing",
                               missing = missing)
 
     @cherrypy.expose
     def methods(self, *args, **params):
-        return self.templates(self.site + "/methods",
+        return self.templates(self.siteInfo.site + "/methods",
                               stats = self.epigenome_stats,
-                              site = self.site)
+                              site = self.siteInfo.site)

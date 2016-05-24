@@ -60,18 +60,18 @@ class WalkRow:
                         yield c.web_id(), c.web_title(), c
 
 class WebEpigenomesLoader:
-    def __init__(self, args, histMark, assayType):
+    def __init__(self, args, siteInfo):
         self.args = args
         self.ontology = Ontology()
-        self.histMark = histMark
-        self.assayType = assayType
+        self.histMark = siteInfo.histMark
+        self.assayType = siteInfo.assayType
 
         byAssembly = {}
 
         m = MetadataWS(Datasets.all_mouse)
         byAssembly["mm10"] = m.chipseq_tf_annotations_mm10()
 
-        roadmap = RoadmapMetadata(histMark, assayType).epigenomes
+        roadmap = RoadmapMetadata(self.histMark, self.assayType).epigenomes
 
         combined = Epigenomes("ROADMAP + ENCODE", "hg19")
         if 1:
