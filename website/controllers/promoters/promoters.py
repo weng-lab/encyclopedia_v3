@@ -13,12 +13,12 @@ from common.session import Sessions
 from common.db_trackhub import DbTrackhub
 from common.db_bed_overlap import DbBedOverlap
 from common.db_url_status import UrlStatusDB
-from common.web_epigenomes import WebEpigenomesLoader
 from common.enums import AssayType
 from common.epigenome_stats import EpigenomeStats
 from common.trackhub import TrackHub
 from common.trackhub_washu import TrackHubWashu
 from common.ucsc_search import UcscSearch
+from common.site_info import PromotersSiteInfo
 
 from models.promoters.defaults import Defaults
 
@@ -26,13 +26,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/ut
 from utils import Utils
 from templates import Templates
 
-class PromotersSiteInfo:
-    site = "promoters"
-    assayType = AssayType.Promoter
-    histMark = "H3K4me3"
-
 class PromotersSite(object):
-    def __init__(self, DBCONN, args):
+    def __init__(self, DBCONN, args, wepigenomes):
         self.args = args
 
         self.siteInfo = PromotersSiteInfo
@@ -42,7 +37,7 @@ class PromotersSite(object):
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args, self.siteInfo)
+        self.wepigenomes = wepigenomes
         self.defaults = Defaults()
         self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.siteInfo)
 

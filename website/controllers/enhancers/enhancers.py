@@ -16,9 +16,9 @@ from common.db_trackhub import DbTrackhub
 from common.db_bed_overlap import DbBedOverlap
 from common.db_url_status import UrlStatusDB
 from common.epigenome_stats import EpigenomeStats
-from common.web_epigenomes import WebEpigenomesLoader
 from common.enums import AssayType
 from common.ucsc_search import UcscSearch
+from common.site_info import EnhancersSiteInfo
 
 from models.enhancers.defaults import Defaults
 
@@ -26,13 +26,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/ut
 from utils import Utils
 from templates import Templates
 
-class EnhancersSiteInfo:
-    site = "enhancers"
-    assayType = AssayType.Enhancer
-    histMark = "H3K27ac"
-
 class EnhancersSite(object):
-    def __init__(self, DBCONN, args):
+    def __init__(self, DBCONN, args, wepigenomes):
         self.args = args
 
         self.siteInfo = EnhancersSiteInfo
@@ -42,7 +37,7 @@ class EnhancersSite(object):
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args, self.siteInfo)
+        self.wepigenomes = wepigenomes
         self.defaults = Defaults()
         self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.siteInfo)
 

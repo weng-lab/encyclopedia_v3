@@ -4,6 +4,9 @@ import os, sys, cherrypy, json, argparse, time
 
 import psycopg2, psycopg2.pool
 
+from common.web_epigenomes import WebEpigenomesLoader
+from common.site_info import EnhancersSiteInfo, PromotersSiteInfo
+
 from controllers.enhancers.enhancers import EnhancersSite
 from controllers.promoters.promoters import PromotersSite
 from controllers.hic.hic import HiCSite
@@ -83,11 +86,17 @@ def main():
 
     DBCONN = dbconn(args)
 
+    wepigenomes = {}
+    wepigenomes[EnhancersSiteInfo.site] = WebEpigenomesLoader(args, EnhancersSiteInfo)
+    wepigenomes[PromotersSiteInfo.site] = WebEpigenomesLoader(args, PromotersSiteInfo)
+
     cherrypy.tree.mount(HiCSite(DBCONN, args, mainIndex.staticDir), '/hic',
                         config=getRootConfig("hic"))
-    cherrypy.tree.mount(EnhancersSite(DBCONN, args), '/enhancers',
+    cherrypy.tree.mount(EnhancersSite(DBCONN, args, wepigenomes[EnhancersSiteInfo.site]),
+                        '/enhancers',
                         config=getRootConfig("enhancers"))
-    cherrypy.tree.mount(PromotersSite(DBCONN, args), '/promoters',
+    cherrypy.tree.mount(PromotersSite(DBCONN, args, wepigenomes[PromotersSiteInfo.site]),
+                        '/promoters',
                         config=getRootConfig("promoters"))
 
     if args.dev:
