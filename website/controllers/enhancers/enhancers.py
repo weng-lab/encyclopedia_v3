@@ -34,7 +34,7 @@ class EnhancersSite(object):
         self.assay_type = AssayType.Enhancer
         self.histMark = "H3K27ac"
         self.db = AnnotationDB(DBCONN, DbTables.search_enhancers)
-        self.sessions = Sessions(DBCONN, DbTables.sessions)
+        self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)

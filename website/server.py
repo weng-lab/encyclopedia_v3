@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, sys, cherrypy, json, argparse
+import os, sys, cherrypy, json, argparse, time
 
 import psycopg2, psycopg2.pool
 
@@ -51,21 +51,26 @@ def dbconn(args):
     return psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
 def getRootConfig(siteName):
-    cacheDir = os.path.realpath(os.path.join(os.path.dirname(__file__),
-                                             "cache", siteName))
-    Utils.mkdir_p(cacheDir)
+    d = os.path.realpath(os.path.join(os.path.dirname(__file__), "tmp"))
 
-    logDir = os.path.join(cacheDir, "logs")
+    # shared sessions
+    sessionDir = os.path.join(d, "sessions")
+    Utils.mkdir_p(sessionDir)
+
+    logDir = os.path.join(d, "logs", siteName)
     Utils.mkdir_p(logDir)
+
+    # http://stackoverflow.com/a/10607768
+    timestr = time.strftime("%Y%m%d-%H%M%S")
 
     return {
         '/': {
             'tools.sessions.on' : True,
             'tools.sessions.timeout' : 60000,
             'tools.sessions.storage_type' : "file",
-            'tools.sessions.storage_path' : cacheDir,
-            'log.access_file' : os.path.join(logDir, "access.log"),
-            'log.error_file' : os.path.join(logDir, "error.log"),
+            'tools.sessions.storage_path' : sessionDir,
+            'log.access_file' : os.path.join(logDir, "access-" + timestr + ".log"),
+            'log.error_file' : os.path.join(logDir, "error-" + timestr + ".log"),
             'log.screen' : False,
         }
     }

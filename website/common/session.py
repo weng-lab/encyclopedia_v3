@@ -9,9 +9,9 @@ from db_utils import getcursor
 from tables import DbTables
 
 class Sessions:
-    def __init__(self, DBCONN, tableName):
+    def __init__(self, DBCONN):
         self.DBCONN = DBCONN
-        self.table = tableName
+        self.table = DbTables.sessions
 
     def setupDB(self):
         with getcursor(self.DBCONN, "get") as curs:

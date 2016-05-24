@@ -32,7 +32,7 @@ class HiCSite(object):
         self.args = args
 
         self.db = AnnotationDB(DBCONN, DbTables.search_hic)
-        self.sessions = Sessions(DBCONN, AssayType.HiC)
+        self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)

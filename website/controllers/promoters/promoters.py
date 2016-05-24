@@ -34,7 +34,7 @@ class PromotersSite(object):
         self.assay_type = AssayType.Promoter
         self.histMark = "H3K4me3"
         self.db = AnnotationDB(DBCONN, DbTables.search_promoters)
-        self.sessions = Sessions(DBCONN, DbTables.sessions_promoters)
+        self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
