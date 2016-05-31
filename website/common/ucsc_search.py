@@ -35,6 +35,7 @@ class UcscSearch:
                                                  self.psb.loci,
                                                  self.uid)
         except:
+            raise
             if self.args.debug:
                 raise
             pass
