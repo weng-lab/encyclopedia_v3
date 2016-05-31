@@ -93,7 +93,7 @@ def main():
     DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
     for t in [DbTables.sessions]:
-        s = Sessions(DBCONN, t)
+        s = Sessions(DBCONN)
         s.setupDB()
 
 if __name__ == '__main__':
