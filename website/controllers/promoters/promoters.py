@@ -166,7 +166,7 @@ class PromotersSite(object):
 
         with zipfile.ZipFile(outFnp, mode='w', compression = zipfile.ZIP_STORED) as a:
             for wepi in epis:
-                fnp = wepi.predictionFnp().replace(".bigBed", ".bed")
+                fnp = wepi.predictionFnp().replace(".bigBed", ".bed.gz")
                 if not os.path.exists(fnp):
                     continue
                 a.write(fnp, arcname = os.path.basename(fnp))
