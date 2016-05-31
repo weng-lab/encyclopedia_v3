@@ -1,6 +1,4 @@
-from enum import Enum
-
-class AssayType(Enum):
+class AssayType():
     Enhancer = 1
     Promoter = 2
     HiC = 3
