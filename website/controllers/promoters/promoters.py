@@ -4,7 +4,7 @@ import os, sys, json, cherrypy, jinja2, argparse, time
 import numpy as np
 import uuid
 import StringIO
-import tarfile
+import zipfile
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.db_bed_overlap import DbBedOverlap
@@ -160,16 +160,16 @@ class PromotersSite(object):
 
         timestr = time.strftime("%Y%m%d-%H%M%S")
         outFn = timestr + '-' + '-'.join([self.siteInfo.name, psb.assembly,
-                                          psb.assays]) + ".tar"
+                                          psb.assays]) + ".zip"
         outFnp = os.path.join(self.staticDir, "downloads", uid, outFn)
         Utils.ensureDir(outFnp)
 
-        with tarfile.open(outFnp, mode = "w") as a:
+        with zipfile.ZipFile(outFnp, mode='w', compression = zipfile.ZIP_DEFLATED) as a:
             for wepi in epis:
-                fnp = wepi.predictionFnp().replace(".bigBed", ".bed.gz")
+                fnp = wepi.predictionFnp().replace(".bigBed", ".bed")
                 if not os.path.exists(fnp):
                     continue
-                a.add(fnp, arcname = os.path.basename(fnp))
+                a.write(fnp, arcname = os.path.basename(fnp))
         print("wrote", outFnp)
 
         url = os.path.join(self.host, "static", "downloads", uid, outFn)
