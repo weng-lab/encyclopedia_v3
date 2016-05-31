@@ -223,3 +223,11 @@ input[type=checkbox]{
     margin-left: 10px;
     width: 420px;
 }
+
+.carousel-inner>.item>a>img,
+.carousel-inner>.item>img,
+.img-responsive,
+.thumbnail a>img,
+.thumbnail>img {
+    max-width: 500px;
+}
