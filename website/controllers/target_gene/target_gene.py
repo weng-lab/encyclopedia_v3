@@ -5,10 +5,8 @@ import numpy as np
 import uuid
 import StringIO
 
-from ucsc_search import UcscSearch
 from trackhub import TrackHub
 from trackhub_washu import TrackHubWashu
-from parse_search_box import ParseSearchBox
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.dbsnps import dbSnps
@@ -18,6 +16,8 @@ from common.session import Sessions
 from common.db_trackhub import DbTrackhub
 from common.db_url_status import UrlStatusDB
 from common.enums import AssayType
+from common.ucsc_search import UcscSearch
+from common.site_info import TargetGeneSiteInfo
 
 from models.target_gene.web_epigenomes import WebEpigenomesLoader
 from models.target_gene.defaults import Defaults
@@ -27,15 +27,11 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/ut
 from utils import Utils
 from templates import Templates
 
-class TargetGeneSiteInfo:
-    site = "target_gene"
-    assayType = AssayType.TargetGene
-    histMark = "TargetGene"
-
 class TargetGeneSite(object):
     def __init__(self, DBCONN, args, globalStaticDir):
         self.args = args
 
+        self.siteInfo = TargetGeneSiteInfo
         self.db = DbTrackhub(DBCONN)
         self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
@@ -81,7 +77,7 @@ class TargetGeneSite(object):
 
         us = UcscSearch(self.wepigenomes, self.db, self.dbSnps, self.genes,
                         self.host, self.args, input_json, uid)
-        us.parse()
+        us.parse(self.siteInfo)
         url = us.configureUcscHubLink()
 
         if us.psb.userErrMsg:
@@ -89,7 +85,7 @@ class TargetGeneSite(object):
 
         if self.args.debug:
             return {"inner-url" : url,
-                    "html" : self.templates("target_gene/ucsc",
+                    "html" : self.templates(self.siteInfo.site + "/ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
@@ -120,19 +116,6 @@ class TargetGeneSite(object):
                                             us = us,
                                             url = url)}
         return {"url" : url}
-
-    @cherrypy.expose
-    def trackhubCustom(self, *args, **params):
-        cherrypy.response.headers['Content-Type'] = 'text/plain'
-
-        uid = args[0]
-        hubNum = args[1]
-        row = self.db.get(uid, hubNum)
-        if not row:
-            raise Exception("uuid not found")
-
-        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
-        return th.Custom()
 
     @cherrypy.expose
     def trackhub(self, *args, **params):

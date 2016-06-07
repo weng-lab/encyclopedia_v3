@@ -51,8 +51,7 @@ function processFormSubmitRet(event, local_url, override_data){
 
     $("#errBox").hide()
 
-    var formData = JSON.stringify(override_data) || $("#searchForm").serializeJSON();
-
+    var formData = $("#searchForm").serializeJSON();
     //console.log(formData);
 
     $.ajax({
