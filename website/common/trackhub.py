@@ -17,12 +17,12 @@ from files_and_paths import Dirs
 
 class TrackHub:
     def __init__(self, args, epigenomes, urlStatus, row):
-        self.assembly = row[0]
-        self.assays = row[1]
-        self.tissue_ids = json.loads(row[2])
-        self.loci = row[3]
-        self.assayType = row[4]
-        self.hubNum = row[5]
+        self.assembly = row["assembly"]
+        self.assays = row["assays"]
+        self.tissue_ids = json.loads(row["tissues"])
+        self.loci = row["loci"]
+        self.assayType = row["assayType"]
+        self.hubNum = row["hubNum"]
 
         self.args = args
         self.epigenomes = epigenomes[self.assayType]

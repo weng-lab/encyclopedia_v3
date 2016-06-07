@@ -35,7 +35,15 @@ SELECT assembly, assays, tissues, loci, assayType, hubNum
 FROM {search}
 WHERE uid = %(uid)s
 """.format(search = self.tableSearch), {"uid" : uid})
-            return curs.fetchone()
+            row = curs.fetchone()
+        if not row:
+            return None
+        return {"assembly" : row[0],
+                "assays" : row[1],
+                "tissues" : row[2],
+                "loci" : row[3],
+                "assayType" : row[4],
+                "hubNum" : row[5]}
 
     def insertOrUpdate(self, assayType, assembly, assays, tissues, loci, uid):
         with getcursor(self.DBCONN, "insertOrUpdate") as curs:
