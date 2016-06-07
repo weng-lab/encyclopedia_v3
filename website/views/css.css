@@ -226,9 +226,6 @@ input[type=checkbox]{
 }
 
 .carousel-inner>.item>a>img,
-.carousel-inner>.item>img,
-.img-responsive,
-.thumbnail a>img,
-.thumbnail>img {
+.carousel-inner>.item>img {
     max-width: 500px;
 }

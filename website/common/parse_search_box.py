@@ -21,7 +21,10 @@ class ParseSearchBox:
         self._parse()
 
     def _parse(self):
-        self.assembly = self.params["assembly"]
+        if "assembly" in self.params:
+            self.assembly = self.params["assembly"]
+        else:
+            self.assembly = "hg19"
         self.assays = self.params["assays"]
 
         key = self.assembly + self.assays

@@ -1,0 +1,64 @@
+<form id="searchForm">
+  <table id="formTable">
+    <tr>
+      <td colspan="2" id="jumboTD">
+        <div class="jumbotron" id="jumboHeader" style="background-color: #FFC8C8;">
+          {% include 'target_gene/_blurb.html' -%}
+        </div>
+        <a href="#search"></a>
+        <span id="searchTitle"><p>Search Target Gene Regions</span>
+      </td>
+
+      <td colspan="2">
+        {% include 'target_gene/_gallery.html' -%}
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="2">
+        {{ hh.badge(1, "Select genome") }}
+        {% include 'target_gene/_genome_buttons.html' -%}
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="3">
+        {{ hh.badge(2, "Enter gene, SNP,<br>coordinate, or rank") }}
+        <div style="display: inline-block;">
+             <input type="text" name="loci" id="lociSearchBox" value="{{defaults["mm10"]["pos"]}}">
+             <br>
+             {% include 'target_gene/_examples.html' -%}
+        </div>
+        {% include 'target_gene/_browser_buttons.html' -%}
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="4">
+        <div class="alert alert-warning alert-dismissible" role="alert" style="display: none" id="errBox">
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <strong>Warning!</strong> <span id="errMsg"></span>
+      </td>
+    </tr>
+
+    <tr>
+      <td colspan="4">
+        {{ hh.badge(3, "Select assays<br>and cell types") }}
+        {% include 'target_gene/_cell_type_buttons.html' -%}
+        <br>
+        <div id="cellTypeTable">
+          {% include 'target_gene/_cell_type_tables.html' -%}
+        </div>
+      </td>
+    </tr>
+
+  </table>
+</form>
+
+<script src="../static/tablesort.min.js"></script>
+<script>
+  var selectorNames = {{epigenomes.SelectorNames()}};
+  var annotationDefaults = {{defaults.json()}};
+  {% include 'target_gene/js.js' -%}
+</script>
+<script src="../static/jquery.serialize-object.min.js"></script>
