@@ -8,4 +8,7 @@ class TrackHubTargetGene(TrackHub):
         super(TrackHubTargetGene, self).__init__(args, epigenomes, urlStatus, row)
 
     def makeTrackDb(self):
-        return "hi"
+        trackhubFnp = os.path.join(os.path.dirname(__file__),
+                                   "..", "views", "target_gene", "trackhub.txt")
+        with open(trackhubFnp) as f:
+            return f.read()
