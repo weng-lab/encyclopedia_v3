@@ -6,15 +6,19 @@ import uuid
 import StringIO
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
-from common.dbsnps import dbSnps
+from common.db_bed_overlap import DbBedOverlap
 from common.db_trackhub import DbTrackhub
-from common.genes import LookupGenes
-from common.tables import DbTables
-from common.session import Sessions
 from common.db_url_status import UrlStatusDB
-from common.enums import AssayType
-from common.ucsc_search import UcscSearch
+from common.dbsnps import dbSnps
+from common.epigenome_stats import EpigenomeStats
+from common.genes import LookupGenes
+from common.parse_search_box import ParseSearchBox
+from common.session import Sessions
 from common.site_info import TargetGeneSiteInfo
+from common.tables import DbTables
+from common.trackhub import TrackHub
+from common.trackhub_washu import TrackHubWashu
+from common.ucsc_search import UcscSearch
 
 from models.target_gene.web_epigenomes import WebEpigenomesLoader
 from models.target_gene.defaults import Defaults
@@ -25,18 +29,20 @@ from utils import Utils
 from templates import Templates
 
 class TargetGeneSite(object):
-    def __init__(self, DBCONN, args, globalStaticDir):
+    def __init__(self, DBCONN, args, staticDir):
         self.args = args
 
         self.siteInfo = TargetGeneSiteInfo
         self.db = DbTrackhub(DBCONN)
+        self.db_bed_overlap = DbBedOverlap(DBCONN)
         self.sessions = Sessions(DBCONN)
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args)#, HiCSiteInfo)
+        self.wepigenomes = WebEpigenomesLoader(self.args, self.siteInfo)
         self.defaults = Defaults()
-        self.epigenome_stats = EpigenomeStats(self.wepigenomes)#, HiCSiteInfo)
+        self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.siteInfo)
+        self.staticDir = staticDir
 
         viewDir = os.path.join(os.path.dirname(__file__), "../../views")
         self.templates = Templates(viewDir)
@@ -46,9 +52,6 @@ class TargetGeneSite(object):
             fnp = os.path.expanduser("~/.ws_host.txt")
             if os.path.exists(fnp):
                 self.host = open(fnp).read().strip()
-        self.host += TargetGeneSiteInfo.site + "/"
-
-        self.staticDir = os.path.join(globalStaticDir, "target_gene")
 
     @cherrypy.expose
     def index(self, *args, **params):
