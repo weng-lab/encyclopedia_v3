@@ -5,8 +5,8 @@ import numpy as np
 import uuid
 import StringIO
 
-from trackhub import TrackHub
-from trackhub_washu import TrackHubWashu
+from trackhub_target_gene import TrackHubTargetGene
+#from trackhub_washu import TrackHubWashu
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.dbsnps import dbSnps
