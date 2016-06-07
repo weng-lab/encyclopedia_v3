@@ -5,15 +5,12 @@ import numpy as np
 import uuid
 import StringIO
 
-from trackhub_target_gene import TrackHubTargetGene
-#from trackhub_washu import TrackHubWashu
-
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.dbsnps import dbSnps
+from common.db_trackhub import DbTrackhub
 from common.genes import LookupGenes
 from common.tables import DbTables
 from common.session import Sessions
-from common.db_trackhub import DbTrackhub
 from common.db_url_status import UrlStatusDB
 from common.enums import AssayType
 from common.ucsc_search import UcscSearch
@@ -112,40 +109,10 @@ class TargetGeneSite(object):
 
         if self.args.debug:
             return {"inner-url" : url,
-                    "html" : self.templates("target_gene/ucsc",
+                    "html" : self.templates(self.siteInfo.site + "/ucsc",
                                             us = us,
                                             url = url)}
         return {"url" : url}
-
-    @cherrypy.expose
-    def trackhub(self, *args, **params):
-        cherrypy.response.headers['Content-Type'] = 'text/plain'
-
-        uid = args[0]
-        hubNum = args[1]
-        row = self.db.get(uid, hubNum)
-        if not row:
-            raise Exception("uuid not found")
-
-        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
-
-        path = args[1:]
-        return th.ParsePath(path)
-
-    @cherrypy.expose
-    def trackhub_washu(self, *args, **params):
-        cherrypy.response.headers['Content-Type'] = 'text/plain'
-
-        uid = args[0]
-        hubNum = args[1]
-        row = self.db.get(uid, hubNum)
-        if not row:
-            raise Exception("uuid not found")
-
-        th = TrackHubWashu(self.args, self.wepigenomes, self.urlStatus, row)
-
-        path = args[1:]
-        return th.ParsePath(path)
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
@@ -187,5 +154,5 @@ class TargetGeneSite(object):
 
     @cherrypy.expose
     def methods(self, *args, **params):
-        return self.templates("target_gene/methods",
+        return self.templates(self.siteInfo.site + "/methods",
                               stats = self.epigenome_stats)

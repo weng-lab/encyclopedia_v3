@@ -11,9 +11,9 @@ function updateTissues(){
 
     var assembly = activeAssembly()
 
-    var assays = "H3K4me3";
+    var assays = "H3K27ac";
     if($("#assaysBoth").is(":checked")){
-        assays = "BothDNaseAndH3K4me3";
+        assays = "BothDNaseAndH3K27ac";
     } else if($("#assaysDNase").is(":checked")){
         assays = "DNase";
     }
@@ -51,7 +51,8 @@ function processFormSubmitRet(event, local_url, override_data){
 
     $("#errBox").hide()
 
-    var formData = $("#searchForm").serializeJSON();
+    var formData = JSON.stringify(override_data) || $("#searchForm").serializeJSON();
+
     //console.log(formData);
 
     $.ajax({
@@ -73,6 +74,34 @@ function processFormSubmitRet(event, local_url, override_data){
             }
             var w = window.open();
             $(w.document.body).html(got["html"]);
+        }
+    });
+}
+
+function processDownload(event){
+    event.preventDefault();
+
+    $("#errBox").hide()
+
+    var formData = $("#searchForm").serializeJSON();
+
+    console.log(formData);
+
+    $.ajax({
+        type: "POST",
+        url: "download",
+        data: formData,
+        dataType: "json",
+        contentType : "application/json",
+        async: false, // http://stackoverflow.com/a/20235765
+        success: function(got){
+            if("err" in got){
+                $("#errMsg").text(got["err"]);
+                $("#errBox").show()
+                return true;
+            }
+
+            return window.open(got["url"], '_blank');
         }
     });
 }
@@ -105,7 +134,7 @@ function selectIntersect(){
             }
 
             var assembly = activeAssembly()
-            $.each(["BothDNaseAndH3K4me3", "H3K27ac", "DNase"], function(idx, assays) {
+            $.each(["BothDNaseAndH3K27ac", "H3K27ac", "DNase"], function(idx, assays) {
                 var section = $("#content" + assembly + assays);
                 section.find(":checkbox").prop('checked', false);
 
@@ -129,21 +158,6 @@ function selectIntersect(){
 }
 
 function fixGallery(){
-    var blurb = $("#jumboTD");
-    var height = blurb.height();
-
-    var gal = $("#myCarousel");
-    gal.height(height);
-    gal.show();
-
-    $(".galleryImg").each(function(i, e){
-        $(this).css("height", height);
-    });
-
-    var maxWidth = Math.max.apply(Math, $('.galleryImg').map(function(){
-        return $(this).width(); }).get());
-
-    gal.width(maxWidth);
 }
 
 $(document).ready(function(){
@@ -195,43 +209,48 @@ $(document).ready(function(){
         processFormSubmitRet(event, "washu");
     });
 
+    $(".table_download_link").click(function(event) {
+        processDownload(event);
+    });
+
     $("#selectIntersect").click(function() {
         selectIntersect();
     });
 
     $("#firstGalleryPane").click(function(event){
-        // mm10 at
         var fd = {"assembly":"mm10",
-                  "loci":"chr19:26839562-26851786",
-                  "assays":"BothDNaseAndH3K4me3",
-                  "mm10Both":["neural_tube_embryonic_11_5_day"]
+                  "loci":"chr19:26844000-26848000",
+                  "assays":"BothDNaseAndH3K27ac",
+                  "mm10BothDNaseAndH3K27ac":["neural_tube_embryonic_11_5_day"]
                  };
-        processFormSubmitRet(event, "washu", fd);
+        processFormSubmitRet(event, "ucsc", fd);
     });
 
     $("#secondGalleryPane").click(function(event){
-        // hg19 at
         var fd = {"assembly":"hg19",
-                  "loci":"rs11742570",
-                  "assays":"BothDNaseAndH3K4me3",
-                  "hg19Both": ["primary_natural_killer_cells_from_peripheral_blood_select",
-                               "primary_t_cells_from_peripheral_blood_select",
-                               "fetal_thymus_select"]
+                  "loci":"chr17:40767000-40775000",
+                  "assays":"BothDNaseAndH3K27ac",
+                  "hg19BothDNaseAndH3K27ac": ["gm12878_select"]
                  };
         processFormSubmitRet(event, "ucsc", fd);
     });
 
     $("#thirdGalleryPane").click(function(event){
-        // mm10 at
-        var fd = {"assembly":"mm10",
-                  "loci":"rs27106747",
-                  "assays":"BothDNaseAndH3K4me3",
-                  "mm10Both":["hindbrain_embryonic_11_5_day",
-                              "midbrain_embryonic_11_5_day",
-                              "neural_tube_embryonic_11_5_day",
-                              "limb_embryonic_11_5_day"]
+        var fd = {"assembly":"hg19",
+                  "loci":"chr6:42370000-42380000",
+                  "assays":"BothDNaseAndH3K27ac",
+                  "hg19BothDNaseAndH3K27ac": ["hela-s3_adult_31_year"]
                  };
-        processFormSubmitRet(event, "washu", fd);
+        processFormSubmitRet(event, "ucsc", fd);
+    });
+
+    $("#fourthGalleryPane").click(function(event){
+        var fd = {"assembly":"mm10",
+                  "loci":"chr6:72214000-72220000",
+                  "assays":"BothDNaseAndH3K27ac",
+                  "mm10BothDNaseAndH3K27ac":["limb_embryonic_11_5_day"]
+                 };
+        processFormSubmitRet(event, "ucsc", fd);
     });
 
 })

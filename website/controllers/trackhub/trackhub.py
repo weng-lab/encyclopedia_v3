@@ -99,7 +99,10 @@ class TrackhubSite(object):
         if not row:
             raise Exception("uuid not found")
 
-        th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
+        if AssayType.TargetGene == row["assayType"]:
+            th = TrackHubTargetGene(self.args, self.wepigenomes, self.urlStatus, row)
+        else:
+            th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
 
         path = args[1:]
         return th.ParsePath(path)
