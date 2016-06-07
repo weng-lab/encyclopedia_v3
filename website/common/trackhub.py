@@ -15,7 +15,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/ut
 from utils import Utils
 from files_and_paths import Dirs
 
-class TrackHub:
+class TrackHub(object):
     def __init__(self, args, epigenomes, urlStatus, row):
         self.assembly = row["assembly"]
         self.assays = row["assays"]

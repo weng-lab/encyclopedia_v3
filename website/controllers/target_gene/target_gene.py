@@ -20,7 +20,6 @@ from common.trackhub import TrackHub
 from common.trackhub_washu import TrackHubWashu
 from common.ucsc_search import UcscSearch
 
-from models.target_gene.web_epigenomes import WebEpigenomesLoader
 from models.target_gene.defaults import Defaults
 from models.target_gene.epigenome_stats import EpigenomeStats
 
@@ -29,7 +28,7 @@ from utils import Utils
 from templates import Templates
 
 class TargetGeneSite(object):
-    def __init__(self, DBCONN, args, staticDir):
+    def __init__(self, DBCONN, args, wepigenomes, staticDir):
         self.args = args
 
         self.siteInfo = TargetGeneSiteInfo
@@ -39,7 +38,7 @@ class TargetGeneSite(object):
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args, self.siteInfo)
+        self.wepigenomes = wepigenomes
         self.defaults = Defaults()
         self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.siteInfo)
         self.staticDir = staticDir

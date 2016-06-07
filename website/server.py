@@ -5,7 +5,8 @@ import os, sys, cherrypy, json, argparse, time
 import psycopg2, psycopg2.pool
 
 from common.web_epigenomes import WebEpigenomesLoader
-from common.site_info import EnhancersSiteInfo, PromotersSiteInfo
+from models.target_gene.web_epigenomes import TargetGeneWebEpigenomesLoader
+from common.site_info import EnhancersSiteInfo, PromotersSiteInfo, TargetGeneSiteInfo
 
 from controllers.target_gene.target_gene import TargetGeneSite
 from controllers.enhancers.enhancers import EnhancersSite
@@ -92,10 +93,13 @@ def main():
     wepigenomes = {}
     wepigenomes[EnhancersSiteInfo.assayType] = WebEpigenomesLoader(args, EnhancersSiteInfo)
     wepigenomes[PromotersSiteInfo.assayType] = WebEpigenomesLoader(args, PromotersSiteInfo)
+    wepigenomes[TargetGeneSiteInfo.assayType] = TargetGeneWebEpigenomesLoader(args, TargetGeneSiteInfo)
 
     cherrypy.tree.mount(HiCSite(DBCONN, args, mainIndex.staticDir), '/hic',
                         config=getRootConfig("hic"))
-    cherrypy.tree.mount(TargetGeneSite(DBCONN, args, mainIndex.staticDir), '/target_gene',
+    cherrypy.tree.mount(TargetGeneSite(DBCONN, args,
+                                       wepigenomes[TargetGeneSiteInfo.assayType],
+                                       mainIndex.staticDir), '/target_gene',
                         config=getRootConfig("target_gene"))
     cherrypy.tree.mount(EnhancersSite(DBCONN, args,
                                       wepigenomes[EnhancersSiteInfo.assayType],

@@ -58,7 +58,7 @@ class WalkRow:
                     else:
                         yield c.web_id(), c.web_title(), c
 
-class WebEpigenomesLoader:
+class TargetGeneWebEpigenomesLoader:
     def __init__(self, args, siteInfo):
         self.args = args
         self.ontology = Ontology()

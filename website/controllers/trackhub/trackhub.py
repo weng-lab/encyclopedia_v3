@@ -7,6 +7,7 @@ import StringIO
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.trackhub import TrackHub
+from common.trackhub_target_gene import TrackHubTargetGene
 from common.trackhub_washu import TrackHubWashu
 from common.genes import LookupGenes
 from common.dbsnps import dbSnps
