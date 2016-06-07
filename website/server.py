@@ -7,6 +7,7 @@ import psycopg2, psycopg2.pool
 from common.web_epigenomes import WebEpigenomesLoader
 from common.site_info import EnhancersSiteInfo, PromotersSiteInfo
 
+from controllers.target_gene.target_gene import TargetGeneSite
 from controllers.enhancers.enhancers import EnhancersSite
 from controllers.promoters.promoters import PromotersSite
 from controllers.hic.hic import HiCSite
@@ -94,6 +95,8 @@ def main():
 
     cherrypy.tree.mount(HiCSite(DBCONN, args, mainIndex.staticDir), '/hic',
                         config=getRootConfig("hic"))
+    cherrypy.tree.mount(TargetGeneSite(DBCONN, args, mainIndex.staticDir), '/target_gene',
+                        config=getRootConfig("target_gene"))
     cherrypy.tree.mount(EnhancersSite(DBCONN, args,
                                       wepigenomes[EnhancersSiteInfo.assayType],
                                       mainIndex.staticDir),
