@@ -229,3 +229,7 @@ input[type=checkbox]{
 .carousel-inner>.item>img {
     max-width: 500px;
 }
+
+.gallery_wrapper {
+    max-width: 500px;
+}
