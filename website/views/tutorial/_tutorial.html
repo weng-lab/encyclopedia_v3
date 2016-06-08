@@ -43,12 +43,16 @@
   <h2>ENCODE Encyclopedia Exercises</h2>
 
   <div class="row">
+    <h3>Exercise #1</h3>
     <div class="col-md-4">
-      <h3>Exercise #1</h3>
-      You are interested in
+      You are a graduate student working on the mechanistic role and therapeutic potential of microRNA-122 (MIR122) in alcoholic liver disease. Are there any enhancers nearby that you could potentially study?
     </div>
     <div class="col-md-8">
-
+      <button id="b1">Answer</button>
+      <p>
+        <div id="a1" style="visibility: hidden;">
+          There appear to be several enhancer-like regions within 1Mb of MIR122. <a class="btn btn btn-warning" href="#" role="button" id="gb1">Visualize on Genome Browser</a>
+        </div>
     </div>
   </div>
 
@@ -80,3 +84,8 @@
   </div>
 
 </div>
+
+<script>
+  {% include 'tutorial/js.js' -%}
+</script>
+<script src="../static/jquery.serialize-object.min.js"></script>
