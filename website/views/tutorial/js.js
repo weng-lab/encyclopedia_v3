@@ -33,8 +33,11 @@ $(document).ready(function(){
         $("#a1").css("visibility", "visible");
     });
 
+    $("#b2").click(function(){
+        $("#a2").css("visibility", "visible");
+    });
+
     $("#gb1").click(function(event){
-        console.log(event);
         var fd = {"assembly":"hg19",
                   "loci":"chr18:55735848-56500847",
                   "assays":"BothDNaseAndH3K27ac",
@@ -43,31 +46,13 @@ $(document).ready(function(){
         processFormSubmitRet(event, "../enhancers/ucsc", fd);
     });
 
-    $("#secondGalleryPane").click(function(event){
+    $("#gb2").click(function(event){
         var fd = {"assembly":"hg19",
-                  "loci":"chr17:40767000-40775000",
+                  "loci":"chr4:55090519-55159667",
                   "assays":"BothDNaseAndH3K27ac",
-                  "hg19BothDNaseAndH3K27ac": ["gm12878_select"]
+                  "hg19BothDNaseAndH3K27ac":["astrocyte_select"]
                  };
-        processFormSubmitRet(event, "ucsc", fd);
-    });
-
-    $("#thirdGalleryPane").click(function(event){
-        var fd = {"assembly":"hg19",
-                  "loci":"chr6:42370000-42380000",
-                  "assays":"BothDNaseAndH3K27ac",
-                  "hg19BothDNaseAndH3K27ac": ["hela-s3_adult_31_year"]
-                 };
-        processFormSubmitRet(event, "ucsc", fd);
-    });
-
-    $("#fourthGalleryPane").click(function(event){
-        var fd = {"assembly":"mm10",
-                  "loci":"chr6:72214000-72220000",
-                  "assays":"BothDNaseAndH3K27ac",
-                  "mm10BothDNaseAndH3K27ac":["limb_embryonic_11_5_day"]
-                 };
-        processFormSubmitRet(event, "ucsc", fd);
+        processFormSubmitRet(event, "../enhancers/ucsc", fd);
     });
 
 })

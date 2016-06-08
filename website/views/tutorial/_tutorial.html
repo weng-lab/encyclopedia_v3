@@ -1,5 +1,9 @@
 <div class="container">
-  <h2>Tutorial</h2>
+  <div class="row">
+    <div class="col-sm-2">
+      <button type="button"class="btn btn-info"><h1>Tutorial</h1></button>
+    </div>
+  </div>
   <div class="row">
     <div class="col-sm-7">
       <br><br>
@@ -39,15 +43,21 @@
       </ul>
     </div>
   </div>
+</div>
 
-  <h2>ENCODE Encyclopedia Exercises</h2>
-
+<div class="container">
   <div class="row">
-    <h3>Exercise #1</h3>
-    <div class="col-md-4">
+    <div class="col-sm-2">
+      <button type="button"class="btn btn-info"><h1>Exercises</h1></button>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Exercise #1</h3>
       You are a graduate student working on the mechanistic role and therapeutic potential of microRNA-122 (MIR122) in alcoholic liver disease. Are there any enhancers nearby that you could potentially study?
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
+      <br>
       <button id="b1">Answer</button>
       <p>
         <div id="a1" style="visibility: hidden;">
@@ -57,10 +67,17 @@
   </div>
 
   <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
       <h3>Exercise #2</h3>
+      In Flavahan, Drier, et al., Nature 2015, compromised CTCF binding was demonstrated to allow a constitutive enhancer to interact with an oncogene in IDH gliomas. The enhancer is ~50Kb upstream of the oncogene PDGFRA. Is this enhancer potentially also found in other ENCODE brain-related cell types?
     </div>
-    <div class="col-md-8">
+    <div class="col-md-6">
+      <br>
+      <button id="b2">Answer</button>
+      <p>
+        <div id="a2" style="visibility: hidden;">
+          There appear to be enhancer-like regions within 100Kb of PDGFRA in astrocytes. <a class="btn btn btn-warning" href="#" role="button" id="gb2">Visualize on Genome Browser</a>
+        </div>
 
     </div>
   </div>
