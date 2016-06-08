@@ -57,7 +57,8 @@ class TargetGeneSite(object):
         return self.templates("target_gene/index",
                               epigenomes = self.wepigenomes,
                               defaults = self.defaults,
-                              stats = self.epigenome_stats)
+                              stats = self.epigenome_stats,
+                              site = self.siteInfo.site)
 
     def makeUid(self):
         return str(uuid.uuid4())
