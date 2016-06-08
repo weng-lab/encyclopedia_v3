@@ -33,10 +33,13 @@ $(document).ready(function(){
         $("#a1").css("visibility", "visible");
         $("#b1").hide();
     });
-
     $("#b2").click(function(){
         $("#a2").css("visibility", "visible");
         $("#b2").hide();
+    });
+    $("#b3").click(function(){
+        $("#a3").css("visibility", "visible");
+        $("#b3").hide();
     });
 
     $("#gb1").click(function(event){
@@ -53,6 +56,15 @@ $(document).ready(function(){
                   "loci":"chr4:55090519-55159667",
                   "assays":"BothDNaseAndH3K27ac",
                   "hg19BothDNaseAndH3K27ac":["astrocyte_select"]
+                 };
+        processFormSubmitRet(event, "../enhancers/ucsc", fd);
+    });
+
+    $("#gb3").click(function(event){
+        var fd = {"assembly":"hg19",
+                  "loci":"chr16:52598938-52599438",
+                  "assays":"BothDNaseAndH3K27ac",
+                  "hg19BothDNaseAndH3K27ac":["mcf-7_adult_69_year"]
                  };
         processFormSubmitRet(event, "../enhancers/ucsc", fd);
     });
