@@ -199,14 +199,7 @@ class WebEpigenome:
         return self.pretty_age()
 
     def isActive(self):
-        return self.web_id() in ["midbrain_embryonic_11_5_day",
-                                 "hindbrain_embryonic_11_5_day",
-                                 "limb_embryonic_11_5_day",
-                                 "neural_tube_embryonic_11_5_day",
-                                 "cerebellum_adult_8_week",
-                                 "primary_t_cells_from_peripheral_blood_select",
-                                 "primary_natural_killer_cells_from_peripheral_blood_select",
-                                 "fetal_thymus_select"]
+        return self.web_id() in ["gm12878_select"]
 
     def exps(self):
         if "TargetGene" == self.assays:
