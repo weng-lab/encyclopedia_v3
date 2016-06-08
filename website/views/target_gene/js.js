@@ -218,10 +218,10 @@ $(document).ready(function(){
     });
 
     $("#firstGalleryPane").click(function(event){
-        var fd = {"assembly":"mm10",
-                  "loci":"chr19:26844000-26848000",
-                  "assays":"BothDNaseAndH3K27ac",
-                  "mm10BothDNaseAndH3K27ac":["neural_tube_embryonic_11_5_day"]
+        var fd = {"assembly":"hg19",
+                  "loci":"chr4:83910641-84311040",
+                  "assays":"TargetGene",
+                  "hg19TargetGene":["gm12878_select"]
                  };
         processFormSubmitRet(event, "ucsc", fd);
     });
