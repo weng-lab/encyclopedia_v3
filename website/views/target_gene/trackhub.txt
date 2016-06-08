@@ -2929,3 +2929,768 @@ sortOrder view=+
 		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF426HXD  plus strand signal of unique reads rep 1
 		visibility full
 		subGroups view=SIG
+track ENCSR000AKC
+shortLabel ChIP-seq of GM12878 - ENCSR000AKC(Target - H3K27ac)
+longLabel ChIP-seq of GM12878 - ENCSR000AKC(Target - H3K27ac)
+compositeTrack on
+visibility full
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AKCPKView
+	parent ENCSR000AKC
+	shortLabel ENCSR000AKCPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000ASH
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000ASH/@@download/ENCFF000ASH.bigBed?proxy=true
+		parent ENCSR000AKCPKView on
+		shortLabel ENCFF000ASH
+		longLabel ChIP-seq of GM12878 - ENCSR000AKC - ENCFF000ASH broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AKCSIGView
+	parent ENCSR000AKC
+	shortLabel ENCSR000AKCSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000ASJ
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000ASJ/@@download/ENCFF000ASJ.bigWig?proxy=true
+		parent ENCSR000AKCSIGView on
+		shortLabel ENCFF000ASJ
+		longLabel ChIP-seq of GM12878 - ENCSR000AKC - ENCFF000ASJ  signal rep unknown
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000AKG
+shortLabel ChIP-seq of GM12878 - ENCSR000AKG(Target - H3K4me2)
+longLabel ChIP-seq of GM12878 - ENCSR000AKG(Target - H3K4me2)
+compositeTrack on
+visibility full
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AKGPKView
+	parent ENCSR000AKG
+	shortLabel ENCSR000AKGPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000ATI
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000ATI/@@download/ENCFF000ATI.bigBed?proxy=true
+		parent ENCSR000AKGPKView on
+		shortLabel ENCFF000ATI
+		longLabel ChIP-seq of GM12878 - ENCSR000AKG - ENCFF000ATI broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AKGSIGView
+	parent ENCSR000AKG
+	shortLabel ENCSR000AKGSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000ATL
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000ATL/@@download/ENCFF000ATL.bigWig?proxy=true
+		parent ENCSR000AKGSIGView on
+		shortLabel ENCFF000ATL
+		longLabel ChIP-seq of GM12878 - ENCSR000AKG - ENCFF000ATL  signal rep unknown
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000AOW
+shortLabel ChIP-seq of GM12878 - ENCSR000AOW(Target - H3K79me2)
+longLabel ChIP-seq of GM12878 - ENCSR000AOW(Target - H3K79me2)
+compositeTrack on
+visibility full
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AOWPKView
+	parent ENCSR000AOW
+	shortLabel ENCSR000AOWPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000ATU
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000ATU/@@download/ENCFF000ATU.bigBed?proxy=true
+		parent ENCSR000AOWPKView on
+		shortLabel ENCFF000ATU
+		longLabel ChIP-seq of GM12878 - ENCSR000AOW - ENCFF000ATU broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AOWSIGView
+	parent ENCSR000AOW
+	shortLabel ENCSR000AOWSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000ATX
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000ATX/@@download/ENCFF000ATX.bigWig?proxy=true
+		parent ENCSR000AOWSIGView on
+		shortLabel ENCFF000ATX
+		longLabel ChIP-seq of GM12878 - ENCSR000AOW - ENCFF000ATX  signal rep unknown
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000DRW
+shortLabel ChIP-seq of GM12878 - ENCSR000DRW(Target - H3K36me3)
+longLabel ChIP-seq of GM12878 - ENCSR000DRW(Target - H3K36me3)
+compositeTrack on
+visibility full
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000DRWPKView
+	parent ENCSR000DRW
+	shortLabel ENCSR000DRWPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF001EXH
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXH/@@download/ENCFF001EXH.bigBed?proxy=true
+		parent ENCSR000DRWPKView on
+		shortLabel ENCFF001EXH
+		longLabel ChIP-seq of GM12878 - ENCSR000DRW - ENCFF001EXH broadPeak hotspots rep 1
+		visibility dense
+		subGroups view=PK
+
+		track ENCFF001EXI
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXI/@@download/ENCFF001EXI.bigBed?proxy=true
+		parent ENCSR000DRWPKView on
+		shortLabel ENCFF001EXI
+		longLabel ChIP-seq of GM12878 - ENCSR000DRW - ENCFF001EXI broadPeak hotspots rep 2
+		visibility dense
+		subGroups view=PK
+
+		track ENCFF001EXJ
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXJ/@@download/ENCFF001EXJ.bigBed?proxy=true
+		parent ENCSR000DRWPKView on
+		shortLabel ENCFF001EXJ
+		longLabel ChIP-seq of GM12878 - ENCSR000DRW - ENCFF001EXJ narrowPeak peaks rep 1
+		visibility dense
+		subGroups view=PK
+
+		track ENCFF001EXK
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXK/@@download/ENCFF001EXK.bigBed?proxy=true
+		parent ENCSR000DRWPKView on
+		shortLabel ENCFF001EXK
+		longLabel ChIP-seq of GM12878 - ENCSR000DRW - ENCFF001EXK narrowPeak peaks rep 2
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000DRWSIGView
+	parent ENCSR000DRW
+	shortLabel ENCSR000DRWSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF001EXN
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXN/@@download/ENCFF001EXN.bigWig?proxy=true
+		parent ENCSR000DRWSIGView on
+		shortLabel ENCFF001EXN
+		longLabel ChIP-seq of GM12878 - ENCSR000DRW - ENCFF001EXN  raw signal rep 1
+		visibility dense
+		subGroups view=SIG
+
+		track ENCFF001EXP
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXP/@@download/ENCFF001EXP.bigWig?proxy=true
+		parent ENCSR000DRWSIGView on
+		shortLabel ENCFF001EXP
+		longLabel ChIP-seq of GM12878 - ENCSR000DRW - ENCFF001EXP  raw signal rep 2
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000AKE
+shortLabel ChIP-seq of GM12878 - ENCSR000AKE(Target - H3K36me3)
+longLabel ChIP-seq of GM12878 - ENCSR000AKE(Target - H3K36me3)
+compositeTrack on
+visibility full
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AKEPKView
+	parent ENCSR000AKE
+	shortLabel ENCSR000AKEPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000ASY
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000ASY/@@download/ENCFF000ASY.bigBed?proxy=true
+		parent ENCSR000AKEPKView on
+		shortLabel ENCFF000ASY
+		longLabel ChIP-seq of GM12878 - ENCSR000AKE - ENCFF000ASY broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AKESIGView
+	parent ENCSR000AKE
+	shortLabel ENCSR000AKESIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000ATA
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000ATA/@@download/ENCFF000ATA.bigWig?proxy=true
+		parent ENCSR000AKESIGView on
+		shortLabel ENCFF000ATA
+		longLabel ChIP-seq of GM12878 - ENCSR000AKE - ENCFF000ATA  signal rep unknown
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000AOV
+shortLabel ChIP-seq of GM12878 - ENCSR000AOV(Target - H2AFZ)
+longLabel ChIP-seq of GM12878 - ENCSR000AOV(Target - H2AFZ)
+compositeTrack on
+visibility hide
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AOVPKView
+	parent ENCSR000AOV
+	shortLabel ENCSR000AOVPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000ART
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000ART/@@download/ENCFF000ART.bigBed?proxy=true
+		parent ENCSR000AOVPKView on
+		shortLabel ENCFF000ART
+		longLabel ChIP-seq of GM12878 - ENCSR000AOV - ENCFF000ART broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AOVSIGView
+	parent ENCSR000AOV
+	shortLabel ENCSR000AOVSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000ARW
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000ARW/@@download/ENCFF000ARW.bigWig?proxy=true
+		parent ENCSR000AOVSIGView on
+		shortLabel ENCFF000ARW
+		longLabel ChIP-seq of GM12878 - ENCSR000AOV - ENCFF000ARW  signal rep unknown
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000AKF
+shortLabel ChIP-seq of GM12878 - ENCSR000AKF(Target - H3K4me1)
+longLabel ChIP-seq of GM12878 - ENCSR000AKF(Target - H3K4me1)
+compositeTrack on
+visibility hide
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AKFPKView
+	parent ENCSR000AKF
+	shortLabel ENCSR000AKFPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000ARX
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000ARX/@@download/ENCFF000ARX.bigBed?proxy=true
+		parent ENCSR000AKFPKView on
+		shortLabel ENCFF000ARX
+		longLabel ChIP-seq of GM12878 - ENCSR000AKF - ENCFF000ARX broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AKFSIGView
+	parent ENCSR000AKF
+	shortLabel ENCSR000AKFSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+ 	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000ARZ
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000ARZ/@@download/ENCFF000ARZ.bigWig?proxy=true
+		parent ENCSR000AKFSIGView on
+		shortLabel ENCFF000ARZ
+		longLabel ChIP-seq of GM12878 - ENCSR000AKF - ENCFF000ARZ  signal rep unknown
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000DRX
+shortLabel ChIP-seq of GM12878 - ENCSR000DRX(Target - H3K27me3)
+longLabel ChIP-seq of GM12878 - ENCSR000DRX(Target - H3K27me3)
+compositeTrack on
+visibility hide
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000DRXPKView
+	parent ENCSR000DRX
+	shortLabel ENCSR000DRXPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF001EWX
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EWX/@@download/ENCFF001EWX.bigBed?proxy=true
+		parent ENCSR000DRXPKView on
+		shortLabel ENCFF001EWX
+		longLabel ChIP-seq of GM12878 - ENCSR000DRX - ENCFF001EWX broadPeak hotspots rep 1
+		visibility dense
+		subGroups view=PK
+
+		track ENCFF001EWY
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EWY/@@download/ENCFF001EWY.bigBed?proxy=true
+		parent ENCSR000DRXPKView on
+		shortLabel ENCFF001EWY
+		longLabel ChIP-seq of GM12878 - ENCSR000DRX - ENCFF001EWY broadPeak hotspots rep 2
+		visibility dense
+		subGroups view=PK
+
+		track ENCFF001EXA
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXA/@@download/ENCFF001EXA.bigBed?proxy=true
+		parent ENCSR000DRXPKView on
+		shortLabel ENCFF001EXA
+		longLabel ChIP-seq of GM12878 - ENCSR000DRX - ENCFF001EXA narrowPeak peaks rep 1
+		visibility dense
+		subGroups view=PK
+
+		track ENCFF001EXB
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXB/@@download/ENCFF001EXB.bigBed?proxy=true
+		parent ENCSR000DRXPKView on
+		shortLabel ENCFF001EXB
+		longLabel ChIP-seq of GM12878 - ENCSR000DRX - ENCFF001EXB narrowPeak peaks rep 2
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000DRXSIGView
+	parent ENCSR000DRX
+	shortLabel ENCSR000DRXSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF001EXC
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXC/@@download/ENCFF001EXC.bigWig?proxy=true
+		parent ENCSR000DRXSIGView on
+		shortLabel ENCFF001EXC
+		longLabel ChIP-seq of GM12878 - ENCSR000DRX - ENCFF001EXC  raw signal rep 1
+		visibility dense
+		subGroups view=SIG
+
+		track ENCFF001EXD
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXD/@@download/ENCFF001EXD.bigWig?proxy=true
+		parent ENCSR000DRXSIGView on
+		shortLabel ENCFF001EXD
+		longLabel ChIP-seq of GM12878 - ENCSR000DRX - ENCFF001EXD  raw signal rep 2
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000AKA
+shortLabel ChIP-seq of GM12878 - ENCSR000AKA(Target - H3K4me3)
+longLabel ChIP-seq of GM12878 - ENCSR000AKA(Target - H3K4me3)
+compositeTrack on
+visibility hide
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AKAPKView
+	parent ENCSR000AKA
+	shortLabel ENCSR000AKAPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000ASB
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000ASB/@@download/ENCFF000ASB.bigBed?proxy=true
+		parent ENCSR000AKAPKView on
+		shortLabel ENCFF000ASB
+		longLabel ChIP-seq of GM12878 - ENCSR000AKA - ENCFF000ASB broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AKASIGView
+	parent ENCSR000AKA
+	shortLabel ENCSR000AKASIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000ASF
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000ASF/@@download/ENCFF000ASF.bigWig?proxy=true
+		parent ENCSR000AKASIGView on
+		shortLabel ENCFF000ASF
+		longLabel ChIP-seq of GM12878 - ENCSR000AKA - ENCFF000ASF  signal rep unknown
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000AKH
+shortLabel ChIP-seq of GM12878 - ENCSR000AKH(Target - H3K9ac)
+longLabel ChIP-seq of GM12878 - ENCSR000AKH(Target - H3K9ac)
+compositeTrack on
+visibility hide
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AKHPKView
+	parent ENCSR000AKH
+	shortLabel ENCSR000AKHPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000AUE
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000AUE/@@download/ENCFF000AUE.bigBed?proxy=true
+		parent ENCSR000AKHPKView on
+		shortLabel ENCFF000AUE
+		longLabel ChIP-seq of GM12878 - ENCSR000AKH - ENCFF000AUE broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AKHSIGView
+	parent ENCSR000AKH
+	shortLabel ENCSR000AKHSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000AUF
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000AUF/@@download/ENCFF000AUF.bigWig?proxy=true
+		parent ENCSR000AKHSIGView on
+		shortLabel ENCFF000AUF
+		longLabel ChIP-seq of GM12878 - ENCSR000AKH - ENCFF000AUF  signal rep unknown
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000DRY
+shortLabel ChIP-seq of GM12878 - ENCSR000DRY(Target - H3K4me3)
+longLabel ChIP-seq of GM12878 - ENCSR000DRY(Target - H3K4me3)
+compositeTrack on
+visibility hide
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000DRYPKView
+	parent ENCSR000DRY
+	shortLabel ENCSR000DRYPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF001EXS
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXS/@@download/ENCFF001EXS.bigBed?proxy=true
+		parent ENCSR000DRYPKView on
+		shortLabel ENCFF001EXS
+		longLabel ChIP-seq of GM12878 - ENCSR000DRY - ENCFF001EXS broadPeak hotspots rep 1
+		visibility dense
+		subGroups view=PK
+
+		track ENCFF001EXT
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXT/@@download/ENCFF001EXT.bigBed?proxy=true
+		parent ENCSR000DRYPKView on
+		shortLabel ENCFF001EXT
+		longLabel ChIP-seq of GM12878 - ENCSR000DRY - ENCFF001EXT broadPeak hotspots rep 2
+		visibility dense
+		subGroups view=PK
+
+		track ENCFF001EXU
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXU/@@download/ENCFF001EXU.bigBed?proxy=true
+		parent ENCSR000DRYPKView on
+		shortLabel ENCFF001EXU
+		longLabel ChIP-seq of GM12878 - ENCSR000DRY - ENCFF001EXU narrowPeak peaks rep 1
+		visibility dense
+		subGroups view=PK
+
+		track ENCFF001EXV
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXV/@@download/ENCFF001EXV.bigBed?proxy=true
+		parent ENCSR000DRYPKView on
+		shortLabel ENCFF001EXV
+		longLabel ChIP-seq of GM12878 - ENCSR000DRY - ENCFF001EXV narrowPeak peaks rep 2
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000DRYSIGView
+	parent ENCSR000DRY
+	shortLabel ENCSR000DRYSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF001EXX
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXX/@@download/ENCFF001EXX.bigWig?proxy=true
+		parent ENCSR000DRYSIGView on
+		shortLabel ENCFF001EXX
+		longLabel ChIP-seq of GM12878 - ENCSR000DRY - ENCFF001EXX  raw signal rep 1
+		visibility dense
+		subGroups view=SIG
+
+		track ENCFF001EXZ
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF001EXZ/@@download/ENCFF001EXZ.bigWig?proxy=true
+		parent ENCSR000DRYSIGView on
+		shortLabel ENCFF001EXZ
+		longLabel ChIP-seq of GM12878 - ENCSR000DRY - ENCFF001EXZ  raw signal rep 2
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000AOX
+shortLabel ChIP-seq of GM12878 - ENCSR000AOX(Target - H3K9me3)
+longLabel ChIP-seq of GM12878 - ENCSR000AOX(Target - H3K9me3)
+compositeTrack on
+visibility hide
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AOXPKView
+	parent ENCSR000AOX
+	shortLabel ENCSR000AOXPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000AUI
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000AUI/@@download/ENCFF000AUI.bigBed?proxy=true
+		parent ENCSR000AOXPKView on
+		shortLabel ENCFF000AUI
+		longLabel ChIP-seq of GM12878 - ENCSR000AOX - ENCFF000AUI broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AOXSIGView
+	parent ENCSR000AOX
+	shortLabel ENCSR000AOXSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000AUL
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000AUL/@@download/ENCFF000AUL.bigWig?proxy=true
+		parent ENCSR000AOXSIGView on
+		shortLabel ENCFF000AUL
+		longLabel ChIP-seq of GM12878 - ENCSR000AOX - ENCFF000AUL  signal rep unknown
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000AKI
+shortLabel ChIP-seq of GM12878 - ENCSR000AKI(Target - H4K20me1)
+longLabel ChIP-seq of GM12878 - ENCSR000AKI(Target - H4K20me1)
+compositeTrack on
+visibility hide
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AKIPKView
+	parent ENCSR000AKI
+	shortLabel ENCSR000AKIPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000AUQ
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000AUQ/@@download/ENCFF000AUQ.bigBed?proxy=true
+		parent ENCSR000AKIPKView on
+		shortLabel ENCFF000AUQ
+		longLabel ChIP-seq of GM12878 - ENCSR000AKI - ENCFF000AUQ broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AKISIGView
+	parent ENCSR000AKI
+	shortLabel ENCSR000AKISIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000AUS
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000AUS/@@download/ENCFF000AUS.bigWig?proxy=true
+		parent ENCSR000AKISIGView on
+		shortLabel ENCFF000AUS
+		longLabel ChIP-seq of GM12878 - ENCSR000AKI - ENCFF000AUS  signal rep unknown
+		visibility dense
+		subGroups view=SIG
+
+track ENCSR000AKD
+shortLabel ChIP-seq of GM12878 - ENCSR000AKD(Target - H3K27me3)
+longLabel ChIP-seq of GM12878 - ENCSR000AKD(Target - H3K27me3)
+compositeTrack on
+visibility hide
+dragAndDrop subTracks
+subGroup1 view Views PK=Peaks SIG=Signals
+type bed 3
+sortOrder view=+
+
+	track ENCSR000AKDPKView
+	parent ENCSR000AKD
+	shortLabel ENCSR000AKDPKs
+	view PK
+	visibility dense
+	viewUi on
+	type bigBed 6 +
+	autoScale on
+
+		track ENCFF000ASO
+		type bigBed 6 +
+		bigDataUrl https://encodeproject.org/files/ENCFF000ASO/@@download/ENCFF000ASO.bigBed?proxy=true
+		parent ENCSR000AKDPKView on
+		shortLabel ENCFF000ASO
+		longLabel ChIP-seq of GM12878 - ENCSR000AKD - ENCFF000ASO broadPeak peaks rep unknown
+		visibility dense
+		subGroups view=PK
+
+	track ENCSR000AKDSIGView
+	parent ENCSR000AKD
+	shortLabel ENCSR000AKDSIGs
+	view SIG
+	visibility dense
+	viewUi on
+	type bigWig
+	maxHeightPixels 100:32:8
+	autoScale on
+
+		track ENCFF000AST
+		type bigWig
+		bigDataUrl https://encodeproject.org/files/ENCFF000AST/@@download/ENCFF000AST.bigWig?proxy=true
+		parent ENCSR000AKDSIGView on
+		shortLabel ENCFF000AST
+		longLabel ChIP-seq of GM12878 - ENCSR000AKD - ENCFF000AST  signal rep unknown
+		visibility dense
+		subGroups view=SIG
