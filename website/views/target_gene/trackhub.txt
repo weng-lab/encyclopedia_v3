@@ -2753,370 +2753,35 @@ sortOrder view=+
 	parent ENCSR000AEG
 	shortLabel ENCSR000AEGSIGs
 	view SIG
-	visibility hide
+	visibility full
 	viewUi on
 	type bigWig
 	maxHeightPixels 100:32:8
 	autoScale on
 
-		track ENCFF001RQR
-		type bigWig
-		bigDataUrl /files/ENCFF001RQR/@@download/ENCFF001RQR.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001RQR
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001RQR  signal rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001RQP
-		type bigWig
-		bigDataUrl /files/ENCFF001RQP/@@download/ENCFF001RQP.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001RQP
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001RQP  signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001RQS
-		type bigWig
-		bigDataUrl /files/ENCFF001RQS/@@download/ENCFF001RQS.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001RQS
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001RQS  signal rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001RQU
-		type bigWig
-		bigDataUrl /files/ENCFF001RQU/@@download/ENCFF001RQU.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001RQU
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001RQU  signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SDI
-		type bigWig
-		bigDataUrl /files/ENCFF001SDI/@@download/ENCFF001SDI.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SDI
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SDI  signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SDH
-		type bigWig
-		bigDataUrl /files/ENCFF001SDH/@@download/ENCFF001SDH.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SDH
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SDH  signal rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SDG
-		type bigWig
-		bigDataUrl /files/ENCFF001SDG/@@download/ENCFF001SDG.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SDG
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SDG  signal rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SDF
-		type bigWig
-		bigDataUrl /files/ENCFF001SDF/@@download/ENCFF001SDF.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SDF
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SDF  signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SGY
-		type bigWig
-		bigDataUrl /files/ENCFF001SGY/@@download/ENCFF001SGY.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SGY
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SGY  signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SGX
-		type bigWig
-		bigDataUrl /files/ENCFF001SGX/@@download/ENCFF001SGX.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SGX
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SGX  signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SGQ
-		type bigWig
-		bigDataUrl /files/ENCFF001SGQ/@@download/ENCFF001SGQ.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SGQ
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SGQ  signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SGP
-		type bigWig
-		bigDataUrl /files/ENCFF001SGP/@@download/ENCFF001SGP.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SGP
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SGP  signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SMF
-		type bigWig
-		bigDataUrl /files/ENCFF001SMF/@@download/ENCFF001SMF.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SMF
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SMF  signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SME
-		type bigWig
-		bigDataUrl /files/ENCFF001SME/@@download/ENCFF001SME.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SME
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SME  signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SLQ
-		type bigWig
-		bigDataUrl /files/ENCFF001SLQ/@@download/ENCFF001SLQ.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SLQ
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SLQ  signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SLP
-		type bigWig
-		bigDataUrl /files/ENCFF001SLP/@@download/ENCFF001SLP.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF001SLP
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF001SLP  signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF339RVP
-		type bigWig
-		bigDataUrl /files/ENCFF339RVP/@@download/ENCFF339RVP.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF339RVP
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF339RVP  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF026FTE
-		type bigWig
-		bigDataUrl /files/ENCFF026FTE/@@download/ENCFF026FTE.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF026FTE
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF026FTE  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF588QOG
-		type bigWig
-		bigDataUrl /files/ENCFF588QOG/@@download/ENCFF588QOG.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF588QOG
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF588QOG  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF516DJO
-		type bigWig
-		bigDataUrl /files/ENCFF516DJO/@@download/ENCFF516DJO.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF516DJO
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF516DJO  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF591FRE
-		type bigWig
-		bigDataUrl /files/ENCFF591FRE/@@download/ENCFF591FRE.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF591FRE
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF591FRE  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF862VIW
-		type bigWig
-		bigDataUrl /files/ENCFF862VIW/@@download/ENCFF862VIW.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF862VIW
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF862VIW  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
 		track ENCFF071BDJ
 		type bigWig
-		bigDataUrl /files/ENCFF071BDJ/@@download/ENCFF071BDJ.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF071BDJ/@@download/ENCFF071BDJ.bigWig?proxy=true
 		parent ENCSR000AEGSIGView on
 		shortLabel ENCFF071BDJ
 		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF071BDJ  plus strand signal of unique reads rep 1
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
-		track ENCFF085QHW
 		type bigWig
-		bigDataUrl /files/ENCFF085QHW/@@download/ENCFF085QHW.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF085QHW
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF085QHW  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF505EZN
-		type bigWig
-		bigDataUrl /files/ENCFF505EZN/@@download/ENCFF505EZN.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF505EZN
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF505EZN  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF473VMG
-		type bigWig
-		bigDataUrl /files/ENCFF473VMG/@@download/ENCFF473VMG.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF473VMG
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF473VMG  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF696XOZ
-		type bigWig
-		bigDataUrl /files/ENCFF696XOZ/@@download/ENCFF696XOZ.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF696XOZ
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF696XOZ  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF554MKH
-		type bigWig
-		bigDataUrl /files/ENCFF554MKH/@@download/ENCFF554MKH.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF554MKH
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF554MKH  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF393QAS
-		type bigWig
-		bigDataUrl /files/ENCFF393QAS/@@download/ENCFF393QAS.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF393QAS
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF393QAS  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF975LGQ
-		type bigWig
-		bigDataUrl /files/ENCFF975LGQ/@@download/ENCFF975LGQ.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF975LGQ
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF975LGQ  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF148GYT
-		type bigWig
-		bigDataUrl /files/ENCFF148GYT/@@download/ENCFF148GYT.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF148GYT
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF148GYT  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF938KTX
-		type bigWig
-		bigDataUrl /files/ENCFF938KTX/@@download/ENCFF938KTX.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF938KTX
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF938KTX  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF781BAS
-		type bigWig
-		bigDataUrl /files/ENCFF781BAS/@@download/ENCFF781BAS.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF781BAS/@@download/ENCFF781BAS.bigWig?proxy=true
 		parent ENCSR000AEGSIGView on
 		shortLabel ENCFF781BAS
 		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF781BAS  minus strand signal of unique reads rep 1
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
-		track ENCFF576UAZ
 		type bigWig
-		bigDataUrl /files/ENCFF576UAZ/@@download/ENCFF576UAZ.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF576UAZ
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF576UAZ  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF611NYF
-		type bigWig
-		bigDataUrl /files/ENCFF611NYF/@@download/ENCFF611NYF.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF611NYF
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF611NYF  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF831RJV
-		type bigWig
-		bigDataUrl /files/ENCFF831RJV/@@download/ENCFF831RJV.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF831RJV
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF831RJV  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF584HHZ
-		type bigWig
-		bigDataUrl /files/ENCFF584HHZ/@@download/ENCFF584HHZ.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF584HHZ/@@download/ENCFF584HHZ.bigWig?proxy=true
 		parent ENCSR000AEGSIGView on
 		shortLabel ENCFF584HHZ
 		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF584HHZ  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF704NJU
-		type bigWig
-		bigDataUrl /files/ENCFF704NJU/@@download/ENCFF704NJU.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF704NJU
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF704NJU  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF159NFV
-		type bigWig
-		bigDataUrl /files/ENCFF159NFV/@@download/ENCFF159NFV.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF159NFV
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF159NFV  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF982LSO
-		type bigWig
-		bigDataUrl /files/ENCFF982LSO/@@download/ENCFF982LSO.bigWig?proxy=true
-		parent ENCSR000AEGSIGView on
-		shortLabel ENCFF982LSO
-		longLabel RNA-seq of GM12878 - ENCSR000AEG - ENCFF982LSO  minus strand signal of all reads rep 2
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
 track ENCSR000AEE
@@ -3133,525 +2798,63 @@ sortOrder view=+
 	parent ENCSR000AEE
 	shortLabel ENCSR000AEESIGs
 	view SIG
-	visibility hide
+	visibility full
 	viewUi on
 	type bigWig
 	maxHeightPixels 100:32:8
 	autoScale on
 
-		track ENCFF001RXQ
-		type bigWig
-		bigDataUrl /files/ENCFF001RXQ/@@download/ENCFF001RXQ.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001RXQ
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001RXQ  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001RXP
-		type bigWig
-		bigDataUrl /files/ENCFF001RXP/@@download/ENCFF001RXP.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001RXP
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001RXP  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001RXI
-		type bigWig
-		bigDataUrl /files/ENCFF001RXI/@@download/ENCFF001RXI.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001RXI
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001RXI  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001RXH
-		type bigWig
-		bigDataUrl /files/ENCFF001RXH/@@download/ENCFF001RXH.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001RXH
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001RXH  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001RXA
-		type bigWig
-		bigDataUrl /files/ENCFF001RXA/@@download/ENCFF001RXA.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001RXA
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001RXA  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
 		track ENCFF001RWZ
 		type bigWig
-		bigDataUrl /files/ENCFF001RWZ/@@download/ENCFF001RWZ.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF001RWZ/@@download/ENCFF001RWZ.bigWig?proxy=true
 		parent ENCSR000AEESIGView on
 		shortLabel ENCFF001RWZ
 		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001RWZ  plus strand signal of unique reads rep 1
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
-		track ENCFF001RWS
 		type bigWig
-		bigDataUrl /files/ENCFF001RWS/@@download/ENCFF001RWS.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001RWS
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001RWS  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001RWR
-		type bigWig
-		bigDataUrl /files/ENCFF001RWR/@@download/ENCFF001RWR.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001RWR
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001RWR  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SCU
-		type bigWig
-		bigDataUrl /files/ENCFF001SCU/@@download/ENCFF001SCU.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SCU
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SCU  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SCT
-		type bigWig
-		bigDataUrl /files/ENCFF001SCT/@@download/ENCFF001SCT.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SCT
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SCT  minus strand signal rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SCS
-		type bigWig
-		bigDataUrl /files/ENCFF001SCS/@@download/ENCFF001SCS.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SCS
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SCS  plus strand signal rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SCQ
-		type bigWig
-		bigDataUrl /files/ENCFF001SCQ/@@download/ENCFF001SCQ.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SCQ
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SCQ  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SCO
-		type bigWig
-		bigDataUrl /files/ENCFF001SCO/@@download/ENCFF001SCO.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SCO
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SCO  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SCN
-		type bigWig
-		bigDataUrl /files/ENCFF001SCN/@@download/ENCFF001SCN.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SCN
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SCN  minus strand signal rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SCM
-		type bigWig
-		bigDataUrl /files/ENCFF001SCM/@@download/ENCFF001SCM.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF001SCM/@@download/ENCFF001SCM.bigWig?proxy=true
 		parent ENCSR000AEESIGView on
 		shortLabel ENCFF001SCM
 		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SCM  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SCL
-		type bigWig
-		bigDataUrl /files/ENCFF001SCL/@@download/ENCFF001SCL.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SCL
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SCL  plus strand signal rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SJK
-		type bigWig
-		bigDataUrl /files/ENCFF001SJK/@@download/ENCFF001SJK.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SJK
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SJK  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SJJ
-		type bigWig
-		bigDataUrl /files/ENCFF001SJJ/@@download/ENCFF001SJJ.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SJJ
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SJJ  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SJI
-		type bigWig
-		bigDataUrl /files/ENCFF001SJI/@@download/ENCFF001SJI.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SJI
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SJI  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SJH
-		type bigWig
-		bigDataUrl /files/ENCFF001SJH/@@download/ENCFF001SJH.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SJH
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SJH  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SJG
-		type bigWig
-		bigDataUrl /files/ENCFF001SJG/@@download/ENCFF001SJG.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SJG
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SJG  minus strand signal of all reads rep 1
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
 		track ENCFF001SJF
 		type bigWig
-		bigDataUrl /files/ENCFF001SJF/@@download/ENCFF001SJF.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF001SJF/@@download/ENCFF001SJF.bigWig?proxy=true
 		parent ENCSR000AEESIGView on
 		shortLabel ENCFF001SJF
 		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SJF  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SJE
-		type bigWig
-		bigDataUrl /files/ENCFF001SJE/@@download/ENCFF001SJE.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SJE
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SJE  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SJC
-		type bigWig
-		bigDataUrl /files/ENCFF001SJC/@@download/ENCFF001SJC.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF001SJC
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF001SJC  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF753WDL
-		type bigWig
-		bigDataUrl /files/ENCFF753WDL/@@download/ENCFF753WDL.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF753WDL
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF753WDL  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF125JDC
-		type bigWig
-		bigDataUrl /files/ENCFF125JDC/@@download/ENCFF125JDC.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF125JDC
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF125JDC  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF909PSK
-		type bigWig
-		bigDataUrl /files/ENCFF909PSK/@@download/ENCFF909PSK.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF909PSK
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF909PSK  minus strand signal of unique reads rep 2
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
 		track ENCFF150PTP
 		type bigWig
-		bigDataUrl /files/ENCFF150PTP/@@download/ENCFF150PTP.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF150PTP/@@download/ENCFF150PTP.bigWig?proxy=true
 		parent ENCSR000AEESIGView on
 		shortLabel ENCFF150PTP
 		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF150PTP  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF611FQA
-		type bigWig
-		bigDataUrl /files/ENCFF611FQA/@@download/ENCFF611FQA.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF611FQA
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF611FQA  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF347HKZ
-		type bigWig
-		bigDataUrl /files/ENCFF347HKZ/@@download/ENCFF347HKZ.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF347HKZ
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF347HKZ  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF773FEG
-		type bigWig
-		bigDataUrl /files/ENCFF773FEG/@@download/ENCFF773FEG.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF773FEG
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF773FEG  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF845YZK
-		type bigWig
-		bigDataUrl /files/ENCFF845YZK/@@download/ENCFF845YZK.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF845YZK
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF845YZK  minus strand signal of all reads rep 2
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
 		track ENCFF585VCV
 		type bigWig
-		bigDataUrl /files/ENCFF585VCV/@@download/ENCFF585VCV.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF585VCV/@@download/ENCFF585VCV.bigWig?proxy=true
 		parent ENCSR000AEESIGView on
 		shortLabel ENCFF585VCV
 		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF585VCV  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF975RWM
-		type bigWig
-		bigDataUrl /files/ENCFF975RWM/@@download/ENCFF975RWM.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF975RWM
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF975RWM  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF755RBT
-		type bigWig
-		bigDataUrl /files/ENCFF755RBT/@@download/ENCFF755RBT.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF755RBT
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF755RBT  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF260MAD
-		type bigWig
-		bigDataUrl /files/ENCFF260MAD/@@download/ENCFF260MAD.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF260MAD
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF260MAD  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF282OWV
-		type bigWig
-		bigDataUrl /files/ENCFF282OWV/@@download/ENCFF282OWV.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF282OWV
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF282OWV  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF273YJY
-		type bigWig
-		bigDataUrl /files/ENCFF273YJY/@@download/ENCFF273YJY.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF273YJY
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF273YJY  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF319UTC
-		type bigWig
-		bigDataUrl /files/ENCFF319UTC/@@download/ENCFF319UTC.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF319UTC
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF319UTC  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF476RYX
-		type bigWig
-		bigDataUrl /files/ENCFF476RYX/@@download/ENCFF476RYX.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF476RYX
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF476RYX  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF639BCG
-		type bigWig
-		bigDataUrl /files/ENCFF639BCG/@@download/ENCFF639BCG.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF639BCG
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF639BCG  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF012YIT
-		type bigWig
-		bigDataUrl /files/ENCFF012YIT/@@download/ENCFF012YIT.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF012YIT
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF012YIT  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF258LON
-		type bigWig
-		bigDataUrl /files/ENCFF258LON/@@download/ENCFF258LON.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF258LON
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF258LON  minus strand signal of unique reads rep 1
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
 		track ENCFF122TLZ
 		type bigWig
-		bigDataUrl /files/ENCFF122TLZ/@@download/ENCFF122TLZ.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF122TLZ/@@download/ENCFF122TLZ.bigWig?proxy=true
 		parent ENCSR000AEESIGView on
 		shortLabel ENCFF122TLZ
 		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF122TLZ  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF405CSH
-		type bigWig
-		bigDataUrl /files/ENCFF405CSH/@@download/ENCFF405CSH.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF405CSH
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF405CSH  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF370TWY
-		type bigWig
-		bigDataUrl /files/ENCFF370TWY/@@download/ENCFF370TWY.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF370TWY
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF370TWY  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF181NGS
-		type bigWig
-		bigDataUrl /files/ENCFF181NGS/@@download/ENCFF181NGS.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF181NGS
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF181NGS  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF632LQM
-		type bigWig
-		bigDataUrl /files/ENCFF632LQM/@@download/ENCFF632LQM.bigWig?proxy=true
-		parent ENCSR000AEESIGView on
-		shortLabel ENCFF632LQM
-		longLabel RNA-seq of GM12878 - ENCSR000AEE - ENCFF632LQM  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-track ENCSR000CVT
-shortLabel RNA-seq of GM12878 - ENCSR000CVT
-longLabel RNA-seq of GM12878 - ENCSR000CVT
-compositeTrack on
-visibility full
-dragAndDrop subTracks
-subGroup1 view Views PK=Peaks SIG=Signals
-type bed 3
-sortOrder view=+
-
-	track ENCSR000CVTPKView
-	parent ENCSR000CVT
-	shortLabel ENCSR000CVTPKs
-	view PK
-	visibility hide
-	viewUi on
-	type bigBed 6 +
-	autoScale on
-
-		track ENCFF000EZS
-		type bigBed 6 +
-		bigDataUrl /files/ENCFF000EZS/@@download/ENCFF000EZS.bigBed?proxy=true
-		parent ENCSR000CVTPKView on
-		shortLabel ENCFF000EZS
-		longLabel RNA-seq of GM12878 - ENCSR000CVT - ENCFF000EZS bedRnaElements contigs rep unknown
-		visibility hide
-		subGroups view=PK
-
-		track ENCFF000EZW
-		type bigBed 6 +
-		bigDataUrl /files/ENCFF000EZW/@@download/ENCFF000EZW.bigBed?proxy=true
-		parent ENCSR000CVTPKView on
-		shortLabel ENCFF000EZW
-		longLabel RNA-seq of GM12878 - ENCSR000CVT - ENCFF000EZW bedRnaElements splice junctions rep unknown
-		visibility hide
-		subGroups view=PK
-
-	track ENCSR000CVTSIGView
-	parent ENCSR000CVT
-	shortLabel ENCSR000CVTSIGs
-	view SIG
-	visibility hide
-	viewUi on
-	type bigWig
-	maxHeightPixels 100:32:8
-	autoScale on
-
-		track ENCFF000EZX
-		type bigWig
-		bigDataUrl /files/ENCFF000EZX/@@download/ENCFF000EZX.bigWig?proxy=true
-		parent ENCSR000CVTSIGView on
-		shortLabel ENCFF000EZX
-		longLabel RNA-seq of GM12878 - ENCSR000CVT - ENCFF000EZX  minus strand signal rep 3
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF000EZY
-		type bigWig
-		bigDataUrl /files/ENCFF000EZY/@@download/ENCFF000EZY.bigWig?proxy=true
-		parent ENCSR000CVTSIGView on
-		shortLabel ENCFF000EZY
-		longLabel RNA-seq of GM12878 - ENCSR000CVT - ENCFF000EZY  minus strand signal rep 4
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF000FAA
-		type bigWig
-		bigDataUrl /files/ENCFF000FAA/@@download/ENCFF000FAA.bigWig?proxy=true
-		parent ENCSR000CVTSIGView on
-		shortLabel ENCFF000FAA
-		longLabel RNA-seq of GM12878 - ENCSR000CVT - ENCFF000FAA  plus strand signal rep 3
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF000FAB
-		type bigWig
-		bigDataUrl /files/ENCFF000FAB/@@download/ENCFF000FAB.bigWig?proxy=true
-		parent ENCSR000CVTSIGView on
-		shortLabel ENCFF000FAB
-		longLabel RNA-seq of GM12878 - ENCSR000CVT - ENCFF000FAB  plus strand signal rep 4
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
 track ENCSR000AEC
@@ -3668,443 +2871,61 @@ sortOrder view=+
 	parent ENCSR000AEC
 	shortLabel ENCSR000AECSIGs
 	view SIG
-	visibility hide
+	visibility full
 	viewUi on
 	type bigWig
 	maxHeightPixels 100:32:8
 	autoScale on
 
-		track ENCFF001SCA
-		type bigWig
-		bigDataUrl /files/ENCFF001SCA/@@download/ENCFF001SCA.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SCA
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SCA  minus strand signal rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SBY
-		type bigWig
-		bigDataUrl /files/ENCFF001SBY/@@download/ENCFF001SBY.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SBY
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SBY  plus strand signal rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SBX
-		type bigWig
-		bigDataUrl /files/ENCFF001SBX/@@download/ENCFF001SBX.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SBX
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SBX  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SBW
-		type bigWig
-		bigDataUrl /files/ENCFF001SBW/@@download/ENCFF001SBW.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SBW
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SBW  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SBV
-		type bigWig
-		bigDataUrl /files/ENCFF001SBV/@@download/ENCFF001SBV.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SBV
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SBV  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
 		track ENCFF001SBU
 		type bigWig
-		bigDataUrl /files/ENCFF001SBU/@@download/ENCFF001SBU.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF001SBU/@@download/ENCFF001SBU.bigWig?proxy=true
 		parent ENCSR000AECSIGView on
 		shortLabel ENCFF001SBU
 		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SBU  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SBT
-		type bigWig
-		bigDataUrl /files/ENCFF001SBT/@@download/ENCFF001SBT.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SBT
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SBT  minus strand signal rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SBS
-		type bigWig
-		bigDataUrl /files/ENCFF001SBS/@@download/ENCFF001SBS.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SBS
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SBS  plus strand signal rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SHY
-		type bigWig
-		bigDataUrl /files/ENCFF001SHY/@@download/ENCFF001SHY.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SHY
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SHY  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SHX
-		type bigWig
-		bigDataUrl /files/ENCFF001SHX/@@download/ENCFF001SHX.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SHX
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SHX  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SHQ
-		type bigWig
-		bigDataUrl /files/ENCFF001SHQ/@@download/ENCFF001SHQ.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SHQ
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SHQ  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SHP
-		type bigWig
-		bigDataUrl /files/ENCFF001SHP/@@download/ENCFF001SHP.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SHP
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SHP  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SHI
-		type bigWig
-		bigDataUrl /files/ENCFF001SHI/@@download/ENCFF001SHI.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SHI
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SHI  plus strand signal of unique reads rep 2
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
 		track ENCFF001SHH
 		type bigWig
-		bigDataUrl /files/ENCFF001SHH/@@download/ENCFF001SHH.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF001SHH/@@download/ENCFF001SHH.bigWig?proxy=true
 		parent ENCSR000AECSIGView on
 		shortLabel ENCFF001SHH
 		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SHH  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SGK
-		type bigWig
-		bigDataUrl /files/ENCFF001SGK/@@download/ENCFF001SGK.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SGK
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SGK  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SGJ
-		type bigWig
-		bigDataUrl /files/ENCFF001SGJ/@@download/ENCFF001SGJ.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SGJ
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SGJ  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SKC
-		type bigWig
-		bigDataUrl /files/ENCFF001SKC/@@download/ENCFF001SKC.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SKC
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SKC  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SKB
-		type bigWig
-		bigDataUrl /files/ENCFF001SKB/@@download/ENCFF001SKB.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SKB
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SKB  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SKA
-		type bigWig
-		bigDataUrl /files/ENCFF001SKA/@@download/ENCFF001SKA.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SKA
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SKA  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SJZ
-		type bigWig
-		bigDataUrl /files/ENCFF001SJZ/@@download/ENCFF001SJZ.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SJZ
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SJZ  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SLO
-		type bigWig
-		bigDataUrl /files/ENCFF001SLO/@@download/ENCFF001SLO.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SLO
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SLO  minus strand signal of all reads rep 1
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
 		track ENCFF001SLN
 		type bigWig
-		bigDataUrl /files/ENCFF001SLN/@@download/ENCFF001SLN.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF001SLN/@@download/ENCFF001SLN.bigWig?proxy=true
 		parent ENCSR000AECSIGView on
 		shortLabel ENCFF001SLN
 		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SLN  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SLM
-		type bigWig
-		bigDataUrl /files/ENCFF001SLM/@@download/ENCFF001SLM.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SLM
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SLM  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF001SLL
-		type bigWig
-		bigDataUrl /files/ENCFF001SLL/@@download/ENCFF001SLL.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF001SLL
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF001SLL  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF185DVF
-		type bigWig
-		bigDataUrl /files/ENCFF185DVF/@@download/ENCFF185DVF.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF185DVF
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF185DVF  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF684EAC
-		type bigWig
-		bigDataUrl /files/ENCFF684EAC/@@download/ENCFF684EAC.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF684EAC
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF684EAC  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF727XXE
-		type bigWig
-		bigDataUrl /files/ENCFF727XXE/@@download/ENCFF727XXE.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF727XXE
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF727XXE  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF042YPL
-		type bigWig
-		bigDataUrl /files/ENCFF042YPL/@@download/ENCFF042YPL.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF042YPL
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF042YPL  minus strand signal of unique reads rep 1
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
 		track ENCFF574ALG
 		type bigWig
-		bigDataUrl /files/ENCFF574ALG/@@download/ENCFF574ALG.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF574ALG/@@download/ENCFF574ALG.bigWig?proxy=true
 		parent ENCSR000AECSIGView on
 		shortLabel ENCFF574ALG
 		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF574ALG  plus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF773SNB
-		type bigWig
-		bigDataUrl /files/ENCFF773SNB/@@download/ENCFF773SNB.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF773SNB
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF773SNB  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF356QPH
-		type bigWig
-		bigDataUrl /files/ENCFF356QPH/@@download/ENCFF356QPH.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF356QPH
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF356QPH  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF698QMB
-		type bigWig
-		bigDataUrl /files/ENCFF698QMB/@@download/ENCFF698QMB.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF698QMB
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF698QMB  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF270HBR
-		type bigWig
-		bigDataUrl /files/ENCFF270HBR/@@download/ENCFF270HBR.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF270HBR
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF270HBR  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF339IYH
-		type bigWig
-		bigDataUrl /files/ENCFF339IYH/@@download/ENCFF339IYH.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF339IYH
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF339IYH  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF953UUN
-		type bigWig
-		bigDataUrl /files/ENCFF953UUN/@@download/ENCFF953UUN.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF953UUN
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF953UUN  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF003BGQ
-		type bigWig
-		bigDataUrl /files/ENCFF003BGQ/@@download/ENCFF003BGQ.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF003BGQ
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF003BGQ  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF889DHX
-		type bigWig
-		bigDataUrl /files/ENCFF889DHX/@@download/ENCFF889DHX.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF889DHX
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF889DHX  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF618VRC
-		type bigWig
-		bigDataUrl /files/ENCFF618VRC/@@download/ENCFF618VRC.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF618VRC
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF618VRC  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF513EAI
-		type bigWig
-		bigDataUrl /files/ENCFF513EAI/@@download/ENCFF513EAI.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF513EAI
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF513EAI  minus strand signal of unique reads rep 1
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
 		track ENCFF604VIC
 		type bigWig
-		bigDataUrl /files/ENCFF604VIC/@@download/ENCFF604VIC.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF604VIC/@@download/ENCFF604VIC.bigWig?proxy=true
 		parent ENCSR000AECSIGView on
 		shortLabel ENCFF604VIC
 		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF604VIC  plus strand signal of unique reads rep 1
-		visibility hide
+		visibility full
 		subGroups view=SIG
 
-		track ENCFF907DQV
 		type bigWig
-		bigDataUrl /files/ENCFF907DQV/@@download/ENCFF907DQV.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF907DQV
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF907DQV  plus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF029KTJ
-		type bigWig
-		bigDataUrl /files/ENCFF029KTJ/@@download/ENCFF029KTJ.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF029KTJ
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF029KTJ  plus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF236AIE
-		type bigWig
-		bigDataUrl /files/ENCFF236AIE/@@download/ENCFF236AIE.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF236AIE
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF236AIE  minus strand signal of unique reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF071VTY
-		type bigWig
-		bigDataUrl /files/ENCFF071VTY/@@download/ENCFF071VTY.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF071VTY
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF071VTY  plus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF193UFK
-		type bigWig
-		bigDataUrl /files/ENCFF193UFK/@@download/ENCFF193UFK.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF193UFK
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF193UFK  minus strand signal of all reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF417XWD
-		type bigWig
-		bigDataUrl /files/ENCFF417XWD/@@download/ENCFF417XWD.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF417XWD
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF417XWD  minus strand signal of unique reads rep 1
-		visibility hide
-		subGroups view=SIG
-
-		track ENCFF426HXD
-		type bigWig
-		bigDataUrl /files/ENCFF426HXD/@@download/ENCFF426HXD.bigWig?proxy=true
+		bigDataUrl https://encodeproject.org/files/ENCFF426HXD/@@download/ENCFF426HXD.bigWig?proxy=true
 		parent ENCSR000AECSIGView on
 		shortLabel ENCFF426HXD
 		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF426HXD  plus strand signal of unique reads rep 1
-		visibility hide
+		visibility full
 		subGroups view=SIG
-
-		track ENCFF251HYL
-		type bigWig
-		bigDataUrl /files/ENCFF251HYL/@@download/ENCFF251HYL.bigWig?proxy=true
-		parent ENCSR000AECSIGView on
-		shortLabel ENCFF251HYL
-		longLabel RNA-seq of GM12878 - ENCSR000AEC - ENCFF251HYL  minus strand signal of all reads rep 2
-		visibility hide
-		subGroups view=SIG
-
-
-
