@@ -15,8 +15,8 @@ class TargetGeneExp:
         self.eid = self.encodeID
         self.assay_term_name = "TargetGene"
         self.biosample_term_name = "GM12878"
-        self.tissue = self.biosample_term_name
-        self.biosample_type = self.biosample_term_name
+        self.tissue = "blood"
+        self.biosample_type = "immortalized cell line"
         self.age = None
 
         self.files = []
@@ -39,9 +39,9 @@ class TargetGeneEpigenome:
         biosample_term_name = "GM12878"
         self.biosample_term_name = biosample_term_name
         self.biosample_term_id = ""
-        self.organ_slims = biosample_term_name
-        self.tissue = biosample_term_name
-        self.biosample_type = biosample_term_name
+        self.organ_slims = ["blood"]
+        self.tissue = "blood"
+        self.biosample_type = "immortalized cell line"
         self.age_display = None
         self.eid = biosample_term_name
 

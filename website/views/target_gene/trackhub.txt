@@ -3,25 +3,37 @@ shortLabel GM12878-Links
 longLabel GM12878-Links
 color 159,104,230
 type bigGenePred
-bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/convert/eQTL.bigGenePred
+itemRgb on
+visibility dense
+priority 1
+bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/eQTL.bigGenePred
 
 track Aiden-Lab-HiC-Links
 shortLabel GM12878-Links
 longLabel GM12878-Links
 color 159,104,230
 type bigGenePred
-bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/convert/HiC.bigGenePred
+itemRgb on
+visibility dense
+priority 2
+bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/HiC.bigGenePred
 
 track POL2-ChIAPet-Links
 shortLabel GM12878-Links
 longLabel GM12878-Links
 color 159,104,230
 type bigGenePred
-bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/convert/POL2-ChIAPet.bigGenePred
+itemRgb on
+visibility dense
+priority 3
+bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/POL2-ChIAPet.bigGenePred
 
 track RAD21-ChIAPet-Links
 shortLabel GM12878-Links
 longLabel GM12878-Links
 color 159,104,230
 type bigGenePred
-bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/convert/RAD21-ChIAPet.bigGenePred
+itemRgb on
+visibility dense
+priority 4
+bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/RAD21-ChIAPet.bigGenePred
