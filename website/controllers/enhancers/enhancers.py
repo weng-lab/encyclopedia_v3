@@ -93,6 +93,33 @@ class EnhancersSite(object):
     @cherrypy.expose
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
+    def washu(self, *args, **params):
+        uid = self.sessions.get(cherrypy.session.id)
+        if not uid:
+            uid = self.makeUid()
+            cherrypy.session["uid"] = uid
+            self.sessions.insertOrUpdate(cherrypy.session.id, uid)
+
+        input_json = cherrypy.request.json
+
+        us = UcscSearch(self.wepigenomes, self.db, self.dbSnps, self.genes,
+                        self.host, self.args, input_json, uid)
+        us.parse(self.siteInfo)
+        url = us.configureWashuHubLink()
+
+        if us.psb.userErrMsg:
+            return { "err" : us.psb.userErrMsg }
+
+        if self.args.debug:
+            return {"inner-url" : url,
+                    "html" : self.templates(self.siteInfo.site + "/ucsc",
+                                            us = us,
+                                            url = url)}
+        return {"url" : url}
+
+    @cherrypy.expose
+    @cherrypy.tools.json_in()
+    @cherrypy.tools.json_out()
     def bedsInRange(self, *args, **params):
         input_json = cherrypy.request.json
         ret = None

@@ -8,23 +8,25 @@ from enums import AssayType
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
+from common.site_info import SiteInfos
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from utils import Utils
 from files_and_paths import Dirs
 
 class TrackHubWashu:
-    def __init__(self, args, epigenomes, urlStatus, row, histMark, assay_type):
+    def __init__(self, args, epigenomes, urlStatus, row):
+        self.assembly = row["assembly"]
+        self.assays = row["assays"]
+        self.tissue_ids = json.loads(row["tissues"])
+        self.loci = row["loci"]
+        self.assayType = row["assayType"]
+        self.hubNum = row["hubNum"]
+
         self.args = args
-        self.epigenomes = epigenomes
+        self.epigenomes = epigenomes[self.assayType]
         self.urlStatus = urlStatus
-        self.assembly = row[0]
-        self.assays = row[1]
-        self.tissue_ids = json.loads(row[2])
-        self.loci = row[3]
-        self.hubNum = row[4]
-        self.histMark = histMark
-        self.assay_type = assay_type
+        self.histMark = SiteInfos[self.assayType].histMark
 
         self.priority = 1
 
@@ -114,20 +116,20 @@ class TrackHubWashu:
         if not os.path.exists(fnp):
             return None
 
-        if AssayType.Enhancer == self.assay_type:
+        if AssayType.Enhancer == self.assayType:
             descBase = "enhancer-like"
             url = os.path.join(BIB5,
                                Dirs.enhancerTracksBase,
                                "washu",
                                os.path.basename(fnp).replace(".bigBed",
-                                                         ".bed.gz"))
-        elif AssayType.Promoter == self.assay_type:
+                                                             ".bed.gz"))
+        elif AssayType.Promoter == self.assayType:
             descBase = "promoter-like"
             url = os.path.join(BIB5,
                                Dirs.promoterTracksBase,
                                "washu",
                                os.path.basename(fnp).replace(".bigBed",
-                                                         ".bed.gz"))
+                                                             ".bed.gz"))
 
         desc = Track.MakeDesc(descBase,
                               wepi.epi.age_display,
