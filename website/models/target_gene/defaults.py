@@ -1,6 +1,6 @@
 import json
 
-class Defaults:
+class TargetGeneDefaults:
     def __init__(self):
         self.defaults = {}
         self.defaults["hg19"] = {}

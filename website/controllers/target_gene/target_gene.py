@@ -20,7 +20,7 @@ from common.trackhub import TrackHub
 from common.trackhub_washu import TrackHubWashu
 from common.ucsc_search import UcscSearch
 
-from models.target_gene.defaults import Defaults
+from models.target_gene.defaults import TargetGeneDefaults
 from models.target_gene.epigenome_stats import EpigenomeStats
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
@@ -39,7 +39,7 @@ class TargetGeneSite(object):
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
         self.wepigenomes = wepigenomes
-        self.defaults = Defaults()
+        self.defaults = TargetGeneDefaults()
         self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.siteInfo)
         self.staticDir = staticDir
 
