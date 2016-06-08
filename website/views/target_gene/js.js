@@ -85,7 +85,7 @@ function processDownload(event){
 
     var formData = $("#searchForm").serializeJSON();
 
-    console.log(formData);
+    //console.log(formData);
 
     $.ajax({
         type: "POST",
