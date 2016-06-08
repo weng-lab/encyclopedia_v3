@@ -1,106 +1,114 @@
+<br>
 <div class="container">
-  <div class="row">
-    <div class="col-sm-2">
-      <button type="button"class="btn btn-info"><h1>Tutorial</h1></button>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-7">
-      <br><br>
-      <img class="img-responsive" src="../static/numbered.png">
-    </div>
-    <div class="col-sm-5">
-      <ul class="list-group">
-        <li class="list-group-item">
-          <img src="../static/1.png" width="40" align="left" hspace="15">
-          <p> Select Genome</p>
-          <br>
-          <p class="text-muted"><i>Genome: mm10</i> </p>
-        </li>
-        <li class="list-group-item">
-          <img src="../static/2.png" width="40" align="left" hspace="15">
-          <p> Enter gene, SNP, genomic coordinate, or rank</p>
-          <br>
-          <p class="text-muted"><i>genomic region: chr1:134054000-134071000</i></p>
-        </li>
-        <li class="list-group-item">
-          <img src="../static/3.png" width="40" align="left" hspace="15">
-          <p> Choose assays used to determine enhancer-like elements
-          <p class="text-muted"><i>assays: DNase + H3K27ac</i></p>
-        </li>
-        <li class="list-group-item">
-          <img src="../static/4.png" width="40" align="left" hspace="15">
-          <p> Select cell types of interest</p>
-          <br>
-          <p class="text-muted"><i>cell types: hindbrain, midbrain, neural tube, and lung</i></p>
-        </li>
-        <li class="list-group-item">
-          <img src="../static/5.png" width="40" align="left" hspace="15">
-          <p>Display on genome browser</p>
-          <br>
-          <p class="text-muted"><i>UCSC</i></p>
-        </li>
-      </ul>
+  <div class="panel-group">
+    <div class="panel panel-info">
+      <div class="panel-heading tutorialPanelHeading"><h1>Tutorial</h1></div>
+      <div class="panel-body">
+
+        <div class="row">
+          <div class="col-sm-7">
+            <br><br>
+            <img class="img-responsive" src="../static/numbered.png">
+          </div>
+          <div class="col-sm-5">
+            <ul class="list-group">
+              <li class="list-group-item">
+                <img src="../static/1.png" width="40" align="left" hspace="15">
+                <p> Select Genome</p>
+                <br>
+                <p class="text-muted"><i>Genome: mm10</i> </p>
+              </li>
+              <li class="list-group-item">
+                <img src="../static/2.png" width="40" align="left" hspace="15">
+                <p> Enter gene, SNP, genomic coordinate, or rank</p>
+                <br>
+                <p class="text-muted"><i>genomic region: chr1:134054000-134071000</i></p>
+              </li>
+              <li class="list-group-item">
+                <img src="../static/3.png" width="40" align="left" hspace="15">
+                <p> Choose assays used to determine enhancer-like elements
+                <p class="text-muted"><i>assays: DNase + H3K27ac</i></p>
+              </li>
+              <li class="list-group-item">
+                <img src="../static/4.png" width="40" align="left" hspace="15">
+                <p> Select cell types of interest</p>
+                <br>
+                <p class="text-muted"><i>cell types: hindbrain, midbrain, neural tube, and lung</i></p>
+              </li>
+              <li class="list-group-item">
+                <img src="../static/5.png" width="40" align="left" hspace="15">
+                <p>Display on genome browser</p>
+                <br>
+                <p class="text-muted"><i>UCSC</i></p>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
 <div class="container">
-  <div class="row">
-    <div class="col-sm-2">
-      <button type="button"class="btn btn-info"><h1>Exercises</h1></button>
-    </div>
-  </div>
-  <!-------- excercise 1 -->
-  <div class="row">
-    <div class="col-md-6">
-      <h3>Exercise #1</h3>
-      You are a graduate student working on the mechanistic role and therapeutic potential of microRNA-122 (MIR122) in alcoholic liver disease. Are there any enhancers nearby that you could potentially study?
-    </div>
-    <div class="col-md-6">
-      <br><br>
-      <button type="button"class="btn btn-success" id="b1">Answer</button>
-      <p>
-        <div id="a1" style="visibility: hidden;">
-          There appear to be several enhancer-like regions within 1Mb of MIR122. <a class="btn btn btn-warning" href="#" role="button" id="gb1">Visualize on Genome Browser</a>
-        </div>
-    </div>
-  </div>
-  <br>
-  <!-------- excercise 2 -->
-  <div class="row">
-    <div class="col-md-6">
-      <h3>Exercise #2</h3>
-      In Flavahan, Drier, et al., Nature 2015, compromised CTCF binding was demonstrated to allow a constitutive enhancer to interact with an oncogene in IDH gliomas. The enhancer is ~50Kb upstream of the oncogene PDGFRA. Is this constitutive enhancer also potentially found in other ENCODE brain-related cell types?
-    </div>
-    <div class="col-md-6">
-      <br><br>
-      <button type="button"class="btn btn-success" id="b2">Answer</button>
-      <p>
-        <div id="a2" style="visibility: hidden;">
-          There appear to be enhancer-like regions within 100Kb of PDGFRA in astrocytes. <a class="btn btn btn-warning" href="#" role="button" id="gb2">Visualize on Genome Browser</a>
-        </div>
+  <div class="panel-group">
+    <div class="panel panel-info">
+      <div class="panel-heading tutorialPanelHeading"><h1>Exercises</h1></div>
 
-    </div>
-  </div>
-  <br>
-  <!-------- excercise 1 -->
-  <div class="row">
-    <div class="col-md-6">
-      <h3>Exercise #3</h3>
-      Breast cancer risk SNP rs4784227 has been demonstrated to change TOX3 gene expression, and thus alter chromatin structure (Cowper-Sal.lari, et. al., Nature Genetics 2012; Huang and Ovcharenko, NAR 2014). Are there any potential regulatory elements at this SNP location in an ENCODE breast cancer cell line?
-    </div>
-    <div class="col-md-6">
-      <br><br>
-      <button type="button"class="btn btn-success" id="b3">Answer</button>
-      <p>
-        <div id="a3" style="visibility: hidden;">
-          The SNP appears to be in a regulatory-like element. <a class="btn btn btn-warning" href="#" role="button" id="gb3">Visualize on Genome Browser</a>
-        </div>
-    </div>
-  </div>
-  <br>
+      <div class="list-group">
 
+        <!-------- excercise 1 -->
+        <div class="list-group-item tutorialBox">
+          <h3>Exercise #1</h3>
+          <div class="row">
+            <div class="col-sm-8 tutorialQuestion">
+              You are a graduate student working on the mechanistic role and therapeutic potential of microRNA-122 (MIR122) in alcoholic liver disease. Are there any enhancers nearby that you could potentially study?
+            </div>
+            <div class="col-sm-4">
+              <button type="button"class="btn btn-success" id="b1">Answer</button>
+              <div id="a1" class="answerDiv">
+                <a class="btn btn btn-warning" href="#" role="button" id="gb1">Visualize on Genome Browser</a>
+                There appear to be several enhancer-like regions within 1Mb of MIR122.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-------- excercise 2 -->
+      <div class="list-group-item tutorialBox">
+        <h3>Exercise #2</h3>
+          <div class="row">
+            <div class="col-sm-8 tutorialQuestion">
+              In Flavahan, Drier, et al., Nature 2015, compromised CTCF binding was demonstrated to allow a constitutive enhancer to interact with an oncogene in IDH gliomas. The enhancer is ~50Kb upstream of the oncogene PDGFRA. Is this constitutive enhancer also potentially found in other ENCODE brain-related cell types?
+            </div>
+            <div class="col-sm-4">
+              <button type="button"class="btn btn-success" id="b2">Answer</button>
+              <div id="a2" class="answerDiv">
+                <a class="btn btn btn-warning" href="#" role="button" id="gb2">Visualize on Genome Browser</a>
+                There appear to be enhancer-like regions within 100Kb of PDGFRA in astrocytes.
+              </div>
+            </div>
+          </div>
+      </div>
+
+      <!-------- excercise 3 -->
+      <div class="list-group-item tutorialBox">
+        <h3>Exercise #3</h3>
+          <div class="row">
+            <div class="col-sm-8 tutorialQuestion">
+              Breast cancer risk SNP rs4784227 has been demonstrated to change TOX3 gene expression, and thus alter chromatin structure (Cowper-Sal.lari, et. al., Nature Genetics 2012; Huang and Ovcharenko, NAR 2014). Are there any potential regulatory elements at this SNP location in an ENCODE breast cancer cell line?
+            </div>
+            <div class="col-sm-4">
+              <button type="button"class="btn btn-success" id="b3">Answer</button>
+              <div id="a3" class="answerDiv">
+                <a class="btn btn btn-warning" href="#" role="button" id="gb3">Visualize on Genome Browser</a>
+                The SNP appears to be in a regulatory-like element.
+              </div>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>

@@ -233,3 +233,21 @@ input[type=checkbox]{
 .gallery_wrapper {
     max-width: 500px;
 }
+
+.answerDiv {
+    display: none;
+}
+
+.tutorialQuestion {
+    padding-bottom: 40px;
+}
+
+.tutorialBox {
+    padding-left: 25px;
+    padding-right: 25px;
+}
+
+.tutorialPanelHeading h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}

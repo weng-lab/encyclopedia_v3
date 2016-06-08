@@ -30,15 +30,15 @@ function processFormSubmitRet(event, local_url, override_data){
 
 $(document).ready(function(){
     $("#b1").click(function(){
-        $("#a1").css("visibility", "visible");
+        $("#a1").css("display", "block");
         $("#b1").hide();
     });
     $("#b2").click(function(){
-        $("#a2").css("visibility", "visible");
+        $("#a2").css("display", "block");
         $("#b2").hide();
     });
     $("#b3").click(function(){
-        $("#a3").css("visibility", "visible");
+        $("#a3").css("display", "block");
         $("#b3").hide();
     });
 
