@@ -31,10 +31,12 @@ function processFormSubmitRet(event, local_url, override_data){
 $(document).ready(function(){
     $("#b1").click(function(){
         $("#a1").css("visibility", "visible");
+        $("#b1").hide();
     });
 
     $("#b2").click(function(){
         $("#a2").css("visibility", "visible");
+        $("#b2").hide();
     });
 
     $("#gb1").click(function(event){
