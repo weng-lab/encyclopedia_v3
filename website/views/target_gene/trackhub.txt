@@ -38,6 +38,109 @@ visibility pack
 priority 4
 bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/RAD21-ChIAPet.bigGenePred
 
+track GM12878_enhancer-like
+type bigBed 9
+shortLabel enhancer-like
+longLabel GM12878 enhancer-like
+itemRgb on
+visibility dense
+priority 5
+bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Enhancer-Prediction-Tracks/March-2016/ENCSR000EMT_ENCSR000AKC_predictions.bigBed
+
+
+track GM12878_promoter-like
+type bigBed 9
+shortLabel promoter-like
+longLabel GM12878 promoter-like
+itemRgb on
+visibility dense
+priority 6
+bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Promoter-Prediction-Tracks/ENCSR000EMT_ENCSR000DRY_predictions.bigBed
+
+track composite2
+container multiWig
+aggregate transparentOverlay
+showSubtrackColorOnUi on
+type bigWig 0 50.0
+maxHeightPixels 128:32:8
+shortLabel GM12878
+longLabel GM12878
+visibility full
+priority 7
+html examplePage
+
+                track composite2Histone
+                bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/encode_norm/ENCSR000AKC/ENCFF000ASJ.norm.bigWig
+                shortLabel H3K27ac
+                longLabel H3K27ac
+                parent composite2
+                type bigWig
+                color 18,98,235
+
+                track composite2DNase
+                bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/encode_norm/ENCSR000EMT/ENCFF001CUH.norm.bigWig
+                shortLabel DNase
+                longLabel DNase
+                parent composite2
+                type bigWig
+                color 6,218,147
+
+track GM12878_DNase_Signal
+type bigWig
+shortLabel GM12878 DNase Signal
+longLabel GM12878 DNase Signal
+itemRgb on
+visibility full
+priority 8
+bigDataUrl http://www.encodeproject.org/files/ENCFF001CUH/@@download/ENCFF001CUH.bigWig?proxy=true
+color 6,218,147
+maxHeightPixels 128:32:8
+autoScale on
+
+
+track GM12878_H3K27ac_Signal
+type bigWig
+shortLabel GM12878 H3K27ac Signal
+longLabel GM12878 H3K27ac Signal
+itemRgb on
+visibility full
+priority 9
+bigDataUrl http://www.encodeproject.org/files/ENCFF000ASJ/@@download/ENCFF000ASJ.bigWig?proxy=true
+color 18,98,235
+maxHeightPixels 128:32:8
+autoScale on
+
+
+track GM12878_H3K4me3_Signal
+type bigWig
+shortLabel GM12878 H3K4me3 Signal
+longLabel GM12878 H3K4me3 Signal
+itemRgb on
+visibility full
+priority 10
+bigDataUrl http://www.encodeproject.org/files/ENCFF001EXX/@@download/ENCFF001EXX.bigWig?proxy=true
+color 255,0,0
+maxHeightPixels 128:32:8
+autoScale on
+
+track phastCons
+type bigWig
+shortLabel phastCons
+longLabel phastCons
+itemRgb on
+visibility full
+priority 11
+bigDataUrl http://hgdownload.cse.ucsc.edu/goldenPath/hg19/phastCons100way/hg19.100way.phastCons.bw
+color 153,153,153
+maxHeightPixels 128:32:8
+autoScale on
+
+
+
+
+
+
+
 track ENCSR000DZR
 shortLabel ChIP-seq of GM12878 - ENCSR000DZR(Target - CHD2)
 longLabel ChIP-seq of GM12878 - ENCSR000DZR(Target - CHD2)
