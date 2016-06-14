@@ -6,6 +6,7 @@ from common.trackhub import TrackHub
 from common.helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
 
 from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors, GetTrackColorSignal
+from common.labs import Labs
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils/'))
 from files_and_paths import Datasets
@@ -55,7 +56,7 @@ class TrackHubTargetGene(TrackHub):
         if color:
             color = color.rgb
 
-        desc = " ".join([exp.encodeID, exp.biosample_term_name, exp.lab,
+        desc = " ".join([exp.encodeID, exp.biosample_term_name, Labs.translate(exp.lab),
                          exp.assay_term_name, exp.tf])
 
         track = BigWigTrack(desc, self.priority, url, color).track()
