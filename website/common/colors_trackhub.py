@@ -20,3 +20,15 @@ class EncodeTrackhubColors:
 class OtherTrackhubColors:
     Conservation = TrackhubColor("153,153,153", "#999999")
     Genes = TrackhubColor("0,0,0", "#000000")
+
+def GetTrackColorSignal(exp):
+    if "RNA-seq" in exp.assay_term_name:
+        return EncodeTrackhubColors.RNAseq_Signal
+    m = {"ChIP-seq" : None,
+         "H3K27ac" : EncodeTrackhubColors.H3K27ac_Signal,
+         "DNase-seq" : EncodeTrackhubColors.DNase_Signal,
+         "H3K4me3" : EncodeTrackhubColors.H3K4me3_Signal,
+         "RAMPAGE" : EncodeTrackhubColors.RAMPAGE_signal}
+    if exp.assay_term_name in m:
+        return m[exp.assay_term_name]
+    return None
