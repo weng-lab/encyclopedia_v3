@@ -1,7 +1,15 @@
 import os, sys, json
+import StringIO
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.trackhub import TrackHub
+from common.helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
+
+from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils/'))
+from files_and_paths import Datasets
+from metadataws import MetadataWS
 
 class TrackHubTargetGene(TrackHub):
     def __init__(self, args, epigenomes, urlStatus, row):
@@ -18,6 +26,7 @@ class TrackHubTargetGene(TrackHub):
         dataset = Datasets.all_human
         m = MetadataWS(dataset)
         for exp in m.biosample_term_name("GM12878"):
+            print(exp)
             lines += [self.trackhubExp(exp)]
 
         f = StringIO.StringIO()
@@ -26,15 +35,18 @@ class TrackHubTargetGene(TrackHub):
         return fileLines + "\n" + f.getvalue()
 
     def trackhubExp(self, exp):
-        url, name, color = self._getUrl(exp, False)
+        url, name, color = self._getUrln(exp, False)
 
+        if not url:
+            return ""
         desc = Track.MakeDesc(name, exp.age, exp.biosample_term_name)
+        desc += str(self.priority)
 
         track = BigWigTrack(desc, self.priority, url, color).track()
         self.priority += 1
         return track
 
-    def _getUrl(self, exp, norm):
+    def _getUrln(self, exp, norm):
         if not exp:
             return None, None, None
 
@@ -47,6 +59,7 @@ class TrackHubTargetGene(TrackHub):
         bigWigs = bigWigFilters(self.assembly, exp.files)
 
         if not bigWigs:
+            return None, None, None
             raise Exception("missing bigWigs for " + exp.encodeID)
         bigWig = bigWigs[0]
 
@@ -76,6 +89,8 @@ class TrackHubTargetGene(TrackHub):
             name = "DNase Signal"
             color = EncodeTrackhubColors.DNase_Signal.rgb
         else:
-            raise Exception("unexpected exp")
-
+            pass
+            #raise Exception("unexpected exp")
+        name = "signal"
+        color = EncodeTrackhubColors.DNase_Signal.rgb
         return url, name, color
