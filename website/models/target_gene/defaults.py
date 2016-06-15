@@ -4,7 +4,7 @@ class TargetGeneDefaults:
     def __init__(self):
         self.defaults = {}
         self.defaults["hg19"] = {}
-        self.defaults["hg19"]["pos"] = "chr4:83910641-84311040"
+        self.defaults["hg19"]["pos"] = "chr9:37102673-37516177"
         self.defaults["hg19"]["snp"] = "rs149273678"
 
         self.defaults["mm10"] = {}
