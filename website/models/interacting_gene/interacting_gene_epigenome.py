@@ -9,11 +9,11 @@ from files_and_paths import Dirs
 
 UrlBase = "http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/convert/"
 
-class TargetGeneExp:
+class InteractingGeneExp:
     def __init__(self):
-        self.encodeID = "TargetGeneID"
+        self.encodeID = "InteractingGeneID"
         self.eid = self.encodeID
-        self.assay_term_name = "TargetGene"
+        self.assay_term_name = "InteractingGene"
         self.biosample_term_name = "GM12878"
         self.tissue = "blood"
         self.biosample_type = "immortalized cell line"
@@ -33,8 +33,8 @@ class TargetGeneExp:
     def getSingleBigWigSingleFnp(self, args = None):
         return None, "hg19"
 
-class TargetGeneEpigenome:
-    def __init__(self, target_gene):
+class InteractingGeneEpigenome:
+    def __init__(self, interacting_gene):
         self.assembly = "hg19"
         biosample_term_name = "GM12878"
         self.biosample_term_name = biosample_term_name
@@ -45,32 +45,32 @@ class TargetGeneEpigenome:
         self.age_display = None
         self.eid = biosample_term_name
 
-        self.target_gene = target_gene
+        self.interacting_gene = interacting_gene
 
-    def hasTargetGene(self):
+    def hasInteractingGene(self):
         return True
 
-    def TargetGene(self):
-        return [self.target_gene]
+    def InteractingGene(self):
+        return [self.interacting_gene]
 
     def tadFnp(self, assays):
-        path = Dirs.targetGeneTracks
+        path = Dirs.interactingGeneTracks
         if "TAD" == assays:
             fn = "{eid}_H3K4me3_predictions.bigBed".format(eid = self.eid)
         return os.path.join(path, fn)
 
-class TargetGeneMetadata:
+class InteractingGeneMetadata:
     def __init__(self):
-        self.epigenomes = Epigenomes("TargetGene", "hg19")
+        self.epigenomes = Epigenomes("InteractingGene", "hg19")
 
-        target_gene = TargetGeneExp()
-        epi = TargetGeneEpigenome(target_gene)
+        interacting_gene = InteractingGeneExp()
+        epi = InteractingGeneEpigenome(interacting_gene)
         self.epigenomes.addEpigenome(epi)
 
         print "found", len(self.epigenomes), "epigenomes for Dekker hg19"
 
 def main():
-    r = TargetGeneMetadata().epigenomes
+    r = InteractingGeneMetadata().epigenomes
 
 if __name__ == '__main__':
     main()

@@ -12,12 +12,12 @@ class PromotersSiteInfo:
     histMark = "H3K4me3"
     name = "promoter-like"
 
-class TargetGeneSiteInfo:
-    site = "target_gene"
-    assayType = AssayType.TargetGene
-    histMark = "TargetGene"
+class InteractingGeneSiteInfo:
+    site = "interacting_gene"
+    assayType = AssayType.InteractingGene
+    histMark = "InteractingGene"
 
 SiteInfos = {}
 SiteInfos[EnhancersSiteInfo.assayType] = EnhancersSiteInfo
 SiteInfos[PromotersSiteInfo.assayType] = PromotersSiteInfo
-SiteInfos[TargetGeneSiteInfo.assayType] = TargetGeneSiteInfo
+SiteInfos[InteractingGeneSiteInfo.assayType] = InteractingGeneSiteInfo

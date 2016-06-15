@@ -5,10 +5,10 @@ import os, sys, cherrypy, json, argparse, time
 import psycopg2, psycopg2.pool
 
 from common.web_epigenomes import WebEpigenomesLoader
-from models.target_gene.web_epigenomes import TargetGeneWebEpigenomesLoader
-from common.site_info import EnhancersSiteInfo, PromotersSiteInfo, TargetGeneSiteInfo
+from models.interacting_gene.web_epigenomes import InteractingGeneWebEpigenomesLoader
+from common.site_info import EnhancersSiteInfo, PromotersSiteInfo, InteractingGeneSiteInfo
 
-from controllers.target_gene.target_gene import TargetGeneSite
+from controllers.interacting_gene.interacting_gene import InteractingGeneSite
 from controllers.enhancers.enhancers import EnhancersSite
 from controllers.promoters.promoters import PromotersSite
 from controllers.hic.hic import HiCSite
@@ -93,14 +93,14 @@ def main():
     wepigenomes = {}
     wepigenomes[EnhancersSiteInfo.assayType] = WebEpigenomesLoader(args, EnhancersSiteInfo)
     wepigenomes[PromotersSiteInfo.assayType] = WebEpigenomesLoader(args, PromotersSiteInfo)
-    wepigenomes[TargetGeneSiteInfo.assayType] = TargetGeneWebEpigenomesLoader(args, TargetGeneSiteInfo)
+    wepigenomes[InteractingGeneSiteInfo.assayType] = InteractingGeneWebEpigenomesLoader(args, InteractingGeneSiteInfo)
 
     cherrypy.tree.mount(HiCSite(DBCONN, args, mainIndex.staticDir), '/hic',
                         config=getRootConfig("hic"))
-    cherrypy.tree.mount(TargetGeneSite(DBCONN, args,
-                                       wepigenomes[TargetGeneSiteInfo.assayType],
-                                       mainIndex.staticDir), '/target_gene',
-                        config=getRootConfig("target_gene"))
+    cherrypy.tree.mount(InteractingGeneSite(DBCONN, args,
+                                       wepigenomes[InteractingGeneSiteInfo.assayType],
+                                       mainIndex.staticDir), '/interacting_gene',
+                        config=getRootConfig("interacting_gene"))
     cherrypy.tree.mount(EnhancersSite(DBCONN, args,
                                       wepigenomes[EnhancersSiteInfo.assayType],
                                       mainIndex.staticDir),

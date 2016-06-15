@@ -12,13 +12,13 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils
 from files_and_paths import Datasets
 from metadataws import MetadataWS
 
-class TrackHubTargetGene(TrackHub):
+class TrackHubInteractingGene(TrackHub):
     def __init__(self, args, epigenomes, urlStatus, row):
-        super(TrackHubTargetGene, self).__init__(args, epigenomes, urlStatus, row)
+        super(TrackHubInteractingGene, self).__init__(args, epigenomes, urlStatus, row)
 
     def makeTrackDb(self):
         trackhubFnp = os.path.join(os.path.dirname(__file__),
-                                   "..", "views", "target_gene", "trackhub.txt")
+                                   "..", "views", "interacting_gene", "trackhub.txt")
         with open(trackhubFnp) as f:
             fileLines = f.read()
 

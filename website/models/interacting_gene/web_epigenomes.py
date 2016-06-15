@@ -9,7 +9,7 @@ import numpy as np
 
 from natsort import natsorted
 
-from target_gene_epigenome import TargetGeneMetadata
+from interacting_gene_epigenome import InteractingGeneMetadata
 from common.ontology.ontology import Ontology
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
@@ -58,7 +58,7 @@ class WalkRow:
                     else:
                         yield c.web_id(), c.web_title(), c
 
-class TargetGeneWebEpigenomesLoader:
+class InteractingGeneWebEpigenomesLoader:
     def __init__(self, args, siteInfo):
         self.args = args
         self.ontology = Ontology()
@@ -66,14 +66,14 @@ class TargetGeneWebEpigenomesLoader:
         byAssembly = {}
 
         m = MetadataWS(Datasets.all_mouse)
-        target_gene = TargetGeneMetadata().epigenomes
+        interacting_gene = InteractingGeneMetadata().epigenomes
         combined = Epigenomes("ROADMAP + ENCODE", "hg19")
-        combined.epis = target_gene.epis
+        combined.epis = interacting_gene.epis
         byAssembly["hg19"] = combined
 
         self.byAssemblyAssays = defaultdict(lambda : defaultdict(None))
         for assembly in ["hg19"]:
-            for assays in ["TargetGene"]:
+            for assays in ["InteractingGene"]:
                 epis = byAssembly[assembly].GetByAssays(assays)
                 if epis:
                     epis = [WebEpigenome(self.args, epi, assays, self.ontology) for epi in epis]
@@ -91,7 +91,7 @@ class TargetGeneWebEpigenomesLoader:
     def SelectorNames(self):
         ret = []
         for assembly in ["hg19"]:
-            for assays in ["TargetGene"]:
+            for assays in ["InteractingGene"]:
                 epis = self.GetByAssemblyAndAssays(assembly, assays)
                 for epi in epis.epis:
                     ret.append(epi.SelectorName())
@@ -100,7 +100,7 @@ class TargetGeneWebEpigenomesLoader:
     def getWebIDsFromExpIDs(self, assembly, expIDs):
         ret = {}
         total = 0
-        for assays in ["TargetGene"]:
+        for assays in ["InteractingGene"]:
             epis = self.GetByAssemblyAndAssays(assembly, assays)
             ret[assays] = epis.getWebIDsFromExpIDs(expIDs)
             total += len(ret[assays])
@@ -114,14 +114,14 @@ class WebEpigenome:
         self.assays = assays
         self.ontology = ontology
 
-        if len(self.epi.TargetGene()) > 1:
+        if len(self.epi.InteractingGene()) > 1:
             print self.epi
-            for e in self.epi.TargetGene():
+            for e in self.epi.InteractingGene():
                 print "\t", e
             raise Exception("multiple TAD experiments found")
 
-        if "TargetGene" == self.assays:
-            self.TargetGene = epi.TargetGene()[0]
+        if "InteractingGene" == self.assays:
+            self.InteractingGene = epi.InteractingGene()[0]
         else:
             raise Exception("unknown assay type " + self.assays)
 
@@ -202,8 +202,8 @@ class WebEpigenome:
         return self.web_id() in ["gm12878_select"]
 
     def exps(self):
-        if "TargetGene" == self.assays:
-            return [self.TargetGene]
+        if "InteractingGene" == self.assays:
+            return [self.InteractingGene]
         raise Exception("unknown assay type " + self.assays)
 
     def tadFnp(self):

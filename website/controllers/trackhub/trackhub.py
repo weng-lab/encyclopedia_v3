@@ -7,7 +7,7 @@ import StringIO
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.trackhub import TrackHub
-from common.trackhub_target_gene import TrackHubTargetGene
+from common.trackhub_interacting_gene import TrackHubInteractingGene
 from common.trackhub_washu import TrackHubWashu
 from common.genes import LookupGenes
 from common.dbsnps import dbSnps
@@ -100,8 +100,8 @@ class TrackhubSite(object):
         if not row:
             raise Exception("uuid not found")
 
-        if AssayType.TargetGene == row["assayType"]:
-            th = TrackHubTargetGene(self.args, self.wepigenomes, self.urlStatus, row)
+        if AssayType.InteractingGene == row["assayType"]:
+            th = TrackHubInteractingGene(self.args, self.wepigenomes, self.urlStatus, row)
         else:
             th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
 

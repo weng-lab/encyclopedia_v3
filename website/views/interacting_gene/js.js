@@ -220,8 +220,8 @@ $(document).ready(function(){
     $("#firstGalleryPane").click(function(event){
         var fd = {"assembly":"hg19",
                   "loci":"chr4:83910641-84311040",
-                  "assays":"TargetGene",
-                  "hg19TargetGene":["gm12878_select"]
+                  "assays":"InteractingGene",
+                  "hg19InteractingGene":["gm12878_select"]
                  };
         processFormSubmitRet(event, "ucsc", fd);
     });

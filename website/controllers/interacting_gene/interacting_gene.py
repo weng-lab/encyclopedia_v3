@@ -14,24 +14,24 @@ from common.epigenome_stats import EpigenomeStats
 from common.genes import LookupGenes
 from common.parse_search_box import ParseSearchBox
 from common.session import Sessions
-from common.site_info import TargetGeneSiteInfo
+from common.site_info import InteractingGeneSiteInfo
 from common.tables import DbTables
 from common.trackhub import TrackHub
 from common.trackhub_washu import TrackHubWashu
 from common.ucsc_search import UcscSearch
 
-from models.target_gene.defaults import TargetGeneDefaults
-from models.target_gene.epigenome_stats import EpigenomeStats
+from models.interacting_gene.defaults import InteractingGeneDefaults
+from models.interacting_gene.epigenome_stats import EpigenomeStats
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
 from templates import Templates
 
-class TargetGeneSite(object):
+class InteractingGeneSite(object):
     def __init__(self, DBCONN, args, wepigenomes, staticDir):
         self.args = args
 
-        self.siteInfo = TargetGeneSiteInfo
+        self.siteInfo = InteractingGeneSiteInfo
         self.db = DbTrackhub(DBCONN)
         self.db_bed_overlap = DbBedOverlap(DBCONN)
         self.sessions = Sessions(DBCONN)
@@ -39,7 +39,7 @@ class TargetGeneSite(object):
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
         self.wepigenomes = wepigenomes
-        self.defaults = TargetGeneDefaults()
+        self.defaults = InteractingGeneDefaults()
         self.epigenome_stats = EpigenomeStats(self.wepigenomes, self.siteInfo)
         self.staticDir = staticDir
 
@@ -54,7 +54,7 @@ class TargetGeneSite(object):
 
     @cherrypy.expose
     def index(self, *args, **params):
-        return self.templates("target_gene/index",
+        return self.templates("interacting_gene/index",
                               epigenomes = self.wepigenomes,
                               defaults = self.defaults,
                               stats = self.epigenome_stats,
@@ -148,11 +148,11 @@ class TargetGeneSite(object):
     @cherrypy.expose
     def missing(self, *args, **params):
         if not args:
-            return self.templates("target_gene/missing_list")
+            return self.templates("interacting_gene/missing_list")
         row = [args[0], args[1], "[]", "loci", "hubNum"]
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
-        return self.templates("target_gene/missing",
+        return self.templates("interacting_gene/missing",
                               missing = missing)
 
     @cherrypy.expose

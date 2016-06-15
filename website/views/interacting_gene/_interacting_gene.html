@@ -3,21 +3,21 @@
     <tr>
       <td colspan="2" id="jumboTD">
         <div class="jumbotron" id="jumboHeader" style="background-color: #c8dcff;">
-          {% include 'target_gene/_blurb.html' -%}
+          {% include 'interacting_gene/_blurb.html' -%}
         </div>
         <a href="#search"></a>
-        <span id="searchTitle"><p>Search Target Gene Regions</span>
+        <span id="searchTitle"><p>Search Interacting Gene Regions</span>
       </td>
 
       <td colspan="2">
-        {% include 'target_gene/_gallery.html' -%}
+        {% include 'interacting_gene/_gallery.html' -%}
       </td>
     </tr>
 
     <tr>
       <td colspan="2">
         {{ hh.badge(1, "Select genome") }}
-        {% include 'target_gene/_genome_buttons.html' -%}
+        {% include 'interacting_gene/_genome_buttons.html' -%}
       </td>
     </tr>
 
@@ -27,9 +27,9 @@
         <div style="display: inline-block;">
              <input type="text" name="loci" id="lociSearchBox" value="{{defaults["hg19"]["pos"]}}">
              <br>
-             {% include 'target_gene/_examples.html' -%}
+             {% include 'interacting_gene/_examples.html' -%}
         </div>
-        {% include 'target_gene/_browser_buttons.html' -%}
+        {% include 'interacting_gene/_browser_buttons.html' -%}
       </td>
     </tr>
 
@@ -44,10 +44,10 @@
     <tr>
       <td colspan="4">
         {{ hh.badge(3, "Select assays<br>and cell types") }}
-        {% include 'target_gene/_cell_type_buttons.html' -%}
+        {% include 'interacting_gene/_cell_type_buttons.html' -%}
         <br>
         <div id="cellTypeTable">
-          {% include 'target_gene/_cell_type_tables.html' -%}
+          {% include 'interacting_gene/_cell_type_tables.html' -%}
         </div>
       </td>
     </tr>
@@ -59,6 +59,6 @@
 <script>
   var selectorNames = {{epigenomes.SelectorNames()}};
   var annotationDefaults = {{defaults.json()}};
-  {% include 'target_gene/js.js' -%}
+  {% include 'interacting_gene/js.js' -%}
 </script>
 <script src="../static/jquery.serialize-object.min.js"></script>
