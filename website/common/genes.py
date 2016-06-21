@@ -2,7 +2,7 @@
 
 import os, sys, json, psycopg2, argparse, StringIO
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils/'))
 from utils import Utils
 from dbs import DBS
 from files_and_paths import Dirs
@@ -20,7 +20,7 @@ class LookupGenes:
         with getcursor(self.DBCONN, "lookup") as curs:
             curs.execute("""
 SELECT chrom, chromStart, chromEnd FROM {table}
-WHERE gene = %(gene)s
+WHERE lower(gene) = lower(%(gene)s)
 """.format(table=self.tableNames[assembly]),
                              {"gene" : gene})
             if (curs.rowcount > 0):
@@ -31,7 +31,7 @@ WHERE gene = %(gene)s
         with getcursor(self.DBCONN, "lookup") as curs:
             curs.execute("""
 SELECT gene FROM {table}
-WHERE gene ~ %(gene)s
+WHERE gene ~ lower(%(gene)s)
 """.format(table=self.tableNames[assembly]),
                              {"gene" : gene})
             if (curs.rowcount > 0):
@@ -64,7 +64,7 @@ gene text
                   columns=("chrom", "chromStart", "chromEnd", "gene"))
     print "\t", fnp, cur.rowcount
     cur.execute("""
-CREATE INDEX {table}_idx01 ON {table}(gene);
+    CREATE INDEX {table}_idx01 ON {table}(lower(gene));
 """.format(table=table_name))
 
 def setupAll(cur):
