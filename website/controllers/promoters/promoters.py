@@ -1,13 +1,11 @@
 #!/usr/bin/env python
 
-import os, sys, json, cherrypy, jinja2, argparse, time
-import numpy as np
+import os, sys, json, cherrypy, jinja2
 import uuid
-import StringIO
-import zipfile
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.db_bed_overlap import DbBedOverlap
+from common.bulk_download import BulkDownload
 from common.db_trackhub import DbTrackhub
 from common.db_url_status import UrlStatusDB
 from common.dbsnps import dbSnps
@@ -166,38 +164,6 @@ class PromotersSite(object):
     @cherrypy.tools.json_in()
     @cherrypy.tools.json_out()
     def download(self, *args, **params):
-        uid = self.sessions.get(cherrypy.session.id)
-        if not uid:
-            uid = self.makeUid()
-            cherrypy.session["uid"] = uid
-            self.sessions.insert(cherrypy.session.id, uid)
-
-        input_json = cherrypy.request.json
-
-        try:
-            psb = ParseSearchBox(self.wepigenomes, self.dbSnps, self.genes, input_json)
-            if psb.userErrMsg:
-                return { "err" : us.psb.userErrMsg }
-        except:
-            raise
-            return { "err" : "internal download error"}
-
-        epis = self.wepigenomes.GetByAssemblyAndAssays(psb.assembly, psb.assays)
-        epis = filter(lambda e: e.web_id() in psb.tissue_ids, epis.epis)
-
-        timestr = time.strftime("%Y%m%d-%H%M%S")
-        outFn = timestr + '-' + '-'.join([self.siteInfo.name, psb.assembly,
-                                          psb.assays]) + ".zip"
-        outFnp = os.path.join(self.staticDir, "downloads", uid, outFn)
-        Utils.ensureDir(outFnp)
-
-        with zipfile.ZipFile(outFnp, mode='w', compression = zipfile.ZIP_STORED) as a:
-            for wepi in epis:
-                fnp = wepi.predictionFnp().replace(".bigBed", ".bed.gz")
-                if not os.path.exists(fnp):
-                    continue
-                a.write(fnp, arcname = os.path.basename(fnp))
-        print("wrote", outFnp)
-
-        url = os.path.join(self.host, "static", "downloads", uid, outFn)
-        return {"url" : url}
+        bd = BulkDownload(self.sessions, self.wepigenomes, self.dbSnps, self.genes, self.host,
+                          self.siteInfo, self.staticDir)
+        return bd.download()

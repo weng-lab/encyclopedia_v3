@@ -85,7 +85,7 @@ def main():
     import psycopg2.pool
     DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
-    adb = AnnotationDB(DBCONN)
+    adb = UrlStatusDB(DBCONN)
     adb.setupDB()
 
 if __name__ == '__main__':
