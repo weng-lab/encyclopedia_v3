@@ -191,13 +191,15 @@ class EnhancersSite(object):
         outFnp = os.path.join(self.staticDir, "downloads", uid, outFn)
         Utils.ensureDir(outFnp)
 
+        counter = 0
         with zipfile.ZipFile(outFnp, mode='w', compression = zipfile.ZIP_STORED) as a:
             for wepi in epis:
                 fnp = wepi.predictionFnp().replace(".bigBed", ".bed.gz")
                 if not os.path.exists(fnp):
                     continue
                 a.write(fnp, arcname = os.path.basename(fnp))
-        print("wrote", outFnp)
+                counter += 1
+        print("wrote", outFnp, counter)
 
         url = os.path.join(self.host, "static", "downloads", uid, outFn)
         return {"url" : url}
