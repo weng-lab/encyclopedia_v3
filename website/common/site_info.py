@@ -1,4 +1,4 @@
-from common.enums import AssayType
+from enums import AssayType
 
 class EnhancersSiteInfo:
     site = "enhancers"

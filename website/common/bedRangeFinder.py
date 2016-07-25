@@ -3,6 +3,7 @@
 import os, sys, json, psycopg2, argparse, fileinput, StringIO
 
 from web_epigenomes import WebEpigenomesLoader
+from site_info import EnhancersSiteInfo, PromotersSiteInfo
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
 from utils import Utils, printWroteNumLines
@@ -47,24 +48,31 @@ AND startend && int4range(134054000, 134071000)
 def build(args, conn, cur):
     setupDB(cur)
 
-    epigenomes = WebEpigenomesLoader(args)
-    for assembly in ["hg19", "mm10"]:
-        for assays in ["H3K27ac", "DNase"]:
-            epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
-            for epi in epis.epis:
-                for exp in epi.exps():
-                    try:
-                        bedFnp, bedAssembly = exp.getIDRnarrowPeak(args)
-                        if not bedFnp:
-                            print exp.getIDRnarrowPeak(args)
-                            print "missing", exp
-                        else:
-                            insertFiles(cur, exp.encodeID, bedFnp, bedAssembly)
-                    except Exception, e:
-                        print str(e)
-                        print "bad exp:", exp
-                conn.commit()
+    bedFnps = set()
+    
+    for siteInfo in [EnhancersSiteInfo, PromotersSiteInfo]:
+        epigenomes = WebEpigenomesLoader(args, siteInfo)
+        for assembly in ["hg19", "mm10"]:
+            for assays in [siteInfo.histMark, "DNase"]:
+                epis = epigenomes.GetByAssemblyAndAssays(assembly, assays)
+                for epi in epis.epis:
+                    for exp in epi.exps():
+                        try:
+                            bedFnp, bedAssembly = exp.getIDRnarrowPeak(args)
+                            if not bedFnp:
+                                print exp.getIDRnarrowPeak(args)
+                                print "missing", exp
+                            else:
+                                bedFnps.add((exp.encodeID, bedFnp, bedAssembly))
+                        except Exception, e:
+                            print str(e)
+                            print "bad exp:", exp
+                    conn.commit()
 
+    print("found", len(bedFnps))
+    for b in bedFnps:
+        insertFiles(cur, b[0], b[1], b[2])
+        
     for assembly in ["mm10", "hg19"]:
         print "indexing", assembly, "chrom"
         cur.execute("""

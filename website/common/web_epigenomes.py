@@ -10,7 +10,7 @@ import numpy as np
 from natsort import natsorted
 
 from roadmap import RoadmapMetadata
-from common.ontology.ontology import Ontology
+from ontology.ontology import Ontology
 from enums import AssayType
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
