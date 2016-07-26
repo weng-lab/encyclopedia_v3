@@ -53,6 +53,7 @@ class BulkDownload:
             for wepi in epis:
                 fnp = wepi.predictionFnp().replace(".bigBed", ".bed.gz")
                 if not os.path.exists(fnp):
+                    print("missing", fnp)
                     continue
                 a.write(fnp, arcname = os.path.basename(fnp))
                 counter += 1

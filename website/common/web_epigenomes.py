@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import os, sys, json, argparse
 from collections import defaultdict
 from itertools import groupby
@@ -134,14 +136,14 @@ class WebEpigenome:
         self.histones = None
 
         if len(self.epi.DNase()) > 1:
-            print self.epi
+            print(self.epi)
             for e in self.epi.DNase():
-                print "\t", e
+                print("\t", e)
             raise Exception("multiple DNase experiments found")
         if len(self.epi.Histone(self.histMark)) > 1:
-            print self.epi
+            print(self.epi)
             for e in self.epi.Histone(self.histMark):
-                print "\t", e
+                print("\t", e)
             raise Exception("multiple " + self.histMark + " experiments found")
 
         if "BothDNaseAnd" + self.histMark == self.assays:
@@ -207,7 +209,7 @@ class WebEpigenome:
                    "a24w" : 22 + 24*7,
                    "other" : 1000 }
         if pa not in lookup:
-            print "ERROR: missing ageDays", pa
+            print("ERROR: missing ageDays", pa)
             return 999
         return lookup[pa]
 
@@ -262,19 +264,21 @@ class WebEpigenome:
         fnp = self.enhancerLikePredictionFnp()
         ret = os.path.exists(fnp)
         if not ret:
-            print "missing", self.epi.assembly, os.path.basename(fnp)
-            print fnp
+            print("enhancerLikePredictionFnpExists", "missing", self.epi.assembly, os.path.basename(fnp))
+            print("\t-->", fnp)
         return ret
 
     def promoterLikePredictionFnp(self):
-        return self.epi.promoterLikeFnp(self.assays, self.DNase, self.histones)
+        fnp = self.epi.promoterLikeFnp(self.assays, self.DNase, self.histones)
+        return fnp
 
     def promoterLikePredictionFnpExists(self):
         fnp = self.promoterLikePredictionFnp()
         ret = os.path.exists(fnp)
         if not ret:
-            print "missing", self.epi.assembly, os.path.basename(fnp)
-            print fnp
+            print("promoterLikePredictionFnpExists", "missing",
+                  self.epi.assembly, os.path.basename(fnp))
+            print("\t-->", fnp)
         return ret
 
     def predictionFnp(self):

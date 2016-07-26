@@ -144,7 +144,7 @@ class RoadmapEpigenome:
         return os.path.join(path, fn)
 
     def promoterLikeFnp(self, assays, DNase, H3K27ac):
-        path = Dirs.enhancerTracks
+        path = Dirs.promoterTracks
         if "H3K4me3" == assays:
             fn = "{eid}_H3K4me3_predictions.bigBed".format(eid = self.eid)
         elif "DNase" == assays:
