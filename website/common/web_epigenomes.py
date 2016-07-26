@@ -67,34 +67,43 @@ class WebEpigenomesLoader:
         self.ontology = Ontology()
         self.histMark = siteInfo.histMark
         self.assayType = siteInfo.assayType
-
-        byAssembly = {}
-
-        m = MetadataWS(Datasets.all_mouse)
-        byAssembly["mm10"] = m.chipseq_tf_annotations_mm10()
-
-        roadmap = RoadmapMetadata(self.histMark, self.assayType).epigenomes
-
-        combined = Epigenomes("ROADMAP + ENCODE", "hg19")
-        if 1:
-            m = MetadataWS(Datasets.all_human)
-            encodeHg19 = m.chipseq_tf_annotations_hg19()
-            combined.epis = encodeHg19.epis + roadmap.epis
-        else:
-            combined.epis = roadmap.epis
-        byAssembly["hg19"] = combined
-
         self.byAssemblyAssays = defaultdict(lambda : defaultdict(None))
-        for assembly in ["mm10", "hg19"]:
-            for assays in ["BothDNaseAnd" + self.histMark, self.histMark, "DNase"]:
-                epis = byAssembly[assembly].GetByAssays(assays)
-                if epis:
-                    epis = [WebEpigenome(self.args, epi, assays,
-                                         self.ontology, self.histMark, self.assayType)
-                            for epi in epis]
-                    self.byAssemblyAssays[assembly][assays] = WebEpigenomes(
-                        self.args, assembly, assays, epis)
 
+        allAssays = ["BothDNaseAnd" + self.histMark, self.histMark, "DNase"]
+
+        # mouse
+        m = MetadataWS(Datasets.all_mouse)
+        epigenomes = m.chipseq_tf_annotations_mm10()
+        for assays in allAssays:
+            self._loadEpigenomes("mm10", epigenomes, assays)
+
+        # human
+        roadmap = RoadmapMetadata(self.histMark, self.assayType).epigenomes
+        m = MetadataWS(Datasets.all_human)
+        encodeHg19 = m.chipseq_tf_annotations_hg19()
+        combined = Epigenomes("ROADMAP + ENCODE", "hg19")
+        combined.epis = encodeHg19.epis + roadmap.epis
+        for assays in allAssays:
+            self._loadEpigenomes("hg19", combined, assays)
+
+    def _loadEpigenomes(self, assembly, epigenomes, assays):
+        epis = epigenomes.GetByAssays(assays)
+        if not epis:
+            return
+        wepis = []
+        for epi in epis:
+            if AssayType.Promoter == self.assayType:
+                if epi.isRoadmap:
+                    if assays.startswith("Both"):
+                        # no human ROADMAP dual-ranked predictions
+                        continue
+            we = WebEpigenome(self.args, epi, assays,
+                              self.ontology, self.histMark, self.assayType)
+            wepis.append(we)
+
+        self.byAssemblyAssays[assembly][assays] = WebEpigenomes(
+            self.args, assembly, assays, wepis)
+        
     def GetByAssemblyAndAssays(self, assembly, assays):
         return self.byAssemblyAssays[assembly][assays]
 

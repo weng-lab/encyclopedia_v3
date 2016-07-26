@@ -22,7 +22,8 @@ class RoadmapExp:
         self.biosample_type = biosample_type
         self.age = None
         self.histMark = histMark
-
+        self.isRoadmap = True
+        
         self.files = None
         if files.strip():
             fn = eid + '-' + self.histMark + ".fc.signal.bigwig"
@@ -72,7 +73,8 @@ class RoadmapEpigenome:
         self.eid = eid
         self.histMark = histMark
         self.assayType = assayType
-
+        self.isRoadmap = True
+        
         self.DNaseExp = None
         if DNase.files:
             self.DNaseExp = DNase
