@@ -126,10 +126,10 @@ class PromotersSite(object):
             psb = ParseSearchBox(self.wepigenomes, self.dbSnps, self.genes, input_json)
             coord = psb.search()
             if coord:
-                expIDs = self.db.findBedOverlap(psb.assembly,
-                                                coord.chrom,
-                                                coord.start,
-                                                coord.end)
+                expIDs = self.db_bed_overlap.findBedOverlap(psb.assembly,
+                                                            coord.chrom,
+                                                            coord.start,
+                                                            coord.end)
                 ret = self.wepigenomes.getWebIDsFromExpIDs(psb.assembly,
                                                           expIDs)
             if psb.userErrMsg:
