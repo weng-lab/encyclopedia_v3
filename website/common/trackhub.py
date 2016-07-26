@@ -96,8 +96,8 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         lines += [self.genes()]
 
         for wepi in sorted(epis, key=lambda e: e.epi.biosample_term_name):
+            lines += [self.predictionTrackHub(wepi)]
             if self.assays.startswith("BothDNaseAnd"):
-                lines += [self.predictionTrackHub(wepi)]
                 if AssayType.Enhancer == self.assayType:
                     lines += [self.compositeTrack(wepi)]
             for exp in wepi.exps():
