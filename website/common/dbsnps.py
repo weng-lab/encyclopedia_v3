@@ -2,7 +2,7 @@
 
 import os, sys, json, psycopg2, argparse
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
+sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils/'))
 from utils import Utils
 from dbs import DBS
 from files_and_paths import Dirs
@@ -76,8 +76,7 @@ def main():
     DBCONN = psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
 
     with getcursor(DBCONN, "main") as cur:
-        if 0:
-            setupAll(cur)
+        setupAll(cur)
 
 if __name__ == '__main__':
     main()
