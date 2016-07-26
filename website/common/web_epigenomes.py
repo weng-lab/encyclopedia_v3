@@ -263,7 +263,7 @@ class WebEpigenome:
     def enhancerLikePredictionFnpExists(self):
         fnp = self.enhancerLikePredictionFnp()
         ret = os.path.exists(fnp)
-        if not ret:
+        if self.args.debug and not ret:
             print("enhancerLikePredictionFnpExists", "missing", self.epi.assembly, os.path.basename(fnp))
             print("\t-->", fnp)
         return ret
@@ -275,7 +275,7 @@ class WebEpigenome:
     def promoterLikePredictionFnpExists(self):
         fnp = self.promoterLikePredictionFnp()
         ret = os.path.exists(fnp)
-        if not ret:
+        if self.args.debug and not ret:
             print("promoterLikePredictionFnpExists", "missing",
                   self.epi.assembly, os.path.basename(fnp))
             print("\t-->", fnp)
