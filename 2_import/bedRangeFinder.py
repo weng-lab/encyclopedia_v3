@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import os, sys, json, psycopg2, argparse, fileinput, StringIO
 
+sys.path.append(os.path.join(os.path.dirname(__file__), "../website/common/"))
 from web_epigenomes import WebEpigenomesLoader
 from site_info import EnhancersSiteInfo, PromotersSiteInfo
 
@@ -33,7 +36,7 @@ def insertFiles(cur, expID, fnp, assembly):
     outF.seek(0)
     cur.copy_from(outF, "bedRanges" + assembly, '\t',
                   columns=("chrom", "startend", "expID"))
-    print "\t", fnp, cur.rowcount
+    print("\t", fnp, cur.rowcount)
 
 def test(cur):
     # check chr1:134054000-134071000
@@ -43,7 +46,7 @@ FROM bedRangesmm10
 WHERE chrom = 'chr1'
 AND startend && int4range(134054000, 134071000)
 """)
-    print cur.fetchall()
+    print(cur.fetchall())
 
 def build(args, conn, cur):
     setupDB(cur)
@@ -60,26 +63,26 @@ def build(args, conn, cur):
                         try:
                             bedFnp, bedAssembly = exp.getIDRnarrowPeak(args)
                             if not bedFnp:
-                                print exp.getIDRnarrowPeak(args)
-                                print "missing", exp
+                                print(exp.getIDRnarrowPeak(args))
+                                print("missing", exp)
                             else:
                                 bedFnps.add((exp.encodeID, bedFnp, bedAssembly))
                         except Exception, e:
-                            print str(e)
-                            print "bad exp:", exp
-                    conn.commit()
+                            print(str(e))
+                            print("bad exp:", exp)
 
     print("found", len(bedFnps))
-    for b in bedFnps:
+    for b in sorted(bedFnps):
         insertFiles(cur, b[0], b[1], b[2])
+        conn.commit()
         
     for assembly in ["mm10", "hg19"]:
-        print "indexing", assembly, "chrom"
+        print("indexing", assembly, "chrom")
         cur.execute("""
 CREATE INDEX chromIdx{assembly} ON bedRanges{assembly}(chrom);
 """.format(assembly = assembly))
 
-        print "indexing", assembly, "startend"
+        print("indexing", assembly, "startend")
         cur.execute("""
 CREATE INDEX rangeIdx{assembly} ON bedRanges{assembly} USING gist (startend);
 """.format(assembly = assembly))
@@ -105,7 +108,7 @@ def main():
         with conn.cursor() as cur:
             if args.rebuild:
                 return build(args, conn, cur)
-            test(cur)
+            #test(cur)
 
 if __name__ == '__main__':
     main()
