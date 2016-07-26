@@ -44,7 +44,7 @@ class BulkDownload:
 
         timestr = time.strftime("%Y%m%d-%H%M%S")
         outFn = timestr + '-' + '-'.join([self.siteInfo.name, psb.assembly,
-                                          psb.assays]) + ".zip"
+                                          psb.assays]) + ".v3.zip"
         outFnp = os.path.join(self.staticDir, "downloads", uid, outFn)
         Utils.ensureDir(outFnp)
 
