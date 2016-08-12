@@ -14,6 +14,7 @@ from controllers.promoters.promoters import PromotersSite
 from controllers.hic.hic import HiCSite
 from controllers.trackhub.trackhub import TrackhubSite
 from controllers.tutorial.tutorial import TutorialSite
+from controllers.v4 import VersionFour
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../metadata/utils'))
 from dbs import DBS
@@ -117,6 +118,9 @@ def main():
     cherrypy.tree.mount(TutorialSite(DBCONN, args, mainIndex.staticDir),
                         '/tutorial',
                         config=getRootConfig("tutorial"))
+    cherrypy.tree.mount(VersionFour(),
+                        '/v4',
+                        config=getRootConfig("versionFour"))
 
     if args.dev:
         cherrypy.config.update({'server.environment': "development", })
