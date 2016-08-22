@@ -204,7 +204,10 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         bigWigs = bigWigFilters(self.assembly, exp.files)
 
         if not bigWigs:
-            raise Exception("missing bigWigs for " + exp.encodeID)
+            if "mm10" == self.assembly:
+                bigWigs = bigWigFilters("mm10-minimal", exp.files)
+                if not bigWigs:
+                    raise Exception("missing bigWigs for " + exp.encodeID + " assembly " + self.assembly)
         bigWig = bigWigs[0]
 
         url = bigWig.url
