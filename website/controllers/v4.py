@@ -11,4 +11,4 @@ class VersionFour:
 
     @cherrypy.expose
     def index(self, *args, **params):
-        return self.templates('v4')
+        raise cherrypy.HTTPRedirect("http://zlab-annotations-v4.umassmed.edu")
