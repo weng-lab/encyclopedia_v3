@@ -2,12 +2,14 @@
 
 import os, sys, json
 
+from common.urls import BIB5
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from epigenome import Epigenomes
 from helpers_metadata import ExpFile
 from files_and_paths import Dirs
 
-UrlBase = "http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/convert/"
+UrlBase = os.path.join(BIB5, "Target-Gene-Prediction-Tracks/convert/")
 
 class InteractingGeneExp:
     def __init__(self):

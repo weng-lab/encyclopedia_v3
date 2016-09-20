@@ -6,7 +6,7 @@ type bigGenePred
 itemRgb on
 visibility pack
 priority 1
-bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/eQTL.bigGenePred
+bigDataUrl http://bib7.umassmed.edu/~purcarom/bib5/annotations_demo/Target-Gene-Prediction-Tracks/eQTL.bigGenePred
 
 track Aiden-Lab-HiC-Links
 shortLabel Aiden-Lab-HiC-Links
@@ -16,7 +16,7 @@ type bigGenePred
 itemRgb on
 visibility pack
 priority 2
-bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/HiC.bigGenePred
+bigDataUrl http://bib7.umassmed.edu/~purcarom/bib5/annotations_demo/Target-Gene-Prediction-Tracks/HiC.bigGenePred
 
 track POL2-ChIAPet-Links
 shortLabel POL2-ChIAPet-Links
@@ -26,7 +26,7 @@ type bigGenePred
 itemRgb on
 visibility pack
 priority 3
-bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/POL2-ChIAPet.bigGenePred
+bigDataUrl http://bib7.umassmed.edu/~purcarom/bib5/annotations_demo/Target-Gene-Prediction-Tracks/POL2-ChIAPet.bigGenePred
 
 track RAD21-ChIAPet-Links
 shortLabel RAD21-ChIAPet-Links
@@ -36,7 +36,7 @@ type bigGenePred
 itemRgb on
 visibility pack
 priority 4
-bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Target-Gene-Prediction-Tracks/RAD21-ChIAPet.bigGenePred
+bigDataUrl http://bib7.umassmed.edu/~purcarom/bib5/annotations_demo/Target-Gene-Prediction-Tracks/RAD21-ChIAPet.bigGenePred
 
 track GM12878_enhancer-like
 type bigBed 9
@@ -45,7 +45,7 @@ longLabel GM12878 enhancer-like
 itemRgb on
 visibility dense
 priority 5
-bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Enhancer-Prediction-Tracks/March-2016/ENCSR000EMT_ENCSR000AKC_predictions.bigBed
+bigDataUrl http://bib7.umassmed.edu/~purcarom/bib5/annotations_demo/Enhancer-Prediction-Tracks/March-2016/ENCSR000EMT_ENCSR000AKC_predictions.bigBed
 
 
 track GM12878_promoter-like
@@ -55,7 +55,7 @@ longLabel GM12878 promoter-like
 itemRgb on
 visibility dense
 priority 6
-bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/Promoter-Prediction-Tracks/ENCSR000EMT_ENCSR000DRY_predictions.bigBed
+bigDataUrl http://bib7.umassmed.edu/~purcarom/bib5/annotations_demo/Promoter-Prediction-Tracks/ENCSR000EMT_ENCSR000DRY_predictions.bigBed
 
 track composite2
 container multiWig
@@ -70,7 +70,7 @@ priority 7
 html examplePage
 
                 track composite2Histone
-                bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/encode_norm/ENCSR000AKC/ENCFF000ASJ.norm.bigWig
+                bigDataUrl http://bib7.umassmed.edu/~purcarom/bib5/annotations_demo/encode_norm/ENCSR000AKC/ENCFF000ASJ.norm.bigWig
                 shortLabel H3K27ac
                 longLabel H3K27ac
                 parent composite2
@@ -78,7 +78,7 @@ html examplePage
                 color 18,98,235
 
                 track composite2DNase
-                bigDataUrl http://bib5.umassmed.edu/~purcarom/annotations_demo/encode_norm/ENCSR000EMT/ENCFF001CUH.norm.bigWig
+                bigDataUrl http://bib7.umassmed.edu/~purcarom/bib5/annotations_demo/encode_norm/ENCSR000EMT/ENCFF001CUH.norm.bigWig
                 shortLabel DNase
                 longLabel DNase
                 parent composite2

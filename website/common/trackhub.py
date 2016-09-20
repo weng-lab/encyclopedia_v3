@@ -3,7 +3,8 @@
 import os, sys, json
 import StringIO
 
-from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
+from urls import BIB5
+from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, TempWrap
 from enums import AssayType
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))

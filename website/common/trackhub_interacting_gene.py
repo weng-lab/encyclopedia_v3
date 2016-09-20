@@ -1,9 +1,11 @@
 import os, sys, json
 import StringIO
 
+from urls import BIB5
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.trackhub import TrackHub
-from common.helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, BIB5, TempWrap
+from common.helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters, TempWrap
 
 from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors, GetTrackColorSignal
 from common.labs import Labs

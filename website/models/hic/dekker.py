@@ -2,12 +2,14 @@
 
 import os, sys, json
 
+from common.urls import BIB5base
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from epigenome import Epigenomes
 from helpers_metadata import ExpFile
 from files_and_paths import Dirs
 
-UrlBase = "http://bib5.umassmed.edu/~purcarom/hic-Dekker/tads/"
+UrlBase = os.path.join(BIB5base, "hic-Dekker/tads/")
 
 TADS = { "SK-N-DZ" : "ENCODE3-SKNDZ-HindIII__hg19__ucsc/ENCODE3-SKNDZ-HindIII__hg19__genome__C-40000-iced.tads.bed",
          "SK-MEL-5" : "ENCODE3-SKMEL5-HindIII__hg19__ucsc/ENCODE3-SKMEL5-HindIII__hg19__genome__C-40000-iced.tads.bed",

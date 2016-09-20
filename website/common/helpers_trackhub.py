@@ -1,9 +1,9 @@
 import sys, os
 
+from urls import BIB5
+
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 from common.colors_trackhub import PredictionTrackhubColors, EncodeTrackhubColors, OtherTrackhubColors
-
-BIB5 = "http://bib5.umassmed.edu/~purcarom/annotations_demo/"
 
 class TempWrap:
     def __init__(self, expID, fileID):
