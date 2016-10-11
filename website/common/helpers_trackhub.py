@@ -21,7 +21,7 @@ def rgb_to_hex(rgbStr):
     return '#%02x%02x%02x' % rgb
 
 def bedFilters(assembly, files):
-    files = filter(lambda x: x.assembly == assembly, files)
+    files = filter(lambda x: x.assembly.startswith(assembly), files)
     bfs = [lambda x: x.isBedNarrowPeak() and '1' in x.bio_rep and '2' in x.bio_rep,
            lambda x: x.isBedNarrowPeak() and x.bio_rep == '1',
            lambda x: x.isBedNarrowPeak(),
@@ -35,7 +35,7 @@ def bedFilters(assembly, files):
             return beds
 
 def bigWigFilters(assembly, files):
-    files = filter(lambda x: x.isBigWig() and x.assembly == assembly, files)
+    files = filter(lambda x: x.isBigWig() and x.assembly.startswith(assembly), files)
     bfs = [lambda x: x.output_type == "fold change over control" and x.isPooled,
            lambda x: x.output_type == "fold change over control" and '1' in x.bio_rep,
            lambda x: x.output_type == "fold change over control" and '2' in x.bio_rep,
@@ -176,4 +176,6 @@ urlLabel Vista Enhancer Browser
 bedNameLabel VISTA Enhancers (elementID:organismID(1 for human, 2 for mouse))
 html http://portal.nersc.gov/dna/RD/ChIP-Seq/VISTA_enhancer_e/VistaEnhancerTrackHub/enhancerAssay.html
 visibility full"""}
+    if "assembly" == "mm10-minimal":
+        return byAssembly["mm10"]
     return byAssembly[assembly]
