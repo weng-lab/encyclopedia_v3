@@ -172,8 +172,7 @@ class TrackHubWashu:
                                bigWig.fileID + ".bigWig")
 
         if not bigWig.expID.startswith("EN"):
-            url = os.path.join(BIB5, "roadmap/consolidated/",
-                               bigWig.expID,
+            url = os.path.join("http://egg2.wustl.edu/roadmap/data/byFileType/signal/consolidated/macs2signal/foldChange/",
                                bigWig.fileID + '-' + assay + ".fc.signal.bigwig")
 
         if norm:
