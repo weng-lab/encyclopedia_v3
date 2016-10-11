@@ -171,6 +171,11 @@ class TrackHubWashu:
             url = os.path.join(BIB5, "data", bigWig.expID,
                                bigWig.fileID + ".bigWig")
 
+        if not bigWig.expID.startswith("EN"):
+            url = os.path.join(BIB5, "roadmap/consolidated/",
+                               bigWig.expID,
+                               bigWig.fileID + '-' + assay + ".fc.signal.bigwig")
+
         if norm:
             if "mm10" == self.assembly:
                 url = os.path.join(BIB5, "encode_norm", bigWig.expID, bigWig.fileID + ".norm.bigWig")
