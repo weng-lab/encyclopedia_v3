@@ -73,14 +73,14 @@ class WebEpigenomesLoader:
 
         # mouse
         m = MetadataWS(Datasets.all_mouse)
-        epigenomes = m.chipseq_tf_annotations_mm10()
+        epigenomes = m.chipseq_tf_annotations_mm10(date = "2016-05-01")
         for assays in allAssays:
             self._loadEpigenomes("mm10", epigenomes, assays)
 
         # human
         roadmap = RoadmapMetadata(self.histMark, self.assayType).epigenomes
         m = MetadataWS(Datasets.all_human)
-        encodeHg19 = m.chipseq_tf_annotations_hg19()
+        encodeHg19 = m.chipseq_tf_annotations_hg19(date = "2016-05-01")
         combined = Epigenomes("ROADMAP + ENCODE", "hg19")
         combined.epis = encodeHg19.epis + roadmap.epis
         for assays in allAssays:
@@ -105,6 +105,14 @@ class WebEpigenomesLoader:
             self.args, assembly, assays, wepis)
         
     def GetByAssemblyAndAssays(self, assembly, assays):
+        if assembly not in self.byAssemblyAssays:
+            print("missing", assembly)
+            print(self.byAssemblyAssays.keys())
+            raise Exception("missing " + assembly)
+        if assays not in self.byAssemblyAssays[assembly]:
+            print("missing", assays)
+            print(self.byAssemblyAssays[assembly].keys())
+            raise Exception("missing " + assays + " for " + assembly)
         return self.byAssemblyAssays[assembly][assays]
 
     def Walk(self, assembly, assays):
