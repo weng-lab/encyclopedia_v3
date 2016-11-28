@@ -99,7 +99,8 @@ class WebEpigenomesLoader:
                         continue
             we = WebEpigenome(self.args, epi, assays,
                               self.ontology, self.histMark, self.assayType)
-            wepis.append(we)
+            if we.predictionFnpExists():
+                wepis.append(we)
 
         self.byAssemblyAssays[assembly][assays] = WebEpigenomes(
             self.args, assembly, assays, wepis)
