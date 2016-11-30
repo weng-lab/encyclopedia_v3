@@ -14,7 +14,7 @@ from helpers_submit import authenticateEncodeTxt, getFileValidator, submitAnnota
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../utils'))
 from files_and_paths import Dirs, Tools
-from helpers_metadata import QueryDCC
+from querydcc import QueryDCC
 from utils import Utils
 from cache_memcache import MemCacheWrapper
 
