@@ -6,6 +6,7 @@ import os, sys, json, argparse
 from collections import defaultdict
 from itertools import groupby
 import cPickle as pickle
+import dill
 
 import numpy as np
 
@@ -67,10 +68,31 @@ class WebEpigenomesLoader:
         self.ontology = Ontology()
         self.histMark = siteInfo.histMark
         self.assayType = siteInfo.assayType
-        self.byAssemblyAssays = defaultdict(lambda : defaultdict(None))
+
+        def dd():
+            return defaultdict(None)
+        self.byAssemblyAssays = defaultdict(dd)
 
         allAssays = ["BothDNaseAnd" + self.histMark, self.histMark, "DNase"]
 
+        print("WebEpigenomesLoader:", self.histMark, self.assayType)
+        if 0:
+            self._generate(allAssays)
+            fn = "webEpigenomesLoader.byAssemblyAssays.{histMark}.dill".format(histMark = self.histMark)
+            #outFnp = "/data/projects/encode/encyclopedia_v3/
+            outFnp = os.path.join(os.path.dirname(__file__), "../../../", fn)
+            with open(outFnp, 'wb') as f:
+                dill.dump(self.byAssemblyAssays, f)
+            print("wrote", outFnp)
+        else:
+            fn = "webEpigenomesLoader.byAssemblyAssays.{histMark}.dill".format(histMark = self.histMark)
+            #outFnp = "/data/projects/encode/encyclopedia_v3/
+            outFnp = os.path.join(os.path.dirname(__file__), "../../../", fn)
+            with open(outFnp, 'rb') as f:
+                self.byAssemblyAssays = dill.load(f)
+            print("read", outFnp)
+
+    def _generate(self, allAssays):
         if 0:
             # mouse
             m = MetadataWS(Datasets.all_mouse)
@@ -81,7 +103,6 @@ class WebEpigenomesLoader:
             encodeHg19 = m.chipseq_tf_annotations_hg19(date = "2016-05-01")
 
             outFnp = "/data/projects/encode/encyclopedia_v3/webEpigenomesLoader.cpickle"        
-
             with open(outFnp, 'wb') as f:
                 p = pickle.Pickler(f)
                 p.dump(mm10epis)
@@ -177,12 +198,12 @@ class WebEpigenome:
         self.histones = None
 
         if len(self.epi.DNase()) > 1:
-            print("multiple DNase experiments found")
+            #print("multiple DNase experiments found")
             if args.debug:
                 for e in self.epi.DNase():
                     print("\t", e)
         if len(self.epi.Histone(self.histMark)) > 1:
-            print("multiple " + self.histMark + " experiments found")
+            #print("multiple " + self.histMark + " experiments found")
             if args.debug:
                 for e in self.epi.Histone(self.histMark):
                     print("\t", e)
@@ -250,7 +271,7 @@ class WebEpigenome:
                    "a24w" : 22 + 24*7,
                    "other" : 1000 }
         if pa not in lookup:
-            print("ERROR: missing ageDays", pa)
+            #print("ERROR: missing ageDays", pa)
             return 999
         return lookup[pa]
 
