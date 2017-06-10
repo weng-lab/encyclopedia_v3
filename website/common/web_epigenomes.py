@@ -71,20 +71,40 @@ class WebEpigenomesLoader:
 
         allAssays = ["BothDNaseAnd" + self.histMark, self.histMark, "DNase"]
 
-        # mouse
-        m = MetadataWS(Datasets.all_mouse)
-        epigenomes = m.chipseq_tf_annotations_mm10(date = "2016-05-01")
-        for assays in allAssays:
-            self._loadEpigenomes("mm10", epigenomes, assays)
+        if 0:
+            # mouse
+            m = MetadataWS(Datasets.all_mouse)
+            mm10epis = m.chipseq_tf_annotations_mm10(date = "2016-05-01")
 
-        # human
-        roadmap = RoadmapMetadata(self.histMark, self.assayType).epigenomes
-        m = MetadataWS(Datasets.all_human)
-        encodeHg19 = m.chipseq_tf_annotations_hg19(date = "2016-05-01")
-        combined = Epigenomes("ROADMAP + ENCODE", "hg19")
-        combined.epis = encodeHg19.epis + roadmap.epis
+            # human
+            m = MetadataWS(Datasets.all_human)
+            encodeHg19 = m.chipseq_tf_annotations_hg19(date = "2016-05-01")
+
+            outFnp = "/data/projects/encode/encyclopedia_v3/webEpigenomesLoader.cpickle"        
+
+            with open(outFnp, 'wb') as f:
+                p = pickle.Pickler(f)
+                p.dump(mm10epis)
+                p.dump(encodeHg19)
+            print("wrote", outFnp)
+        else:
+            outFnp = os.path.join(os.path.dirname(__file__), "../../../webEpigenomesLoader.cpickle")
+            #outFnp = "/data/projects/encode/encyclopedia_v3/webEpigenomesLoader.cpickle"        
+            with open(outFnp, 'rb') as f:
+                p = pickle.Unpickler(f)
+                mm10epis = p.load()
+                encodeHg19 = p.load()
+            print("read", outFnp)
+
         for assays in allAssays:
-            self._loadEpigenomes("hg19", combined, assays)
+            self._loadEpigenomes("mm10", mm10epis, assays)
+
+        roadmapMetadata = RoadmapMetadata(self.histMark, self.assayType)
+        roadmap = roadmapMetadata.epigenomes
+        hg19epis = Epigenomes("ROADMAP + ENCODE", "hg19")
+        hg19epis.epis = encodeHg19.epis + roadmap.epis
+        for assays in allAssays:
+            self._loadEpigenomes("hg19", hg19epis, assays)
 
     def _loadEpigenomes(self, assembly, epigenomes, assays):
         epis = epigenomes.GetByAssays(assays)
