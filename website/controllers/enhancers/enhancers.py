@@ -147,7 +147,11 @@ class EnhancersSite(object):
     def missing(self, *args, **params):
         if not args:
             return self.templates(self.siteInfo.site + "/missing_list")
-        row = [args[0], args[1], "[]", "loci", "assayType"]
+        row = {"assembly": args[0],
+               "assays": args[1],
+               "tissues": "[]",
+               "loci": "loci",
+               "assayType": "assayType"}
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
         return self.templates(self.siteInfo.site + "/missing",

@@ -147,7 +147,11 @@ class PromotersSite(object):
     def missing(self, *args, **params):
         if not args:
             return self.templates(self.siteInfo.site + "/missing_list")
-        row = [args[0], args[1], "[]", "loci", "hubNum"]
+        row = {"assembly": args[0],
+               "assays": args[1],
+               "tissues": "[]",
+               "loci": "loci",
+               "assayType": "assayType"}
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row,
                       self.histMark, self.assay_type)
         missing = th.showMissing()
