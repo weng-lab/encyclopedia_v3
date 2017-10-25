@@ -1,5 +1,3 @@
 import os
 
-BIB5base = "http://bib7.umassmed.edu/~purcarom/bib5"
-#BIB5base = "http://bib5.umassmed.edu/~purcarom"
-BIB5 = os.path.join(BIB5base, "annotations_demo/")
+BIB5 = os.path.join("http://users.wenglab.org/purcarom/encyclopedia_v3/")

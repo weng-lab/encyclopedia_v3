@@ -1,4 +1,4 @@
-BIB5 = "http://bib5.umassmed.edu/~purcarom/annotations_demo/"
+BIB5 = "http://users.wenglab.org/purcarom/encyclopedia_v3/"
 
 class TempWrap:
     def __init__(self, expID, fileID):
