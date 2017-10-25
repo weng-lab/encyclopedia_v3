@@ -151,7 +151,8 @@ class EnhancersSite(object):
                "assays": args[1],
                "tissues": "[]",
                "loci": "loci",
-               "assayType": "assayType"}
+               "assayType": "assayType",
+               "hubNum": 0}
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
         return self.templates(self.siteInfo.site + "/missing",

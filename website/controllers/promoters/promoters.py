@@ -151,7 +151,8 @@ class PromotersSite(object):
                "assays": args[1],
                "tissues": "[]",
                "loci": "loci",
-               "assayType": "assayType"}
+               "assayType": "assayType",
+               "hubNum": 0}
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row,
                       self.histMark, self.assay_type)
         missing = th.showMissing()
