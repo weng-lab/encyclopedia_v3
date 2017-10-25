@@ -216,7 +216,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
             url = os.path.join(BIB5, "data", bigWig.expID,
                                bigWig.fileID + ".bigWig")
 
-        if norm:
+        if 0 and norm:
             if "mm10" == self.assembly:
                 url = os.path.join(BIB5, "encode_norm", bigWig.expID, bigWig.fileID + ".norm.bigWig")
             else:
