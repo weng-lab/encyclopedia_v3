@@ -212,6 +212,10 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         bigWig = bigWigs[0]
 
         url = bigWig.url
+        if "encodeproject" in url:
+            if not url.endswith("?proxy=true"):
+                url += "?proxy=true"
+        
         if self.urlStatus.find(url) and not self.urlStatus.get(url):
             url = os.path.join(BIB5, "data", bigWig.expID,
                                bigWig.fileID + ".bigWig")
