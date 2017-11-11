@@ -1,5 +1,6 @@
 BIB5 = "http://users.wenglab.org/purcarom/encyclopedia_v3/"
 
+
 class TempWrap:
     def __init__(self, expID, fileID):
         self.expID = expID
@@ -10,10 +11,12 @@ class TempWrap:
     def isBigWig(self):
         return self.url.endswith(".bigWig")
 
+
 def rgb_to_hex(rgbStr):
     # from http://stackoverflow.com/a/214657
     rgb = tuple([int(x) for x in rgbStr.split(',')])
     return '#%02x%02x%02x' % rgb
+
 
 def bedFilters(assembly, files):
     files = filter(lambda x: x.assembly == assembly, files)
@@ -28,6 +31,7 @@ def bedFilters(assembly, files):
         if beds:
             beds = filter(lambda x: not x.isHotSpot(), beds)
             return beds
+
 
 def bigWigFilters(assembly, files):
     files = filter(lambda x: x.isBigWig() and x.assembly == assembly, files)
@@ -49,6 +53,7 @@ def bigWigFilters(assembly, files):
         bigWigs = filter(bf, files)
         if bigWigs:
             return bigWigs
+
 
 class Track(object):
     def __init__(self, desc, priority, url):
@@ -105,16 +110,17 @@ class Track(object):
         typee = self.type
         if "bigBed 8" == typee:
             typee = "hammock"
-        track = {"name" : self.desc,
-                 "type" : typee,
-                 "mode" : "show",
+        track = {"name": self.desc,
+                 "type": typee,
+                 "mode": "show",
                  #"priority " + str(self.priority),
-                 "url" : url}
+                 "url": url}
         if self.color:
             track["colorpositive"] = rgb_to_hex(self.color)
         if self.height:
             track["height"] = int(self.height.split(':')[1])
         return track
+
 
 class PredictionTrack(Track):
     def __init__(self, desc, priority, url):
@@ -122,11 +128,13 @@ class PredictionTrack(Track):
         self.color = "6,218,147"
         self.type = "bigBed 8"
 
+
 class VistaTrack(Track):
     def __init__(self, desc, priority, url):
         super(VistaTrack, self).__init__(desc, priority, url)
         self.color = None
         self.type = "bigBed 5"
+
 
 class BigWigTrack(Track):
     def __init__(self, desc, priority, url, color):
@@ -137,6 +145,7 @@ class BigWigTrack(Track):
         self.visibility = "full"
         self.autoScale = "on"
 
+
 class BigGenePredTrack(Track):
     def __init__(self, desc, priority, url):
         super(BigGenePredTrack, self).__init__(desc, priority, url)
@@ -144,8 +153,9 @@ class BigGenePredTrack(Track):
         self.type = "bigBed 12 + 8"
         self.visibility = "pack"
 
+
 def officialVistaTrack(assembly):
-    byAssembly = {"mm10" : """
+    byAssembly = {"mm10": """
 track VISTAenhancers
 bigDataUrl http://portal.nersc.gov/dna/RD/ChIP-Seq/VISTA_enhancer_e/mm10_ext_latest.bb
 shortLabel VISTA Enhancers
@@ -157,7 +167,7 @@ urlLabel Vista Enhancer Browser (elementID:organismID(1 for human, 2 for mouse))
 bedNameLabel VISTA Enhancers
 html http://portal.nersc.gov/dna/RD/ChIP-Seq/VISTA_enhancer_e/VistaEnhancerTrackHub/enhancerAssay.html
 visibility full""",
-                  "hg19" : """
+                  "hg19": """
 track VISTAenhancers
 bigDataUrl http://portal.nersc.gov/dna/RD/ChIP-Seq/VISTA_enhancer_e/hg19_ext_latest.bb
 shortLabel VISTA Enhancers

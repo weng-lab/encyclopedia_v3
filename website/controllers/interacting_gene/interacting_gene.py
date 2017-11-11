@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 
-import os, sys, json, cherrypy, jinja2, argparse
+import os
+import sys
+import json
+import cherrypy
+import jinja2
+import argparse
 import numpy as np
 import uuid
 import StringIO
@@ -26,6 +31,7 @@ from models.interacting_gene.epigenome_stats import EpigenomeStats
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
 from templates import Templates
+
 
 class InteractingGeneSite(object):
     def __init__(self, DBCONN, args, wepigenomes, staticDir):
@@ -55,10 +61,10 @@ class InteractingGeneSite(object):
     @cherrypy.expose
     def index(self, *args, **params):
         return self.templates("interacting_gene/index",
-                              epigenomes = self.wepigenomes,
-                              defaults = self.defaults,
-                              stats = self.epigenome_stats,
-                              site = self.siteInfo.site)
+                              epigenomes=self.wepigenomes,
+                              defaults=self.defaults,
+                              stats=self.epigenome_stats,
+                              site=self.siteInfo.site)
 
     def makeUid(self):
         return str(uuid.uuid4())
@@ -81,14 +87,14 @@ class InteractingGeneSite(object):
         url = us.configureUcscHubLink()
 
         if us.psb.userErrMsg:
-            return { "err" : us.psb.userErrMsg }
+            return {"err": us.psb.userErrMsg}
 
         if self.args.debug:
-            return {"inner-url" : url,
-                    "html" : self.templates(self.siteInfo.site + "/ucsc",
-                                            us = us,
-                                            url = url)}
-        return {"url" : url}
+            return {"inner-url": url,
+                    "html": self.templates(self.siteInfo.site + "/ucsc",
+                                           us=us,
+                                           url=url)}
+        return {"url": url}
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
@@ -108,14 +114,14 @@ class InteractingGeneSite(object):
         url = us.configureWashuHubLink()
 
         if us.psb.userErrMsg:
-            return { "err" : us.psb.userErrMsg }
+            return {"err": us.psb.userErrMsg}
 
         if self.args.debug:
-            return {"inner-url" : url,
-                    "html" : self.templates(self.siteInfo.site + "/ucsc",
-                                            us = us,
-                                            url = url)}
-        return {"url" : url}
+            return {"inner-url": url,
+                    "html": self.templates(self.siteInfo.site + "/ucsc",
+                                           us=us,
+                                           url=url)}
+        return {"url": url}
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
@@ -133,17 +139,17 @@ class InteractingGeneSite(object):
                                                 coord.start,
                                                 coord.end)
                 ret = self.wepigenomes.getWebIDsFromExpIDs(psb.assembly,
-                                                          expIDs)
+                                                           expIDs)
             if psb.userErrMsg:
-                return { "err" : psb.userErrMsg }
+                return {"err": psb.userErrMsg}
 
-            return {"ret" : ret}
+            return {"ret": ret}
 
         except:
             if self.args.debug:
                 raise
 
-        return {"err" : "Problem parsing coordinate"}
+        return {"err": "Problem parsing coordinate"}
 
     @cherrypy.expose
     def missing(self, *args, **params):
@@ -153,9 +159,9 @@ class InteractingGeneSite(object):
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
         return self.templates("interacting_gene/missing",
-                              missing = missing)
+                              missing=missing)
 
     @cherrypy.expose
     def methods(self, *args, **params):
         return self.templates(self.siteInfo.site + "/methods",
-                              stats = self.epigenome_stats)
+                              stats=self.epigenome_stats)

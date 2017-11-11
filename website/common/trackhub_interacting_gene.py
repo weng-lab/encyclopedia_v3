@@ -1,4 +1,6 @@
-import os, sys, json
+import os
+import sys
+import json
 import StringIO
 
 from urls import BIB5
@@ -13,6 +15,7 @@ from common.labs import Labs
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils/'))
 from files_and_paths import Datasets
 from metadataws import MetadataWS
+
 
 class TrackHubInteractingGene(TrackHub):
     def __init__(self, args, epigenomes, urlStatus, row):
@@ -30,7 +33,7 @@ class TrackHubInteractingGene(TrackHub):
         m = MetadataWS(dataset)
         exps = m.biosample_term_name("GM12878")
 
-        for exp in sorted(exps, key = lambda x: (x.assay_term_name, x.tf, x.lab)):
+        for exp in sorted(exps, key=lambda x: (x.assay_term_name, x.tf, x.lab)):
             lines += [self.trackhubExp(exp)]
 
         f = StringIO.StringIO()

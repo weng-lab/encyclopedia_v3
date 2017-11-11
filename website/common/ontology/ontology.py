@@ -1,13 +1,15 @@
 #!/usr/bin/env python
 
-import os, json
+import os
+import json
+
 
 class AdHoc:
     def __init__(self, toks):
         self.count = toks[0]
-	self.term_name = toks[1]
-	self.term_id = toks[2]
-	self.organism = toks[3]
+        self.term_name = toks[1]
+        self.term_id = toks[2]
+        self.organism = toks[3]
 
         self.is_a = ""
         self.part_of = ""
@@ -25,6 +27,7 @@ class AdHoc:
 
     def __repr__(self):
         return "\t".join([self.term_id, self.term_name, self.part_of])
+
 
 class Ontology:
     def __init__(self):
@@ -91,7 +94,7 @@ class Ontology:
             return "limb"
         if "neural tube" == epi.biosample_term_name:
             return "brain"
-        #print btn, "\t", bti
+        # print btn, "\t", bti
         return ""
 
     def getCellType(self, epi):
@@ -108,10 +111,11 @@ class Ontology:
             return "immortalized cell line"
         return bt
 
+
 def main():
     on = Ontology()
     print on.adhoc["EFO:0002784"]
 
+
 if __name__ == '__main__':
     main()
-

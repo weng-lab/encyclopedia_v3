@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import os, sys, json
+import os
+import sys
+import json
 import StringIO
 
 from urls import BIB5
@@ -15,6 +17,7 @@ from common.site_info import SiteInfos
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
 from files_and_paths import Dirs
+
 
 class TrackHub(object):
     def __init__(self, args, epigenomes, urlStatus, row):
@@ -86,8 +89,8 @@ class TrackHub(object):
 
     def makeGenomes(self):
         return """genome\t{assembly}
-trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
-                                                   hubNum = self.hubNum)
+trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly=self.assembly,
+                                                   hubNum=self.hubNum)
 
     def makeTrackDb(self):
         epis = self.epigenomes.GetByAssemblyAndAssays(self.assembly, self.assays)
@@ -129,7 +132,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
 
     def phastcons(self):
         if "mm10" == self.assembly:
-            url =  "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/phastCons60way/mm10.60way.phastCons.bw"
+            url = "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/phastCons60way/mm10.60way.phastCons.bw"
         elif "hg19" == self.assembly:
             url = "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/phastCons100way/hg19.100way.phastCons.bw"
 
@@ -144,12 +147,12 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         if "hg19" == self.assembly:
             return None
 
-        byAssembly = {"mm10" : "Comprehensive M8",
-                      "hg19" : "Comprehensive 24"}
+        byAssembly = {"mm10": "Comprehensive M8",
+                      "hg19": "Comprehensive 24"}
         desc = "GENCODE Genes " + byAssembly[self.assembly]
 
-        byAssemblyURl = {"mm10" : os.path.join(BIB5, "genes", "gencode.vM8.annotation.bb"),
-                         "hg19" : os.path.join(BIB5, "genes", "gencode.v24.annotation.bb")}
+        byAssemblyURl = {"mm10": os.path.join(BIB5, "genes", "gencode.vM8.annotation.bb"),
+                         "hg19": os.path.join(BIB5, "genes", "gencode.v24.annotation.bb")}
         url = byAssemblyURl[self.assembly]
 
         track = BigGenePredTrack(desc, self.priority, url).track()
@@ -215,7 +218,7 @@ trackDb\t{assembly}/trackDb_{hubNum}.txt""".format(assembly = self.assembly,
         if "encodeproject" in url:
             if not url.endswith("?proxy=true"):
                 url += "?proxy=true"
-        
+
         if self.urlStatus.find(url) and not self.urlStatus.get(url):
             url = os.path.join(BIB5, "data", bigWig.expID,
                                bigWig.fileID + ".bigWig")
@@ -281,14 +284,14 @@ html examplePage
                 parent composite{priority}
                 type bigWig
                 color {dnaseColor}
-""".format(priority = self.priority,
-           descShort = descShort,
-           desc = desc,
-           histoneUrl = histoneUrl,
-           histoneColor = histoneColor,
-           dnaseUrl = dnaseUrl,
-           dnaseColor = dnaseColor,
-           histone = self.histMark)
+""".format(priority=self.priority,
+           descShort=descShort,
+           desc=desc,
+           histoneUrl=histoneUrl,
+           histoneColor=histoneColor,
+           dnaseUrl=dnaseUrl,
+           dnaseColor=dnaseColor,
+           histone=self.histMark)
 
         self.priority += 1
         return track
@@ -298,27 +301,27 @@ html examplePage
 
         def checkUrl(url):
             if not url:
-                return {"title" : None, "url" : None}
+                return {"title": None, "url": None}
 
             if not self.urlStatus.find(url):
                 self.urlStatus.insertOrUpdate(url,
                                               Utils.checkIfUrlExists(url))
             if self.urlStatus.get(url):
                 if "encodeproject" in url:
-                    return {"title" : "OK - ENCODE", "url" : url}
+                    return {"title": "OK - ENCODE", "url": url}
                 if BIB5 in url:
-                    return {"title" : "OK - zlab", "url" : url}
+                    return {"title": "OK - zlab", "url": url}
                 if "wustl.edu" in url:
-                    return {"title" : "OK - roadmap", "url" : url}
-                return {"title" : "OK", "url" : url}
+                    return {"title": "OK - roadmap", "url": url}
+                return {"title": "OK", "url": url}
 
             if "encodeproject" in url:
-                return {"title" : "ERROR - ENCODE", "url" : url}
+                return {"title": "ERROR - ENCODE", "url": url}
             if BIB5 in url:
-                return {"title" : "ERROR - zlab", "url" : url}
+                return {"title": "ERROR - zlab", "url": url}
             if "wustl.edu" in url:
-                return {"title" : "ERROR - roadmap", "url" : url}
-            return {"title" : "ERROR", "url" : url}
+                return {"title": "ERROR - roadmap", "url": url}
+            return {"title": "ERROR", "url": url}
 
         def checkExp(exp):
             u, _, _ = self._getUrl(exp, False)

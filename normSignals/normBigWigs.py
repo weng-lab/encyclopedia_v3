@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-import os, sys, json, argparse
+import os
+import sys
+import json
+import argparse
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../website/'))
 from web_epigenomes import WebEpigenomesLoader
@@ -16,6 +19,7 @@ normBin = os.path.join(os.path.realpath(os.path.dirname(__file__)), "bin/normBig
 if not os.path.exists(normBin):
     print "missing", normBin
     sys.exit(1)
+
 
 def process(args, expID):
     exp = MetadataWS.exp(expID)
@@ -46,8 +50,9 @@ def process(args, expID):
         print "bad " + str(e)
     return 1
 
+
 def build(args):
-    jr = JobRunner(cpus = args.j)
+    jr = JobRunner(cpus=args.j)
 
     epigenomes = WebEpigenomesLoader(args)
     for assembly in ["hg19", "mm10"]:
@@ -56,10 +61,10 @@ def build(args):
             for epi in epis.epis:
                 for exp in epi.exps():
                     if exp.encodeID.startswith("EN"):
-                        #print exp.encodeID
+                        # print exp.encodeID
                         jr.append([
-                                [os.path.realpath(__file__), "--job", exp.encodeID,
-                                 "--assembly", assembly, "--process"]])
+                            [os.path.realpath(__file__), "--job", exp.encodeID,
+                             "--assembly", assembly, "--process"]])
                     else:
                         # ROADMAP
                         bigWig = exp.files[0]
@@ -68,25 +73,27 @@ def build(args):
                         else:
                             if not os.path.exists(bigWig.normFnp()):
                                 jr.append([
-                                        [normBin,
-                                         "--assembly=" + bigWig.assembly,
-                                         "--bwFnp=" + bigWig.normFnp(),
-                                         bigWig.fnp()]])
+                                    [normBin,
+                                     "--assembly=" + bigWig.assembly,
+                                     "--bwFnp=" + bigWig.normFnp(),
+                                     bigWig.fnp()]])
     if args.test:
         return jr.runOne()
 
     if args.local:
         return jr.run()
 
-    jobOptions = {"mem" : 64000,
-                  "time" : "3:59",
-                  "cores" : 2,
-                  "queue" : "short" }
+    jobOptions = {"mem": 64000,
+                  "time": "3:59",
+                  "cores": 2,
+                  "queue": "short"}
 
     jr.cluster("/project/umw_zhiping_weng/encyc/norm", jobOptions)
 
+
 def runJob(args):
     return process(args, args.job)
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -100,6 +107,7 @@ def parse_args():
     args = parser.parse_args()
     return args
 
+
 def main():
     args = parse_args()
 
@@ -107,6 +115,7 @@ def main():
         return runJob(args)
 
     return build(args)
+
 
 if __name__ == '__main__':
     sys.exit(main())

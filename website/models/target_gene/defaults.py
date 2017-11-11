@@ -1,5 +1,6 @@
 import json
 
+
 class TargetGeneDefaults:
     def __init__(self):
         self.defaults = {}

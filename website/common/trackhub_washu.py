@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import os, sys, json
+import os
+import sys
+import json
 import StringIO
 
 from urls import BIB5
@@ -15,6 +17,7 @@ from common.site_info import SiteInfos
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils'))
 from utils import Utils
 from files_and_paths import Dirs
+
 
 class TrackHubWashu:
     def __init__(self, args, epigenomes, urlStatus, row):
@@ -83,7 +86,7 @@ class TrackHubWashu:
 
     def phastcons(self):
         if "mm10" == self.assembly:
-            url =  "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/phastCons60way/mm10.60way.phastCons.bw"
+            url = "http://hgdownload.cse.ucsc.edu/goldenPath/mm10/phastCons60way/mm10.60way.phastCons.bw"
         if "hg19" == self.assembly:
             url = "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/phastCons100way/hg19.100way.phastCons.bw"
 
@@ -98,12 +101,12 @@ class TrackHubWashu:
         if "hg19" == self.assembly:
             return None
 
-        byAssembly = {"mm10" : "Comprehensive M8",
-                      "hg19" : "Comprehensive 24"}
+        byAssembly = {"mm10": "Comprehensive M8",
+                      "hg19": "Comprehensive 24"}
         desc = "GENCODE Genes " + byAssembly[self.assembly]
 
-        byAssemblyURl = {"mm10" : os.path.join(BIB5, "genes", "gencode.vM8.annotation.bb"),
-                         "hg19" : os.path.join(BIB5, "genes", "gencode.v24.annotation.bb")}
+        byAssemblyURl = {"mm10": os.path.join(BIB5, "genes", "gencode.vM8.annotation.bb"),
+                         "hg19": os.path.join(BIB5, "genes", "gencode.v24.annotation.bb")}
         url = byAssemblyURl[self.assembly]
 
         track = BigGenePredTrack(desc, self.priority, url).track_washu()
@@ -167,7 +170,7 @@ class TrackHubWashu:
         bigWig = bigWigs[0]
 
         url = bigWig.url
-        if 1: #self.urlStatus.find(url) and not self.urlStatus.get(url):
+        if 1:  # self.urlStatus.find(url) and not self.urlStatus.get(url):
             url = os.path.join(BIB5, "data", bigWig.expID,
                                bigWig.fileID + ".bigWig")
 
@@ -236,14 +239,14 @@ html examplePage
                 parent composite{priority}
                 type bigWig
                 color {dnaseColor}
-""".format(priority = self.priority,
-           descShort = descShort,
-           desc = desc,
-           histoneUrl = histoneUrl,
-           histoneColor = histoneColor,
-           dnaseUrl = dnaseUrl,
-           dnaseColor = dnaseColor,
-           histone = self.histMark)
+""".format(priority=self.priority,
+           descShort=descShort,
+           desc=desc,
+           histoneUrl=histoneUrl,
+           histoneColor=histoneColor,
+           dnaseUrl=dnaseUrl,
+           dnaseColor=dnaseColor,
+           histone=self.histMark)
 
         self.priority += 1
         return track

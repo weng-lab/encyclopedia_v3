@@ -1,8 +1,14 @@
 #!/usr/bin/env python
 
-import os, sys, cherrypy, json, argparse, time
+import os
+import sys
+import cherrypy
+import json
+import argparse
+import time
 
-import psycopg2, psycopg2.pool
+import psycopg2
+import psycopg2.pool
 
 from common.web_epigenomes import WebEpigenomesLoader
 from models.interacting_gene.web_epigenomes import InteractingGeneWebEpigenomesLoader
@@ -21,6 +27,7 @@ from dbs import DBS
 from templates import Templates
 from utils import Utils
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--local', action="store_true", default=False)
@@ -29,6 +36,7 @@ def parse_args():
     parser.add_argument('--port', default=9191)
     args = parser.parse_args()
     return args
+
 
 class MainApp():
     def __init__(self, args):
@@ -43,12 +51,13 @@ class MainApp():
             '/static': {
                 'tools.staticdir.on': True,
                 'tools.staticdir.dir': self.staticDir
-                }
             }
+        }
 
     @cherrypy.expose
     def index(self):
         raise cherrypy.HTTPRedirect("/enhancers")
+
 
 def dbconn(args):
     if args.local:
@@ -57,6 +66,7 @@ def dbconn(args):
         dbs = DBS.pgdsn("Annotations")
     dbs["application_name"] = os.path.realpath(__file__)
     return psycopg2.pool.ThreadedConnectionPool(1, 32, **dbs)
+
 
 def getRootConfig(siteName):
     d = os.path.realpath(os.path.join(os.path.dirname(__file__), "tmp"))
@@ -73,21 +83,22 @@ def getRootConfig(siteName):
 
     return {
         '/': {
-            'tools.sessions.on' : True,
-            'tools.sessions.timeout' : 60000,
-            'tools.sessions.storage_type' : "file",
-            'tools.sessions.storage_path' : sessionDir,
-            'log.access_file' : os.path.join(logDir, "access-" + timestr + ".log"),
-            'log.error_file' : os.path.join(logDir, "error-" + timestr + ".log"),
-            'log.screen' : False,
+            'tools.sessions.on': True,
+            'tools.sessions.timeout': 60000,
+            'tools.sessions.storage_type': "file",
+            'tools.sessions.storage_path': sessionDir,
+            'log.access_file': os.path.join(logDir, "access-" + timestr + ".log"),
+            'log.error_file': os.path.join(logDir, "error-" + timestr + ".log"),
+            'log.screen': False,
         }
     }
+
 
 def main():
     args = parse_args()
 
     mainIndex = MainApp(args)
-    cherrypy.tree.mount(mainIndex, '/', config = mainIndex.config)
+    cherrypy.tree.mount(mainIndex, '/', config=mainIndex.config)
 
     DBCONN = dbconn(args)
 
@@ -99,8 +110,8 @@ def main():
     cherrypy.tree.mount(HiCSite(DBCONN, args, mainIndex.staticDir), '/hic',
                         config=getRootConfig("hic"))
     cherrypy.tree.mount(InteractingGeneSite(DBCONN, args,
-                                       wepigenomes[InteractingGeneSiteInfo.assayType],
-                                       mainIndex.staticDir), '/interacting_gene',
+                                            wepigenomes[InteractingGeneSiteInfo.assayType],
+                                            mainIndex.staticDir), '/interacting_gene',
                         config=getRootConfig("interacting_gene"))
     cherrypy.tree.mount(EnhancersSite(DBCONN, args,
                                       wepigenomes[EnhancersSiteInfo.assayType],
@@ -134,6 +145,7 @@ def main():
 
     cherrypy.engine.start()
     cherrypy.engine.block()
+
 
 if __name__ == '__main__':
     sys.exit(main())

@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import os, sys, json
+import os
+import sys
+import json
 
 from common.urls import BIB5
 
@@ -10,6 +12,7 @@ from exp_file import ExpFile
 from files_and_paths import Dirs
 
 UrlBase = os.path.join(BIB5, "Target-Gene-Prediction-Tracks/convert/")
+
 
 class InteractingGeneExp:
     def __init__(self):
@@ -29,11 +32,12 @@ class InteractingGeneExp:
             expF.file_type = "genePred"
             self.files.append(expF)
 
-    def getIDRnarrowPeak(self, args = None):
+    def getIDRnarrowPeak(self, args=None):
         return None, "hg19"
 
-    def getSingleBigWigSingleFnp(self, args = None):
+    def getSingleBigWigSingleFnp(self, args=None):
         return None, "hg19"
+
 
 class InteractingGeneEpigenome:
     def __init__(self, interacting_gene):
@@ -58,8 +62,9 @@ class InteractingGeneEpigenome:
     def tadFnp(self, assays):
         path = Dirs.interactingGeneTracks
         if "TAD" == assays:
-            fn = "{eid}_H3K4me3_predictions.bigBed".format(eid = self.eid)
+            fn = "{eid}_H3K4me3_predictions.bigBed".format(eid=self.eid)
         return os.path.join(path, fn)
+
 
 class InteractingGeneMetadata:
     def __init__(self):
@@ -71,8 +76,10 @@ class InteractingGeneMetadata:
 
         print "found", len(self.epigenomes), "epigenomes for Dekker hg19"
 
+
 def main():
     r = InteractingGeneMetadata().epigenomes
+
 
 if __name__ == '__main__':
     main()

@@ -2,7 +2,10 @@
 
 from __future__ import print_function
 
-import os, sys, json, argparse
+import os
+import sys
+import json
+import argparse
 from collections import defaultdict
 from itertools import groupby
 import cPickle as pickle
@@ -21,6 +24,7 @@ from metadataws import MetadataWS
 from files_and_paths import Datasets
 from epigenome import Epigenomes
 
+
 class ColWrap:
     def __init__(self, pretty_age, ageDays, selectorName):
         self.pretty_age = pretty_age
@@ -32,7 +36,7 @@ class ColWrap:
                 and self.__dict__ == other.__dict__)
 
     def __ne__(self):
-         return not self.__eq__(other)
+        return not self.__eq__(other)
 
     # allow correct set() operations
     # http://stackoverflow.com/a/10547584
@@ -41,6 +45,7 @@ class ColWrap:
 
     def matchWepi(self, wepi):
         return wepi.pretty_age() == self.pretty_age and wepi.SelectorName() == self.selectorName
+
 
 class WalkRow:
     def __init__(self, row):
@@ -62,6 +67,7 @@ class WalkRow:
                     else:
                         yield c.web_id(), c.web_title(), c
 
+
 class WebEpigenomesLoader:
     def __init__(self, args, siteInfo):
         self.args = args
@@ -78,15 +84,15 @@ class WebEpigenomesLoader:
         print("WebEpigenomesLoader:", self.histMark, self.assayType)
         if 0:
             self._generate(allAssays)
-            fn = "webEpigenomesLoader.byAssemblyAssays.{histMark}.dill".format(histMark = self.histMark)
-            #outFnp = "/data/projects/encode/encyclopedia_v3/
+            fn = "webEpigenomesLoader.byAssemblyAssays.{histMark}.dill".format(histMark=self.histMark)
+            # outFnp = "/data/projects/encode/encyclopedia_v3/
             outFnp = os.path.join(os.path.dirname(__file__), "../../../", fn)
             with open(outFnp, 'wb') as f:
                 dill.dump(self.byAssemblyAssays, f)
             print("wrote", outFnp)
         else:
-            fn = "webEpigenomesLoader.byAssemblyAssays.{histMark}.dill".format(histMark = self.histMark)
-            #outFnp = "/data/projects/encode/encyclopedia_v3/
+            fn = "webEpigenomesLoader.byAssemblyAssays.{histMark}.dill".format(histMark=self.histMark)
+            # outFnp = "/data/projects/encode/encyclopedia_v3/
             outFnp = os.path.join(os.path.dirname(__file__), "../../../", fn)
             with open(outFnp, 'rb') as f:
                 self.byAssemblyAssays = dill.load(f)
@@ -96,13 +102,13 @@ class WebEpigenomesLoader:
         if 0:
             # mouse
             m = MetadataWS(Datasets.all_mouse)
-            mm10epis = m.chipseq_tf_annotations_mm10(date = "2016-05-01")
+            mm10epis = m.chipseq_tf_annotations_mm10(date="2016-05-01")
 
             # human
             m = MetadataWS(Datasets.all_human)
-            encodeHg19 = m.chipseq_tf_annotations_hg19(date = "2016-05-01")
+            encodeHg19 = m.chipseq_tf_annotations_hg19(date="2016-05-01")
 
-            outFnp = "/data/projects/encode/encyclopedia_v3/webEpigenomesLoader.cpickle"        
+            outFnp = "/data/projects/encode/encyclopedia_v3/webEpigenomesLoader.cpickle"
             with open(outFnp, 'wb') as f:
                 p = pickle.Pickler(f)
                 p.dump(mm10epis)
@@ -110,7 +116,7 @@ class WebEpigenomesLoader:
             print("wrote", outFnp)
         else:
             outFnp = os.path.join(os.path.dirname(__file__), "../../../webEpigenomesLoader.cpickle")
-            #outFnp = "/data/projects/encode/encyclopedia_v3/webEpigenomesLoader.cpickle"        
+            #outFnp = "/data/projects/encode/encyclopedia_v3/webEpigenomesLoader.cpickle"
             with open(outFnp, 'rb') as f:
                 p = pickle.Unpickler(f)
                 mm10epis = p.load()
@@ -143,12 +149,12 @@ class WebEpigenomesLoader:
                               self.ontology, self.histMark, self.assayType)
             if we.predictionFnpExists():
                 wepis.append(we)
-            
+
         print(assembly, assays, len(epigenomes), len(wepis))
-                
+
         self.byAssemblyAssays[assembly][assays] = WebEpigenomes(
             self.args, assembly, assays, wepis)
-        
+
     def GetByAssemblyAndAssays(self, assembly, assays):
         if assembly not in self.byAssemblyAssays:
             print("missing", assembly)
@@ -185,6 +191,7 @@ class WebEpigenomesLoader:
         ret["total"] = total
         return ret
 
+
 class WebEpigenome:
     def __init__(self, args, epi, assays, ontology, histMark, assayType):
         self.args = args
@@ -207,7 +214,7 @@ class WebEpigenome:
             if args.debug:
                 for e in self.epi.Histone(self.histMark):
                     print("\t", e)
-        
+
         if "BothDNaseAnd" + self.histMark == self.assays:
             self.DNase = epi.DNase()[0]
             self.histones = epi.Histone(self.histMark)[0]
@@ -233,7 +240,7 @@ class WebEpigenome:
         if self.epi.age_display:
             s = self.epi.life_stage + " " + self.epi.age_display
         if "13.5 week" == self.epi.age_display:
-            s = "e13.5" # exception for d embryonic fibroblast 13.5 week
+            s = "e13.5"  # exception for d embryonic fibroblast 13.5 week
         if "embryonic" in s:
             s = s.replace("embryonic ", "e").replace(" day", "")
         elif "postnatal" in s:
@@ -253,23 +260,23 @@ class WebEpigenome:
 
     def ageDays(self):
         pa = self.pretty_age()
-        lookup = { "e10" : 10,
-                   "e10.5" : 10.5,
-                   "e11" : 11,
-                   "e11.5" : 11.5,
-                   "e12" : 12,
-                   "e13.5" : 13.5,
-                   "e14.5" : 14.5,
-                   "e15.5" : 15.5,
-                   "e16.5" : 16.5,
-                   "e18.5" : 18.5,
-                   "p0" : 22,
-                   "p1" : 23,
-                   "p7" : 29,
-                   "a8w" : 22 + 8*7,
-                   "a8-10w" : 22 + 9*7,
-                   "a24w" : 22 + 24*7,
-                   "other" : 1000 }
+        lookup = {"e10": 10,
+                  "e10.5": 10.5,
+                  "e11": 11,
+                  "e11.5": 11.5,
+                  "e12": 12,
+                  "e13.5": 13.5,
+                  "e14.5": 14.5,
+                  "e15.5": 15.5,
+                  "e16.5": 16.5,
+                  "e18.5": 18.5,
+                  "p0": 22,
+                  "p1": 23,
+                  "p7": 29,
+                  "a8w": 22 + 8 * 7,
+                  "a8-10w": 22 + 9 * 7,
+                  "a24w": 22 + 24 * 7,
+                  "other": 1000}
         if pa not in lookup:
             #print("ERROR: missing ageDays", pa)
             return 999
@@ -374,6 +381,7 @@ class WebEpigenome:
     def cell_type(self):
         return self.ontology.getCellType(self.epi)
 
+
 class WebEpigenomes:
     def __init__(self, args, assembly, assays, epis):
         self.args = args
@@ -399,14 +407,14 @@ class WebEpigenomes:
             yield idx, c.pretty_age, c.selectorName
 
     def Walk(self):
-        m = natsorted(self.m, key = lambda x: (x[0].lower(), x[1].lower(), x[2]))
+        m = natsorted(self.m, key=lambda x: (x[0].lower(), x[1].lower(), x[2]))
         for row in m:
             yield row[0], row[1], row[2], WalkRow(row[3:]).Walk()
 
     def adjust_biosample_term_name(self, b):
         if "embryonic facial prominence" == b:
             b = "embryonic facial<br>prominence"
-        b  = b.replace("negative", "-").replace("positive", "+").replace("--", "-").replace("-+", "+")
+        b = b.replace("negative", "-").replace("positive", "+").replace("--", "-").replace("-+", "+")
         return b
 
     def setupMatrix(self):
@@ -416,8 +424,9 @@ class WebEpigenomes:
 
     def setupMatrixHuman(self):
         wepis = self.epis
-        keyfunc = lambda x: (x.epi.biosample_term_name.lower(), x.pretty_age())
-	wepis.sort(key=keyfunc)
+
+        def keyfunc(x): return (x.epi.biosample_term_name.lower(), x.pretty_age())
+        wepis.sort(key=keyfunc)
 
         cols = [ColWrap("Tissue of origin", "", ""),
                 ColWrap("Cell Type", "", ""),
@@ -443,15 +452,16 @@ class WebEpigenomes:
         cols = set()
 
         epis = self.epis
-        keyfunc = lambda x: x.epi.biosample_term_name
-	epis.sort(key=keyfunc)
+
+        def keyfunc(x): return x.epi.biosample_term_name
+        epis.sort(key=keyfunc)
 
         for biosample_term_name, wepis in groupby(epis, keyfunc):
             rows.add(biosample_term_name)
             for wepi in wepis:
                 cols.add(ColWrap(wepi.pretty_age(), wepi.ageDays(), wepi.SelectorName()))
 
-        cols = natsorted(list(cols), key = lambda x: x.ageDays)
+        cols = natsorted(list(cols), key=lambda x: x.ageDays)
         cols = [ColWrap("Tissue of origin", "", ""),
                 ColWrap("Cell Type", "", ""),
                 ColWrap("Biosample", "", "")
@@ -459,7 +469,7 @@ class WebEpigenomes:
         for colIdx, cw in enumerate(cols):
             if cw.pretty_age == "other":
                 break
-        cols += [cols.pop(colIdx)] # push "other" column to end
+        cols += [cols.pop(colIdx)]  # push "other" column to end
         self.m = []
 
         # header row
@@ -480,16 +490,19 @@ class WebEpigenomes:
             row[2] = self.adjust_biosample_term_name(biosample_term_name)
             self.m.append(row)
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--debug', action="store_true", default=False)
     args = parser.parse_args()
     return args
 
+
 def main():
     args = parse_args()
 
     we = WebEpigenomesLoader(args)
+
 
 if __name__ == '__main__':
     main()

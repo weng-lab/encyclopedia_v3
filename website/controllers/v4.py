@@ -1,8 +1,11 @@
-import sys, os, cherrypy
+import sys
+import os
+import cherrypy
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils'))
 from utils import Utils
 from templates import Templates
+
 
 class VersionFour:
     def __init__(self):

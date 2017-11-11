@@ -1,5 +1,6 @@
 import json
 
+
 class InteractingGeneDefaults:
     def __init__(self):
         self.defaults = {}

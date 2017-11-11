@@ -9,4 +9,3 @@ class EpigenomeStats:
         self.mouse_not_both = 0
 
         self.human_not_both = self.human
-

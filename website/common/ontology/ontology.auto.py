@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
-import os, json
+import os
+import json
 from orangecontrib.bio import ontology
+
 
 class OntologyAuto:
     def __init__(self):
@@ -20,6 +22,7 @@ class OntologyAuto:
         if bti in self.adhoc:
             return self.adhoc[bti].part_of
         return epi.biosample_type
+
 
 def main():
     on = OntologyAuto()
@@ -61,6 +64,6 @@ def main():
                         print rt
                         print on.uberon.term(rt[1])
 
+
 if __name__ == '__main__':
     main()
-

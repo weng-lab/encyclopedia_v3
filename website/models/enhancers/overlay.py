@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 
-import os, sys, json, argparse
+import os
+import sys
+import json
+import argparse
 from collections import defaultdict
 from itertools import groupby
 import cPickle as pickle
@@ -19,6 +22,7 @@ from web_epigenomes import WebEpigenomesLoader
 from helpers_trackhub import Track, PredictionTrack, BigGenePredTrack, BigWigTrack, officialVistaTrack, bigWigFilters
 from trackhub import TempWrap
 
+
 def process(assembly, exp):
     bigWigs = bigWigFilters(assembly, exp.files)
     if not bigWigs:
@@ -35,14 +39,16 @@ def process(assembly, exp):
 
     bigWig = bigWigs[0]
     if "eid" in bigWig.fnp():
-        return # ignore Roadmap for now
+        return  # ignore Roadmap for now
     print bigWig.fnp()
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--debug', action="store_true", default=False)
     args = parser.parse_args()
     return args
+
 
 def main():
     args = parse_args()
@@ -55,6 +61,7 @@ def main():
             for epi in wepis.epis:
                 for exp in epi.exps():
                     process(assembly, exp)
+
 
 if __name__ == '__main__':
     main()

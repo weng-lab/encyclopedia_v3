@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 
-import os, sys, json
+import os
+import sys
+import json
 
 from common.urls import BIB5base
 
@@ -11,18 +13,19 @@ from files_and_paths import Dirs
 
 UrlBase = os.path.join(BIB5base, "hic-Dekker/tads/")
 
-TADS = { "SK-N-DZ" : "ENCODE3-SKNDZ-HindIII__hg19__ucsc/ENCODE3-SKNDZ-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "SK-MEL-5" : "ENCODE3-SKMEL5-HindIII__hg19__ucsc/ENCODE3-SKMEL5-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "A549" : "ENCODE3-A549-HindIII__hg19__ucsc/ENCODE3-A549-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "LNCaP clone FGC" : "ENCODE3-LNCaP-HindIII__hg19__ucsc/ENCODE3-LNCaP-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "Panc1" : "ENCODE3-PANC1-HindIII__hg19__ucsc/ENCODE3-PANC1-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "NCI-H460" : "ENCODE3-NCIH460-HindIII__hg19__ucsc/ENCODE3-NCIH460-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "SK-N-MC" : "ENCODE3-SKNMC-HindIII__hg19__ucsc/ENCODE3-SKNMC-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "G401" : "ENCODE3-G401-HindIII__hg19__ucsc/ENCODE3-G401-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "Caki2" : "ENCODE3-CAKI2-HindIII__hg19__ucsc/ENCODE3-CAKI2-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "SJCRH30" : "ENCODE3-SJCRH30-HindIII__hg19__ucsc/ENCODE3-SJCRH30-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "T47D" : "ENCODE3-T470-HindIII__hg19__ucsc/ENCODE3-T470-HindIII__hg19__genome__C-40000-iced.tads.bed",
-         "RPMI-7951" : "ENCODE3-RPMI7951-HindIII__hg19__ucsc/ENCODE3-RPMI7951-HindIII__hg19__genome__C-40000-iced.tads.bed"}
+TADS = {"SK-N-DZ": "ENCODE3-SKNDZ-HindIII__hg19__ucsc/ENCODE3-SKNDZ-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "SK-MEL-5": "ENCODE3-SKMEL5-HindIII__hg19__ucsc/ENCODE3-SKMEL5-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "A549": "ENCODE3-A549-HindIII__hg19__ucsc/ENCODE3-A549-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "LNCaP clone FGC": "ENCODE3-LNCaP-HindIII__hg19__ucsc/ENCODE3-LNCaP-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "Panc1": "ENCODE3-PANC1-HindIII__hg19__ucsc/ENCODE3-PANC1-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "NCI-H460": "ENCODE3-NCIH460-HindIII__hg19__ucsc/ENCODE3-NCIH460-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "SK-N-MC": "ENCODE3-SKNMC-HindIII__hg19__ucsc/ENCODE3-SKNMC-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "G401": "ENCODE3-G401-HindIII__hg19__ucsc/ENCODE3-G401-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "Caki2": "ENCODE3-CAKI2-HindIII__hg19__ucsc/ENCODE3-CAKI2-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "SJCRH30": "ENCODE3-SJCRH30-HindIII__hg19__ucsc/ENCODE3-SJCRH30-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "T47D": "ENCODE3-T470-HindIII__hg19__ucsc/ENCODE3-T470-HindIII__hg19__genome__C-40000-iced.tads.bed",
+        "RPMI-7951": "ENCODE3-RPMI7951-HindIII__hg19__ucsc/ENCODE3-RPMI7951-HindIII__hg19__genome__C-40000-iced.tads.bed"}
+
 
 class DekkerExp:
     def __init__(self, biosample_term_name, info):
@@ -41,11 +44,12 @@ class DekkerExp:
 
         self.files = [expF]
 
-    def getIDRnarrowPeak(self, args = None):
+    def getIDRnarrowPeak(self, args=None):
         return None, "hg19"
 
-    def getSingleBigWigSingleFnp(self, args = None):
+    def getSingleBigWigSingleFnp(self, args=None):
         return None, "hg19"
+
 
 class DekkerEpigenome:
     def __init__(self, biosample_term_name, info, tad):
@@ -69,8 +73,9 @@ class DekkerEpigenome:
     def tadFnp(self, assays):
         path = Dirs.promoterTracks
         if "TAD" == assays:
-            fn = "{eid}_H3K4me3_predictions.bigBed".format(eid = self.eid)
+            fn = "{eid}_H3K4me3_predictions.bigBed".format(eid=self.eid)
         return os.path.join(path, fn)
+
 
 class DekkerMetadata:
     def __init__(self):
@@ -88,8 +93,10 @@ class DekkerMetadata:
 
         print "found", len(self.epigenomes), "epigenomes for Dekker hg19"
 
+
 def main():
     r = DekkerMetadata().epigenomes
+
 
 if __name__ == '__main__':
     main()

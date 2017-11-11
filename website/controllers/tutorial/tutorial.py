@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 
-import os, sys, json, cherrypy, jinja2
+import os
+import sys
+import json
+import cherrypy
+import jinja2
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../'))
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
 from templates import Templates
+
 
 class TutorialSite(object):
     def __init__(self, DBCONN, args, staticDir):
@@ -26,4 +31,4 @@ class TutorialSite(object):
     @cherrypy.expose
     def index(self, *args, **params):
         return self.templates('tutorial' + "/index",
-                              site = "tutorial")
+                              site="tutorial")

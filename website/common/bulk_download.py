@@ -1,4 +1,8 @@
-import os, sys, json, cherrypy, time
+import os
+import sys
+import json
+import cherrypy
+import time
 import uuid
 import StringIO
 import zipfile
@@ -9,16 +13,17 @@ from common.parse_search_box import ParseSearchBox
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils'))
 from utils import Utils
 
+
 class BulkDownload:
     def __init__(self, sessions, wepigenomes, dbSnps, genes, host, siteInfo, staticDir):
         self.sessions = sessions
         self.wepigenomes = wepigenomes
-        self.dbSnps =dbSnps
+        self.dbSnps = dbSnps
         self.genes = genes
         self.host = host
         self.siteInfo = siteInfo
         self.staticDir = staticDir
-        
+
     def makeUid(self):
         return str(uuid.uuid4())
 
@@ -34,10 +39,10 @@ class BulkDownload:
         try:
             psb = ParseSearchBox(self.wepigenomes, self.dbSnps, self.genes, input_json)
             if psb.userErrMsg:
-                return { "err" : us.psb.userErrMsg }
+                return {"err": us.psb.userErrMsg}
         except:
             raise
-            return { "err" : "internal download error"}
+            return {"err": "internal download error"}
 
         epis = self.wepigenomes.GetByAssemblyAndAssays(psb.assembly, psb.assays)
         epis = filter(lambda e: e.web_id() in psb.tissue_ids, epis.epis)
@@ -49,15 +54,15 @@ class BulkDownload:
         Utils.ensureDir(outFnp)
 
         counter = 0
-        with zipfile.ZipFile(outFnp, mode='w', compression = zipfile.ZIP_STORED) as a:
+        with zipfile.ZipFile(outFnp, mode='w', compression=zipfile.ZIP_STORED) as a:
             for wepi in epis:
                 fnp = wepi.predictionFnp().replace(".bigBed", ".bed.gz")
                 if not os.path.exists(fnp):
                     print("missing", fnp)
                     continue
-                a.write(fnp, arcname = os.path.basename(fnp))
+                a.write(fnp, arcname=os.path.basename(fnp))
                 counter += 1
         print("wrote", outFnp, counter)
 
         url = os.path.join(self.host, "static", "downloads", uid, outFn)
-        return {"url" : url}
+        return {"url": url}

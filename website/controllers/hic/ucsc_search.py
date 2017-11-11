@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 
-import os, sys
+import os
+import sys
 
 from parse_search_box import ParseSearchBox
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from files_and_paths import Dirs
+
 
 class UcscSearch:
     def __init__(self, epigenomes, db, dbsnps, genes, host, args, params, uid):
@@ -75,16 +77,14 @@ class UcscSearch:
         self.trackhubUrl = os.path.join(self.host,
                                         "trackhub",
                                         self.uid,
-                                        "hub_{hubNum}.txt".format(hubNum =
-                                                                  self.hubNum))
+                                        "hub_{hubNum}.txt".format(hubNum=self.hubNum))
         ucscParams.append("hubClear=" + self.trackhubUrl)
 
         self.trackdbUrl = os.path.join(self.host,
                                        "trackhub",
                                        self.uid,
                                        self.psb.assembly,
-                                       "trackDb_{hubNum}.txt".format(hubNum =
-                                                                     self.hubNum))
+                                       "trackDb_{hubNum}.txt".format(hubNum=self.hubNum))
 
         url = urlBase + "&".join(ucscParams)
         return url
@@ -94,8 +94,7 @@ class UcscSearch:
                                        "trackhub_washu",
                                        self.uid,
                                        self.psb.assembly,
-                                       "trackDb_{hn}.json".format(hn =
-                                                                  self.hubNum))
+                                       "trackDb_{hn}.json".format(hn=self.hubNum))
 
         urlBase = "http://epigenomegateway.wustl.edu/browser/"
         assembly = "?genome=" + self.psb.assembly

@@ -1,15 +1,17 @@
 #!/usr/bin/env python
 
-import os, sys
+import os
+import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils/'))
 from db_utils import getcursor
 
+
 class LookupGenes:
     def __init__(self, DBCONN):
         self.DBCONN = DBCONN
-        self.tableNames = {"mm10" : "genes_mm10",
-                           "hg19" : "genes_hg19"}
+        self.tableNames = {"mm10": "genes_mm10",
+                           "hg19": "genes_hg19"}
 
     def lookup(self, assembly, gene):
         with getcursor(self.DBCONN, "lookup") as curs:
@@ -17,7 +19,7 @@ class LookupGenes:
 SELECT chrom, chromStart, chromEnd FROM {table}
 WHERE lower(gene) = lower(%(gene)s)
 """.format(table=self.tableNames[assembly]),
-                             {"gene" : gene})
+                {"gene": gene})
             if (curs.rowcount > 0):
                 return curs.fetchall()
             return None
@@ -28,7 +30,7 @@ WHERE lower(gene) = lower(%(gene)s)
 SELECT gene FROM {table}
 WHERE gene ~ lower(%(gene)s)
 """.format(table=self.tableNames[assembly]),
-                             {"gene" : gene})
+                {"gene": gene})
             if (curs.rowcount > 0):
                 return [x[0] for x in curs.fetchall()]
             return None

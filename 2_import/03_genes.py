@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 
-import os, sys, psycopg2, argparse, StringIO
+import os
+import sys
+import psycopg2
+import argparse
+import StringIO
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../metadata/utils/'))
 from dbs import DBS
 from files_and_paths import Dirs
 from db_utils import getcursor
 from get_tss import Genes
+
 
 def setupAndCopy(cur, fnp, fileType, table_name):
     print "loading", fnp
@@ -37,17 +42,20 @@ gene text
     CREATE INDEX {table}_idx01 ON {table}(lower(gene));
 """.format(table=table_name))
 
+
 def setupAll(cur):
     setupAndCopy(cur, Dirs.GenomeFnp("gencode.m4/gencode.vM4.annotation.gtf.gz"),
                  "gtf", "genes_mm10")
     setupAndCopy(cur, Dirs.GenomeFnp("gencode.v19/gencode.v19.annotation.gff3.gz"),
                  "gff", "genes_hg19")
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument('--local', action="store_true", default=False)
     args = parser.parse_args()
     return args
+
 
 def main():
     args = parse_args()
@@ -63,6 +71,7 @@ def main():
 
     with getcursor(DBCONN, "main") as cur:
         setupAll(cur)
+
 
 if __name__ == '__main__':
     main()

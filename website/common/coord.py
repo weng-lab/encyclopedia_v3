@@ -24,4 +24,3 @@ class Coord:
             return cls(chrom, start, end)
         except:
             return None
-

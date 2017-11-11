@@ -2,7 +2,13 @@
 
 from __future__ import print_function
 
-import os, sys, json, psycopg2, argparse, fileinput, StringIO
+import os
+import sys
+import json
+import psycopg2
+import argparse
+import fileinput
+import StringIO
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "../website/common/"))
 from web_epigenomes import WebEpigenomesLoader
@@ -14,6 +20,7 @@ from dbs import DBS
 from metadataws import MetadataWS
 from files_and_paths import Datasets
 
+
 def setupDB(cur):
     for assembly in ["hg19", "mm10"]:
         cur.execute("""
@@ -23,7 +30,8 @@ CREATE TABLE bedRanges{assembly}
 chrom text,
 startend int4range,
 expID text
-) """.format(assembly = assembly))
+) """.format(assembly=assembly))
+
 
 def insertFiles(cur, expID, fnp, assembly):
     peaks = [r for r in fileinput.input(fnp, mode="r", openhook=fileinput.hook_compressed)]
@@ -31,12 +39,13 @@ def insertFiles(cur, expID, fnp, assembly):
     for peak in peaks:
         toks = peak.rstrip().split('\t')
         outF.write("\t".join([toks[0],
-                              "[%s, %s)" %(toks[1], toks[2]),
+                              "[%s, %s)" % (toks[1], toks[2]),
                               expID]) + "\n")
     outF.seek(0)
     cur.copy_from(outF, "bedRanges" + assembly, '\t',
                   columns=("chrom", "startend", "expID"))
     print("\t", fnp, cur.rowcount)
+
 
 def test(cur):
     # check chr1:134054000-134071000
@@ -48,11 +57,12 @@ AND startend && int4range(134054000, 134071000)
 """)
     print(cur.fetchall())
 
+
 def build(args, conn, cur):
     setupDB(cur)
 
     bedFnps = set()
-    
+
     for siteInfo in [EnhancersSiteInfo, PromotersSiteInfo]:
         epigenomes = WebEpigenomesLoader(args, siteInfo)
         for assembly in ["hg19", "mm10"]:
@@ -75,17 +85,18 @@ def build(args, conn, cur):
     for b in sorted(bedFnps):
         insertFiles(cur, b[0], b[1], b[2])
         conn.commit()
-        
+
     for assembly in ["mm10", "hg19"]:
         print("indexing", assembly, "chrom")
         cur.execute("""
 CREATE INDEX chromIdx{assembly} ON bedRanges{assembly}(chrom);
-""".format(assembly = assembly))
+""".format(assembly=assembly))
 
         print("indexing", assembly, "startend")
         cur.execute("""
 CREATE INDEX rangeIdx{assembly} ON bedRanges{assembly} USING gist (startend);
-""".format(assembly = assembly))
+""".format(assembly=assembly))
+
 
 def parse_args():
     parser = argparse.ArgumentParser()
@@ -94,6 +105,7 @@ def parse_args():
     parser.add_argument('--rebuild', action="store_true", default=False)
     args = parser.parse_args()
     return args
+
 
 def main():
     args = parse_args()
@@ -108,7 +120,8 @@ def main():
         with conn.cursor() as cur:
             if args.rebuild:
                 return build(args, conn, cur)
-            #test(cur)
+            # test(cur)
+
 
 if __name__ == '__main__':
     main()

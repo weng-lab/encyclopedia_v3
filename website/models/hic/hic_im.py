@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
-import sys, os
+import sys
+import os
 import h5py
 import numpy as np
 
@@ -8,6 +9,7 @@ import uuid
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
+
 
 class HiCInteractionMatrix:
     def __init__(self, staticDir):
@@ -18,7 +20,7 @@ class HiCInteractionMatrix:
 
         f = h5py.File(fnp, "r")
 
-        #print f.keys()
+        # print f.keys()
         chrs = dict((c, i) for i, c in enumerate(f["chrs"]))
         chromIdx = chrs[chrom]
         chr_bin_range = f["chr_bin_range"][chromIdx]
@@ -29,7 +31,7 @@ class HiCInteractionMatrix:
         print chr_bin_range, idx, numBins
 
         im = f["interactions"]
-        m = im[idx : idx + numBins, idx : idx + numBins]
+        m = im[idx: idx + numBins, idx: idx + numBins]
         print m.shape
 
         pngFn = str(uuid.uuid4()) + ".png"
@@ -61,7 +63,7 @@ class HiCInteractionMatrix:
 
         # http://stackoverflow.com/a/5253554
         # a white image same size as rotated image
-        fff = Image.new('RGBA', s.size, (255,)*4)
+        fff = Image.new('RGBA', s.size, (255,) * 4)
 
         # create a composite image using the alpha layer of rot as a mask
         out = Image.composite(s, fff, s)
@@ -76,11 +78,11 @@ class HiCInteractionMatrix:
                 fnp + ".trim.png"]
         Utils.runCmds(cmds)
 
+
 def main():
     im = HiCInteractionMatrix()
     im.makeImg("", "chr1", 40000, 2002, 40000)
 
+
 if __name__ == '__main__':
     main()
-
-

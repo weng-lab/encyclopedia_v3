@@ -1,12 +1,17 @@
 #!/usr/bin/env python
 
-import os, sys, json, psycopg2, argparse
+import os
+import sys
+import json
+import psycopg2
+import argparse
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../metadata/utils/'))
 from utils import Utils
 from dbs import DBS
 from db_utils import getcursor
 from tables import DbTables
+
 
 class DbBedOverlap:
     def __init__(self, DBCONN):
@@ -22,7 +27,7 @@ FROM bedRanges{assembly}
 WHERE chrom = %(chrom)s
 AND startend && int4range(%(start)s, %(end)s)
 """.format(assembly=assembly),
-{"chrom" : chrom,
- "start" : start,
- "end" : end})
+                {"chrom": chrom,
+                 "start": start,
+                 "end": end})
             return [x[0] for x in curs.fetchall()]

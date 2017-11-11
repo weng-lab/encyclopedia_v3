@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 
-import os, sys, json, cherrypy, jinja2, argparse
+import os
+import sys
+import json
+import cherrypy
+import jinja2
+import argparse
 import numpy as np
 import uuid
 import StringIO
@@ -26,6 +31,7 @@ from models.enhancers.defaults import Defaults
 sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/utils'))
 from utils import Utils
 from templates import Templates
+
 
 class TrackhubSite(object):
     def __init__(self, DBCONN, args, wepigenomes):
@@ -70,14 +76,14 @@ class TrackhubSite(object):
         url = us.configureWashuHubLink()
 
         if us.psb.userErrMsg:
-            return { "err" : us.psb.userErrMsg }
+            return {"err": us.psb.userErrMsg}
 
         if self.args.debug:
-            return {"inner-url" : url,
-                    "html" : self.templates(self.siteInfo.site + "/ucsc",
-                                            us = us,
-                                            url = url)}
-        return {"url" : url}
+            return {"inner-url": url,
+                    "html": self.templates(self.siteInfo.site + "/ucsc",
+                                           us=us,
+                                           url=url)}
+        return {"url": url}
 
     @cherrypy.expose
     def trackhubCustom(self, *args, **params):
@@ -121,4 +127,3 @@ class TrackhubSite(object):
 
         path = args[1:]
         return th.ParsePath(path)
-

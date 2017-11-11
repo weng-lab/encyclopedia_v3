@@ -1,6 +1,11 @@
 #!/usr/bin/env python
 
-import os, sys, json, cherrypy, jinja2, argparse
+import os
+import sys
+import json
+import cherrypy
+import jinja2
+import argparse
 import numpy as np
 import uuid
 import StringIO
@@ -28,10 +33,12 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '../../../../metadata/ut
 from utils import Utils
 from templates import Templates
 
+
 class HiCSiteInfo:
     site = "hic"
     assayType = AssayType.HiC
     histMark = "HiC"
+
 
 class HiCSite(object):
     def __init__(self, DBCONN, args, globalStaticDir):
@@ -42,9 +49,9 @@ class HiCSite(object):
         self.dbSnps = dbSnps(DBCONN)
         self.genes = LookupGenes(DBCONN)
         self.urlStatus = UrlStatusDB(DBCONN)
-        self.wepigenomes = WebEpigenomesLoader(self.args)#, HiCSiteInfo)
+        self.wepigenomes = WebEpigenomesLoader(self.args)  # , HiCSiteInfo)
         self.defaults = Defaults()
-        self.epigenome_stats = EpigenomeStats(self.wepigenomes)#, HiCSiteInfo)
+        self.epigenome_stats = EpigenomeStats(self.wepigenomes)  # , HiCSiteInfo)
 
         viewDir = os.path.join(os.path.dirname(__file__), "../../views")
         self.templates = Templates(viewDir)
@@ -61,9 +68,9 @@ class HiCSite(object):
     @cherrypy.expose
     def index(self, *args, **params):
         return self.templates("hic/index",
-                              epigenomes = self.wepigenomes,
-                              defaults = self.defaults,
-                              stats = self.epigenome_stats)
+                              epigenomes=self.wepigenomes,
+                              defaults=self.defaults,
+                              stats=self.epigenome_stats)
 
     def makeUid(self):
         return str(uuid.uuid4())
@@ -86,14 +93,14 @@ class HiCSite(object):
         url = us.configureUcscHubLink()
 
         if us.psb.userErrMsg:
-            return { "err" : us.psb.userErrMsg }
+            return {"err": us.psb.userErrMsg}
 
         if self.args.debug:
-            return {"inner-url" : url,
-                    "html" : self.templates("hic/ucsc",
-                                            us = us,
-                                            url = url)}
-        return {"url" : url}
+            return {"inner-url": url,
+                    "html": self.templates("hic/ucsc",
+                                           us=us,
+                                           url=url)}
+        return {"url": url}
 
     @cherrypy.expose
     @cherrypy.tools.json_in()
@@ -113,14 +120,14 @@ class HiCSite(object):
         url = us.configureWashuHubLink()
 
         if us.psb.userErrMsg:
-            return { "err" : us.psb.userErrMsg }
+            return {"err": us.psb.userErrMsg}
 
         if self.args.debug:
-            return {"inner-url" : url,
-                    "html" : self.templates("hic/ucsc",
-                                            us = us,
-                                            url = url)}
-        return {"url" : url}
+            return {"inner-url": url,
+                    "html": self.templates("hic/ucsc",
+                                           us=us,
+                                           url=url)}
+        return {"url": url}
 
     @cherrypy.expose
     def trackhubCustom(self, *args, **params):
@@ -181,17 +188,17 @@ class HiCSite(object):
                                                 coord.start,
                                                 coord.end)
                 ret = self.wepigenomes.getWebIDsFromExpIDs(psb.assembly,
-                                                          expIDs)
+                                                           expIDs)
             if psb.userErrMsg:
-                return { "err" : psb.userErrMsg }
+                return {"err": psb.userErrMsg}
 
-            return {"ret" : ret}
+            return {"ret": ret}
 
         except:
             if self.args.debug:
                 raise
 
-        return {"err" : "Problem parsing coordinate"}
+        return {"err": "Problem parsing coordinate"}
 
     @cherrypy.expose
     def missing(self, *args, **params):
@@ -201,12 +208,12 @@ class HiCSite(object):
         th = TrackHub(self.args, self.wepigenomes, self.urlStatus, row)
         missing = th.showMissing()
         return self.templates("hic/missing",
-                              missing = missing)
+                              missing=missing)
 
     @cherrypy.expose
     def methods(self, *args, **params):
         return self.templates("hic/methods",
-                              stats = self.epigenome_stats)
+                              stats=self.epigenome_stats)
 
     @cherrypy.expose
     def im(self, *args, **params):
@@ -218,7 +225,7 @@ class HiCSite(object):
                              int(params["bins"]),
                              int(params["resolution"]))
             return self.templates("hic/hic_im",
-                                  img = os.path.join("../../static/hic", ret))
+                                  img=os.path.join("../../static/hic", ret))
         except:
             raise
             return "error"

@@ -1,5 +1,6 @@
 import json
 
+
 class Defaults:
     def __init__(self):
         self.defaults = {}
